@@ -1,0 +1,106 @@
+const availableIcons = [
+    // Fitness & Sports (50+)
+    'fitness', 'barbell', 'body', 'walk', 'bicycle',
+    'basketball', 'football', 'tennisball', 'american-football',
+    'baseball', 'golf', 'ice-cream', 'medal', 'trophy',
+    'ribbon', 'podium', 'stopwatch', 'timer', 'speedometer',
+    'pulse', 'heart-circle', 'heart-half', 'heart-dislike',
+    'accessibility', 'man', 'woman', 'male', 'female',
+    'male-female', 'transgender', 'people', 'people-circle',
+    'person', 'person-add', 'person-circle', 'person-remove',
+    'body-outline', 'footsteps', 'hand-left', 'hand-right',
+    'thumbs-up', 'thumbs-down', 'finger-print', 'eye',
+    'eye-off', 'glasses', 'ear', 'nose',
+
+    // Food & Nutrition (80+)
+    'nutrition', 'restaurant', 'fast-food', 'pizza', 'cafe',
+    'beer', 'wine', 'ice-cream', 'egg', 'fish',
+    'water', 'water-outline', 'flame', 'flame-outline', 'bonfire',
+    'leaf', 'leaf-outline', 'flower', 'flower-outline', 'rose',
+    'rose-outline', 'cut', 'cut-outline', 'restaurant-outline',
+    'cafe-outline', 'beer-outline', 'wine-outline', 'fast-food-outline',
+    'pizza-outline', 'fish-outline', 'egg-outline', 'apple',
+    'banana', 'carrot', 'nutrition-outline', 'flask', 'flask-outline',
+    'beaker', 'beaker-outline', 'thermometer', 'thermometer-outline',
+    'scale', 'scale-outline', 'fitness-outline', 'barbell-outline',
+    'pint', 'pint-outline', 'restaurant-sharp', 'cafe-sharp',
+    'beer-sharp', 'wine-sharp', 'fast-food-sharp', 'pizza-sharp',
+    'fish-sharp', 'egg-sharp', 'nutrition-sharp', 'flask-sharp',
+    'beaker-sharp', 'thermometer-sharp', 'scale-sharp', 'fitness-sharp',
+    'barbell-sharp', 'pint-sharp', 'ice-cream-outline', 'ice-cream-sharp',
+    'leaf-sharp', 'flower-sharp', 'rose-sharp', 'cut-sharp',
+    'water-sharp', 'flame-sharp', 'bonfire-outline', 'bonfire-sharp',
+
+    // Medical & Health (60+)
+    'medical', 'medkit', 'bandage', 'eyedrop', 'pulse-outline',
+    'heart', 'heart-outline', 'heart-half-outline', 'heart-dislike-outline',
+    'heart-circle-outline', 'fitness', 'body-outline', 'accessibility-outline',
+    'medical-outline', 'medkit-outline', 'bandage-outline', 'eyedrop-outline',
+    'thermometer', 'thermometer-outline', 'pulse-sharp', 'heart-sharp',
+    'heart-half-sharp', 'heart-dislike-sharp', 'heart-circle-sharp',
+    'medical-sharp', 'medkit-sharp', 'bandage-sharp', 'eyedrop-sharp',
+    'thermometer-sharp', 'fitness-sharp', 'body-sharp', 'accessibility-sharp',
+    'skull', 'skull-outline', 'skull-sharp', 'cellular', 'cellular-outline',
+    'cellular-sharp', 'battery-dead', 'battery-dead-outline', 'battery-dead-sharp',
+    'battery-half', 'battery-half-outline', 'battery-half-sharp',
+    'battery-full', 'battery-full-outline', 'battery-full-sharp',
+    'battery-charging', 'battery-charging-outline', 'battery-charging-sharp',
+    'pulse', 'heart-circle', 'heart-half', 'heart-dislike',
+
+    // Nature & Weather (70+)
+    'leaf', 'flower', 'rose', 'sparkles', 'star',
+    'star-half', 'star-outline', 'sunny', 'sunny-outline', 'sunny-sharp',
+    'moon', 'moon-outline', 'moon-sharp', 'cloudy', 'cloudy-outline',
+    'cloudy-sharp', 'cloudy-night', 'cloudy-night-outline', 'cloudy-night-sharp',
+    'rainy', 'rainy-outline', 'rainy-sharp', 'snow', 'snow-outline',
+    'snow-sharp', 'partly-sunny', 'partly-sunny-outline', 'partly-sunny-sharp',
+    'thunderstorm', 'thunderstorm-outline', 'thunderstorm-sharp',
+    'flash', 'flash-outline', 'flash-sharp', 'flash-off', 'flash-off-outline',
+    'flash-off-sharp', 'umbrella', 'umbrella-outline', 'umbrella-sharp',
+    'water', 'water-outline', 'water-sharp', 'flame', 'flame-outline',
+    'flame-sharp', 'bonfire', 'bonfire-outline', 'bonfire-sharp',
+    'leaf-outline', 'leaf-sharp', 'flower-outline', 'flower-sharp',
+    'rose-outline', 'rose-sharp', 'sparkles-outline', 'sparkles-sharp',
+    'star-sharp', 'star-half-outline', 'star-half-sharp',
+    'planet', 'planet-outline', 'planet-sharp', 'earth', 'earth-outline',
+    'earth-sharp', 'globe', 'globe-outline', 'globe-sharp',
+
+    // Awards & Achievements (40+)
+    'trophy', 'trophy-outline', 'trophy-sharp', 'medal', 'medal-outline',
+    'medal-sharp', 'ribbon', 'ribbon-outline', 'ribbon-sharp',
+    'shield', 'shield-outline', 'shield-sharp', 'shield-checkmark',
+    'shield-checkmark-outline', 'shield-checkmark-sharp', 'shield-half',
+    'shield-half-outline', 'shield-half-sharp', 'star', 'star-outline',
+    'star-sharp', 'star-half', 'star-half-outline', 'star-half-sharp',
+    'sparkles', 'sparkles-outline', 'sparkles-sharp', 'diamond',
+    'diamond-outline', 'diamond-sharp', 'gift', 'gift-outline',
+    'gift-sharp', 'podium', 'podium-outline', 'podium-sharp',
+    'flag', 'flag-outline', 'flag-sharp', 'bookmark', 'bookmark-outline',
+    'bookmark-sharp',
+
+    // Time & Calendar (50+)
+
+
+    // Charts & Analytics (50+)
+
+
+    // Shopping & Commerce (60+)
+
+
+    // Design & Creative (60+)
+
+
+    // Media & Music (50+)
+
+
+    // Communication (70+)
+
+];
+
+    // Available colors
+    const availableColors = [
+        '#DC2626', '#059669', '#7C3AED', '#0891B2', '#EA580C',
+        '#CA8A04', '#16A34A', '#2563EB', '#9333EA', '#DB2777',
+        '#0D9488', '#4F46E5', '#EC4899', '#F59E0B', '#10B981',
+        '#EF4444', '#F97316', '#84CC16', '#06B6D4', '#8B5CF6'
+    ];

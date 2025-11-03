@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsHub - تفاصيل الإعلان</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body[dir="rtl"] {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body[dir="ltr"] {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .breaking-news-ticker {
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .language-switcher {
+            transition: all 0.3s ease;
+        }
+
+        .ad-gallery img {
+            transition: transform 0.3s ease;
+        }
+
+        .ad-gallery img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100" dir="rtl">
+    <!-- الهيدر -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- الشريط العلوي -->
+            <div class="flex flex-col md:flex-row justify-between items-center py-3 border-b border-gray-200">
+                <!-- الشعار وتاريخ اليوم -->
+                <div class="flex items-center mb-2 md:mb-0">
+                    <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-xl">N</div>
+                    <h1 class="mr-2 text-xl md:text-2xl font-bold text-gray-800">NewsHub</h1>
+                    <span class="text-gray-500 text-sm hidden md:block" id="current-date"></span>
+                </div>
+
+                <!-- شريط البحث وتبديل اللغة -->
+                <div class="flex items-center space-x-4 space-x-reverse w-full md:w-auto">
+                    <!-- تبديل اللغة -->
+                    <div class="flex items-center bg-gray-100 rounded-full p-1 language-switcher" id="language-switcher">
+                        <button class="px-3 py-1 rounded-full bg-white shadow text-sm font-medium transition-all duration-300" id="ar-btn">العربية</button>
+                        <button class="px-3 py-1 rounded-full text-gray-600 text-sm font-medium transition-all duration-300" id="en-btn">English</button>
+                    </div>
+
+                    <!-- شريط البحث -->
+                    <div class="relative flex-grow md:w-48">
+                        <input type="text" placeholder="ابحث في الإعلانات..." class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+                        <button class="absolute left-3 top-2 text-gray-500">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- القائمة الرئيسية -->
+            <nav class="py-3">
+                <ul class="flex flex-wrap justify-center md:justify-between space-x-6 space-x-reverse text-sm md:text-base">
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الإعلانات" data-en="Ads">الإعلانات</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="العقارات" data-en="Real Estate">العقارات</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="السيارات" data-en="Cars">السيارات</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الأجهزة" data-en="Electronics">الأجهزة</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الوظائف" data-en="Jobs">الوظائف</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الخدمات" data-en="Services">الخدمات</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="المزيد" data-en="More">المزيد</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- العروض الخاصة -->
+    <div class="bg-blue-600 text-white py-2 overflow-hidden">
+        <div class="container mx-auto px-4 flex items-center">
+            <span class="bg-blue-800 px-3 py-1 rounded text-sm font-bold ml-4" data-ar="عرض خاص" data-en="Special Offer">عرض خاص</span>
+            <div class="flex-1 overflow-hidden">
+                <div class="breaking-news-ticker whitespace-nowrap">
+                    <span data-ar="خصم 20% على جميع الإعلانات المميزة لهذا الأسبوع فقط!" data-en="20% discount on all featured ads for this week only!">خصم 20% على جميع الإعلانات المميزة لهذا الأسبوع فقط!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- تفاصيل الإعلان -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <!-- تفاصيل الإعلان الرئيسية -->
+            <div class="lg:col-span-2">
+                <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="relative">
+                        <!-- معرض الصور -->
+                        <div class="relative h-80 md:h-96 bg-gray-200">
+                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1073&q=80" alt="تفاصيل الإعلان" class="w-full h-full object-cover">
+                            <div class="absolute bottom-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                <span data-ar="إعلان مميز" data-en="Featured Ad">إعلان مميز</span>
+                            </div>
+                            <button class="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                                <i class="far fa-heart text-xl text-gray-600"></i>
+                            </button>
+                        </div>
+
+                        <!-- معلومات الإعلان -->
+                        <div class="p-6">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                                <div>
+                                    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2" data-ar="شقة فاخرة للبيع في حي الرمال - 3 غرف نوم" data-en="Luxury Apartment for Sale in Al-Rimal District - 3 Bedrooms">شقة فاخرة للبيع في حي الرمال - 3 غرف نوم</h1>
+                                    <div class="flex items-center text-gray-600 mb-4">
+                                        <i class="fas fa-map-marker-alt ml-1"></i>
+                                        <span data-ar="الرياض، حي الرمال" data-en="Riyadh, Al-Rimal District">الرياض، حي الرمال</span>
+                                        <span class="mx-2">•</span>
+                                        <i class="far fa-clock ml-1"></i>
+                                        <span data-ar="منذ 3 أيام" data-en="3 days ago">منذ 3 أيام</span>
+                                        <span class="mx-2">•</span>
+                                        <i class="far fa-eye ml-1"></i>
+                                        <span data-ar="245 مشاهدة" data-en="245 views">245 مشاهدة</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 md:mt-0">
+                                    <div class="text-2xl font-bold text-red-600 mb-1">1,250,000 <span data-ar="ريال" data-en">ريال</span></div>
+                                    <div class="text-sm text-gray-500" data-ar="سعر قابل للتفاوض" data-en="Negotiable Price">سعر قابل للتفاوض</div>
+                                </div>
+                            </div>
+
+                            <!-- وصف الإعلان -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-bold mb-3 border-b pb-2" data-ar="وصف الإعلان" data-en="Ad Description">وصف الإعلان</h2>
+                                <p class="text-gray-700 leading-relaxed" data-ar="شقة فاخرة للبيع في حي الرمال الراقي، مساحة 180 متر مربع، تتكون من 3 غرف نوم ماستر، 3 دورات مياه، صالة كبيرة، مطبخ مجهز بالكامل، غرفة غسيل منفصلة. الشقة في الطابق الثامن مع إطلالة رائعة، وتشمل خدمات الصيانة والنظافة. الموقع ممتاز بالقرب من المراكز التجارية والمدارس والخدمات الأساسية. الشقة جاهزة للسكن الفوري." data-en="Luxury apartment for sale in the upscale Al-Rimal district, 180 square meters, consisting of 3 master bedrooms, 3 bathrooms, large living room, fully equipped kitchen, separate laundry room. The apartment is on the 8th floor with a stunning view, and includes maintenance and cleaning services. Excellent location near shopping centers, schools, and essential services. The apartment is ready for immediate occupancy.">شقة فاخرة للبيع في حي الرمال الراقي، مساحة 180 متر مربع، تتكون من 3 غرف نوم ماستر، 3 دورات مياه، صالة كبيرة، مطبخ مجهز بالكامل، غرفة غسيل منفصلة. الشقة في الطابق الثامن مع إطلالة رائعة، وتشمل خدمات الصيانة والنظافة. الموقع ممتاز بالقرب من المراكز التجارية والمدارس والخدمات الأساسية. الشقة جاهزة للسكن الفوري.</p>
+                            </div>
+
+                            <!-- تفاصيل العقار -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-bold mb-3 border-b pb-2" data-ar="تفاصيل العقار" data-en="Property Details">تفاصيل العقار</h2>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                                        <i class="fas fa-ruler-combined text-blue-600 text-xl mb-2"></i>
+                                        <div class="font-bold">180 م²</div>
+                                        <div class="text-sm text-gray-600" data-ar="المساحة" data-en="Area">المساحة</div>
+                                    </div>
+                                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                                        <i class="fas fa-bed text-blue-600 text-xl mb-2"></i>
+                                        <div class="font-bold">3</div>
+                                        <div class="text-sm text-gray-600" data-ar="غرف نوم" data-en="Bedrooms">غرف نوم</div>
+                                    </div>
+                                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                                        <i class="fas fa-bath text-blue-600 text-xl mb-2"></i>
+                                        <div class="font-bold">3</div>
+                                        <div class="text-sm text-gray-600" data-ar="دورات مياه" data-en="Bathrooms">دورات مياه</div>
+                                    </div>
+                                    <div class="bg-gray-50 p-3 rounded-lg text-center">
+                                        <i class="fas fa-car text-blue-600 text-xl mb-2"></i>
+                                        <div class="font-bold">2</div>
+                                        <div class="text-sm text-gray-600" data-ar="مواقف سيارات" data-en="Parking">مواقف سيارات</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- المرافق -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-bold mb-3 border-b pb-2" data-ar="المرافق" data-en="Facilities">المرافق</h2>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check text-green-500 ml-2"></i>
+                                        <span data-ar="مسبح" data-en="Swimming Pool">مسبح</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check text-green-500 ml-2"></i>
+                                        <span data-ar="نادي صحي" data-en="Gym">نادي صحي</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check text-green-500 ml-2"></i>
+                                        <span data-ar="حديقة" data-en="Garden">حديقة</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check text-green-500 ml-2"></i>
+                                        <span data-ar="أمن 24/7" data-en="24/7 Security">أمن 24/7</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check text-green-500 ml-2"></i>
+                                        <span data-ar="مواقف زوار" data-en="Visitor Parking">مواقف زوار</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-check text-green-500 ml-2"></i>
+                                        <span data-ar="مصاعد" data-en="Elevators">مصاعد</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- معرض الصور الإضافية -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-bold mb-3 border-b pb-2" data-ar="معرض الصور" data-en="Photo Gallery">معرض الصور</h2>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 ad-gallery">
+                                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=958&q=80" alt="صورة 1" class="w-full h-32 object-cover rounded-lg cursor-pointer">
+                                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="صورة 2" class="w-full h-32 object-cover rounded-lg cursor-pointer">
+                                    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="صورة 3" class="w-full h-32 object-cover rounded-lg cursor-pointer">
+                                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" alt="صورة 4" class="w-full h-32 object-cover rounded-lg cursor-pointer">
+                                </div>
+                            </div>
+
+                            <!-- الموقع -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-bold mb-3 border-b pb-2" data-ar="الموقع" data-en="Location">الموقع</h2>
+                                <div class="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+                                    <div class="text-center text-gray-600">
+                                        <i class="fas fa-map-marked-alt text-4xl mb-2"></i>
+                                        <p data-ar="خريطة تفاعلية للموقع" data-en="Interactive Location Map">خريطة تفاعلية للموقع</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- معلومات المعلن والإعلانات المشابهة -->
+            <div class="space-y-6">
+                <!-- معلومات المعلن -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold mb-4" data-ar="معلومات المعلن" data-en="Advertiser Info">معلومات المعلن</h3>
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-xl font-bold">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="mr-4">
+                            <h4 class="font-bold" data-ar="أحمد محمد" data-en="Ahmed Mohammed">أحمد محمد</h4>
+                            <p class="text-gray-600 text-sm" data-ar="عضو منذ 2022" data-en="Member since 2022">عضو منذ 2022</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 mb-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                            <span class="text-sm" data-ar="هوية موثقة" data-en="Verified Identity">هوية موثقة</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-yellow-500 ml-2"></i>
+                            <span class="text-sm" data-ar="4.8 تقييم" data-en="4.8 Rating">4.8 تقييم</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-ad text-blue-500 ml-2"></i>
+                            <span class="text-sm" data-ar="15 إعلان نشط" data-en="15 Active Ads">15 إعلان نشط</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-medium transition-colors flex items-center justify-center">
+                        <i class="fas fa-phone ml-2"></i>
+                        <span data-ar="اتصل بالمعلن" data-en="Contact Advertiser">اتصل بالمعلن</span>
+                    </button>
+                    <button class="w-full border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 rounded-lg font-medium transition-colors mt-2 flex items-center justify-center">
+                        <i class="far fa-envelope ml-2"></i>
+                        <span data-ar="إرسال رسالة" data-en="Send Message">إرسال رسالة</span>
+                    </button>
+                </div>
+
+                <!-- إعلانات مشابهة -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold mb-4" data-ar="إعلانات مشابهة" data-en="Similar Ads">إعلانات مشابهة</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex space-x-4 space-x-reverse">
+                            <img src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80" alt="إعلان مشابه 1" class="w-20 h-20 object-cover rounded">
+                            <div>
+                                <h4 class="font-bold text-sm" data-ar="شقة دوبلكس للبيع - حي العليا" data-en="Duplex Apartment for Sale - Al Olaya District">شقة دوبلكس للبيع - حي العليا</h4>
+                                <p class="text-red-600 font-bold text-sm mt-1">950,000 <span data-ar="ريال" data-en="SAR">ريال</span></p>
+                                <div class="flex items-center text-gray-500 text-xs mt-1">
+                                    <i class="fas fa-map-marker-alt ml-1"></i>
+                                    <span data-ar="الرياض" data-en="Riyadh">الرياض</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4 space-x-reverse">
+                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="إعلان مشابه 2" class="w-20 h-20 object-cover rounded">
+                            <div>
+                                <h4 class="font-bold text-sm" data-ar="فيلا فاخرة للإيجار - حي النخيل" data-en="Luxury Villa for Rent - Al Nakheel District">فيلا فاخرة للإيجار - حي النخيل</h4>
+                                <p class="text-red-600 font-bold text-sm mt-1">120,000 <span data-ar="ريال/سنوي" data-en="SAR/Year">ريال/سنوي</span></p>
+                                <div class="flex items-center text-gray-500 text-xs mt-1">
+                                    <i class="fas fa-map-marker-alt ml-1"></i>
+                                    <span data-ar="الرياض" data-en="Riyadh">الرياض</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4 space-x-reverse">
+                            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1153&q=80" alt="إعلان مشابه 3" class="w-20 h-20 object-cover rounded">
+                            <div>
+                                <h4 class="font-bold text-sm" data-ar="شقة جديدة للأفراد - حي الغدير" data-en="New Apartment for Individuals - Al Ghadir District">شقة جديدة للأفراد - حي الغدير</h4>
+                                <p class="text-red-600 font-bold text-sm mt-1">750,000 <span data-ar="ريال" data-en="SAR">ريال</span></p>
+                                <div class="flex items-center text-gray-500 text-xs mt-1">
+                                    <i class="fas fa-map-marker-alt ml-1"></i>
+                                    <span data-ar="الرياض" data-en="Riyadh">الرياض</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 rounded-lg font-medium transition-colors mt-4 flex items-center justify-center text-sm">
+                        <span data-ar="عرض المزيد" data-en="View More">عرض المزيد</span>
+                        <i class="fas fa-arrow-left mr-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- التذييل -->
+    <footer class="bg-gray-800 text-white pt-10 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- معلومات الموقع -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="عن الموقع" data-en="About Us">عن الموقع</h3>
+                    <p class="text-gray-300 text-sm mb-4" data-ar="موقع إعلانات متخصص يقدم منصة شاملة للإعلانات المبوبة في مختلف المجالات بسهولة وأمان." data-en="A specialized advertising website that provides a comprehensive platform for classified ads in various fields with ease and security.">موقع إعلانات متخصص يقدم منصة شاملة للإعلانات المبوبة في مختلف المجالات بسهولة وأمان.</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- روابط سريعة -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="عن الموقع" data-en="About Us">عن الموقع</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="اتصل بنا" data-en="Contact Us">اتصل بنا</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="سياسة الخصوصية" data-en="Privacy Policy">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="شروط الاستخدام" data-en="Terms of Service">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+
+                <!-- الأقسام -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="الأقسام" data-en="Sections">الأقسام</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="العقارات" data-en="Real Estate">العقارات</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="السيارات" data-en="Cars">السيارات</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الأجهزة" data-en="Electronics">الأجهزة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الوظائف" data-en="Jobs">الوظائف</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الخدمات" data-en="Services">الخدمات</a></li>
+                    </ul>
+                </div>
+
+                <!-- النشرة البريدية -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="النشرة البريدية" data-en="Newsletter">النشرة البريدية</h3>
+                    <p class="text-gray-300 text-sm mb-4" data-ar="اشترك في نشرتنا البريدية لتلقي آخر العروض والإعلانات المميزة مباشرة إلى بريدك الإلكتروني." data-en="Subscribe to our newsletter to receive the latest offers and featured ads directly to your email.">اشترك في نشرتنا البريدية لتلقي آخر العروض والإعلانات المميزة مباشرة إلى بريدك الإلكتروني.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="px-4 py-2 w-full rounded-r-lg focus:outline-none text-gray-800 text-sm" data-ar-placeholder="بريدك الإلكتروني" data-en-placeholder="Your email">
+                        <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-l-lg text-sm font-medium transition-colors" data-ar="اشتراك" data-en="Subscribe">اشتراك</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- حقوق النشر -->
+            <div class="pt-6 border-t border-gray-700 text-center text-sm text-gray-400">
+                <p data-ar="جميع الحقوق محفوظة © 2023 موقع NewsHub" data-en="All rights reserved © 2023 NewsHub">جميع الحقوق محفوظة © 2023 موقع NewsHub</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تبديل اللغة
+        document.getElementById('ar-btn').addEventListener('click', function() {
+            if (!this.classList.contains('bg-white')) {
+                switchLanguage('ar');
+            }
+        });
+
+        document.getElementById('en-btn').addEventListener('click', function() {
+            if (!this.classList.contains('bg-white')) {
+                switchLanguage('en');
+            }
+        });
+
+        function switchLanguage(lang) {
+            const body = document.body;
+            const arBtn = document.getElementById('ar-btn');
+            const enBtn = document.getElementById('en-btn');
+
+            if (lang === 'ar') {
+                body.setAttribute('dir', 'rtl');
+                arBtn.classList.add('bg-white', 'shadow');
+                enBtn.classList.remove('bg-white', 'shadow');
+                arBtn.classList.remove('text-gray-600');
+                enBtn.classList.add('text-gray-600');
+            } else {
+                body.setAttribute('dir', 'ltr');
+                enBtn.classList.add('bg-white', 'shadow');
+                arBtn.classList.remove('bg-white', 'shadow');
+                enBtn.classList.remove('text-gray-600');
+                arBtn.classList.add('text-gray-600');
+            }
+
+            // تحديث النصوص
+            document.querySelectorAll('[data-ar]').forEach(element => {
+                if (lang === 'ar') {
+                    element.textContent = element.getAttribute('data-ar');
+
+                    // تحديد النصوص البديلة
+                    if (element.hasAttribute('data-ar-placeholder')) {
+                        element.setAttribute('placeholder', element.getAttribute('data-ar-placeholder'));
+                    }
+                } else {
+                    element.textContent = element.getAttribute('data-en');
+
+                    // تحديد النصوص البديلة
+                    if (element.hasAttribute('data-en-placeholder')) {
+                        element.setAttribute('placeholder', element.getAttribute('data-en-placeholder'));
+                    }
+                }
+            });
+        }
+
+        // عرض التاريخ الحالي
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('ar-SA', options);
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+
+            // تهيئة شريط الأخبار العاجلة
+            const ticker = document.querySelector('.breaking-news-ticker');
+            const tickerWidth = ticker.offsetWidth;
+            const containerWidth = ticker.parentElement.offsetWidth;
+
+            if (tickerWidth > containerWidth) {
+                ticker.style.animationDuration = (tickerWidth / 50) + 's';
+            }
+        });
+    </script>
+</body>
+</html>

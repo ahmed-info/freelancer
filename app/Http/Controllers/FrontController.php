@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Field;
 class FrontController extends Controller
 {
     public function home()
     {
-        $categories = Category::latest()->get();
-        return view('welcome', ['categories' => $categories]);
+        $fields = Field::latest()->get();
+        return view('welcome', ['fields' => $fields]);
     }
 }

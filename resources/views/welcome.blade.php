@@ -1,7 +1,6 @@
-@extends('main.layout.main')
-
-@section('content')
-  <!-- قسم الهيرو -->
+@extends('main.layout.layout')
+@section('main_content')
+ <!-- قسم الهيرو -->
     <section class="gradient-bg text-white py-16 md:py-24 relative overflow-hidden">
         <div class="floating-shape"></div>
         <div class="floating-shape"></div>
@@ -212,16 +211,34 @@
                 <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">اكتشف مجموعة واسعة من المجالات التي يمكنك العمل فيها كمستقل</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach ($categories as $category)
-                    <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 service-icon">
-                            <i class="fas fa-laptop-code text-primary text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $category->name }}</h3>
-                        <p class="text-gray-600">{{ $category->description }}</p>
+                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 service-icon">
+                        <i class="fas fa-laptop-code text-primary text-xl"></i>
                     </div>
-                @endforeach
-
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">برمجة وتطوير</h3>
+                    <p class="text-gray-600">تطوير المواقع، التطبيقات، البرمجيات والتقنيات المختلفة</p>
+                </div>
+                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.2s">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 service-icon">
+                        <i class="fas fa-pen-nib text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">تصميم وأعمال فنية</h3>
+                    <p class="text-gray-600">تصميم الجرافيك، UI/UX، الرسوم المتحركة والفنون الرقمية</p>
+                </div>
+                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.3s">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 service-icon">
+                        <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">تسويق إلكتروني</h3>
+                    <p class="text-gray-600">التسويق عبر وسائل التواصل، تحسين محركات البحث وتحليل البيانات</p>
+                </div>
+                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.4s">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4 service-icon">
+                        <i class="fas fa-pencil-alt text-yellow-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">كتابة وترجمة</h3>
+                    <p class="text-gray-600">كتابة المحتوى، التدقيق اللغوي، الترجمة والنسخ</p>
+                </div>
             </div>
             <div class="text-center mt-10">
                 <a href="#" class="text-primary hover:text-secondary font-bold inline-flex items-center animate-pulse">

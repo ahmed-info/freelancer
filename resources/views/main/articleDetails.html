@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المقال - NewsHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body[dir="rtl"] {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body[dir="ltr"] {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .language-switcher {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100" dir="rtl">
+    <!-- الهيدر -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- الشريط العلوي -->
+            <div class="flex flex-col md:flex-row justify-between items-center py-3 border-b border-gray-200">
+                <!-- الشعار وتاريخ اليوم -->
+                <div class="flex items-center mb-2 md:mb-0">
+                    <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-xl">N</div>
+                    <h1 class="mr-2 text-xl md:text-2xl font-bold text-gray-800">NewsHub</h1>
+                    <span class="text-gray-500 text-sm hidden md:block mr-3" id="current-date"></span>
+                </div>
+
+                <!-- شريط البحث وتبديل اللغة -->
+                <div class="flex items-center space-x-4 space-x-reverse w-full md:w-auto">
+                    <!-- تبديل اللغة -->
+                    <div class="flex items-center bg-gray-100 rounded-full p-1 language-switcher" id="language-switcher">
+                        <button class="px-3 py-1 rounded-full bg-white shadow text-sm font-medium transition-all duration-300" id="ar-btn">العربية</button>
+                        <button class="px-3 py-1 rounded-full text-gray-600 text-sm font-medium transition-all duration-300" id="en-btn">English</button>
+                    </div>
+
+                    <!-- شريط البحث -->
+                    <div class="relative flex-grow md:w-48">
+                        <input type="text" placeholder="ابحث في الأخبار..." class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+                        <button class="absolute left-3 top-2 text-gray-500">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- القائمة الرئيسية -->
+            <nav class="py-3">
+                <ul class="flex flex-wrap justify-center md:justify-between space-x-6 space-x-reverse text-sm md:text-base">
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="السياسة" data-en="Politics">السياسة</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الاقتصاد" data-en="Economy">الاقتصاد</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الرياضة" data-en="Sports">الرياضة</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="التكنولوجيا" data-en="Technology">التكنولوجيا</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الصحة" data-en="Health">الصحة</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الفنون" data-en="Arts">الفنون</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="المزيد" data-en="More">المزيد</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- محتوى المقال الرئيسي -->
+            <div class="lg:col-span-2">
+                <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <!-- صورة المقال الرئيسية -->
+                    <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Article Image" class="w-full h-64 md:h-96 object-cover">
+
+                    <div class="p-6 md:p-8">
+                        <!-- التصنيف والتاريخ -->
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-red-600 text-white px-3 py-1 rounded text-sm font-medium" data-ar="سياسة" data-en="Politics">سياسة</span>
+                            <div class="flex items-center text-gray-500 text-sm">
+                                <i class="far fa-clock ml-2"></i>
+                                <span data-ar="منذ 3 ساعات" data-en="3 hours ago">منذ 3 ساعات</span>
+                                <span class="mx-2">•</span>
+                                <i class="far fa-eye ml-2"></i>
+                                <span data-ar="1,254 مشاهدة" data-en="1,254 views">1,254 مشاهدة</span>
+                            </div>
+                        </div>
+
+                        <!-- عنوان المقال -->
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4" data-ar="قادة العالم يجتمعون في القمة السنوية لمناقشة التحديات العالمية" data-en="World leaders gather at annual summit to discuss global challenges">قادة العالم يجتمعون في القمة السنوية لمناقشة التحديات العالمية</h1>
+
+                        <!-- الكاتب -->
+                        <div class="flex items-center pb-6 mb-6 border-b border-gray-200">
+                            <img src="https://i.pravatar.cc/150?img=33" alt="Author" class="w-12 h-12 rounded-full ml-3">
+                            <div>
+                                <p class="font-semibold text-gray-900" data-ar="أحمد محمود" data-en="Ahmed Mahmoud">أحمد محمود</p>
+                                <p class="text-sm text-gray-500" data-ar="محرر سياسي" data-en="Political Editor">محرر سياسي</p>
+                            </div>
+                        </div>
+
+                        <!-- مقدمة المقال -->
+                        <div class="text-lg text-gray-700 mb-6 p-4 bg-gray-50 rounded-lg border-r-4 border-red-600">
+                            <p data-ar="في خطوة تاريخية، يجتمع قادة من أكثر من 50 دولة في القمة العالمية السنوية لمناقشة القضايا الملحة مثل تغير المناخ، الأمن العالمي، والتعاون الاقتصادي الدولي." data-en="In a historic move, leaders from more than 50 countries are gathering at the annual global summit to discuss pressing issues such as climate change, global security, and international economic cooperation.">في خطوة تاريخية، يجتمع قادة من أكثر من 50 دولة في القمة العالمية السنوية لمناقشة القضايا الملحة مثل تغير المناخ، الأمن العالمي، والتعاون الاقتصادي الدولي.</p>
+                        </div>
+
+                        <!-- محتوى المقال -->
+                        <div class="article-content text-gray-700 text-base leading-relaxed">
+                            <p data-ar="انطلقت اليوم فعاليات القمة العالمية السنوية في العاصمة الدولية، بمشاركة واسعة من قادة العالم وصناع القرار من مختلف القارات. وتأتي هذه القمة في وقت حرج يشهد فيه العالم تحديات متعددة تتطلب تعاوناً دولياً منسقاً." data-en="The annual global summit kicked off today in the international capital, with wide participation from world leaders and decision-makers from various continents. This summit comes at a critical time when the world is facing multiple challenges that require coordinated international cooperation.">انطلقت اليوم فعاليات القمة العالمية السنوية في العاصمة الدولية، بمشاركة واسعة من قادة العالم وصناع القرار من مختلف القارات. وتأتي هذه القمة في وقت حرج يشهد فيه العالم تحديات متعددة تتطلب تعاوناً دولياً منسقاً.</p>
+
+                            <p data-ar="وأكد المتحدثون في الجلسة الافتتاحية على أهمية التعاون الدولي في مواجهة التحديات المشتركة، مشيرين إلى أن القضايا البيئية والأمنية لا تعترف بالحدود الجغرافية وتتطلب حلولاً عالمية منسقة." data-en="Speakers at the opening session emphasized the importance of international cooperation in facing common challenges, noting that environmental and security issues do not recognize geographical borders and require coordinated global solutions.">وأكد المتحدثون في الجلسة الافتتاحية على أهمية التعاون الدولي في مواجهة التحديات المشتركة، مشيرين إلى أن القضايا البيئية والأمنية لا تعترف بالحدود الجغرافية وتتطلب حلولاً عالمية منسقة.</p>
+
+                            <h2 data-ar="محاور القمة الرئيسية" data-en="Main Summit Themes">محاور القمة الرئيسية</h2>
+
+                            <p data-ar="تتناول القمة عدة محاور رئيسية في مقدمتها مكافحة التغير المناخي، حيث من المتوقع أن تشهد القمة إعلان التزامات جديدة من الدول المشاركة للحد من الانبعاثات الكربونية وتعزيز استخدام الطاقة النظيفة." data-en="The summit addresses several main themes, foremost among them combating climate change, where new commitments from participating countries are expected to be announced to reduce carbon emissions and promote the use of clean energy.">تتناول القمة عدة محاور رئيسية في مقدمتها مكافحة التغير المناخي، حيث من المتوقع أن تشهد القمة إعلان التزامات جديدة من الدول المشاركة للحد من الانبعاثات الكربونية وتعزيز استخدام الطاقة النظيفة.</p>
+
+                            <p data-ar="كما تركز القمة على قضايا الأمن السيبراني والتعاون في مكافحة الجرائم الإلكترونية، في ظل تزايد التهديدات الرقمية التي تواجه الدول والمؤسسات في العصر الحديث." data-en="The summit also focuses on cybersecurity issues and cooperation in combating cybercrime, amid increasing digital threats facing countries and institutions in the modern era.">كما تركز القمة على قضايا الأمن السيبراني والتعاون في مكافحة الجرائم الإلكترونية، في ظل تزايد التهديدات الرقمية التي تواجه الدول والمؤسسات في العصر الحديث.</p>
+
+                            <h2 data-ar="التعاون الاقتصادي" data-en="Economic Cooperation">التعاون الاقتصادي</h2>
+
+                            <p data-ar="يشهد المحور الاقتصادي للقمة نقاشات موسعة حول تعزيز التجارة الدولية وإزالة العوائق التجارية، بالإضافة إلى بحث آليات دعم الاقتصادات الناشئة وتعزيز الاستثمارات المشتركة." data-en="The economic track of the summit witnesses extensive discussions on promoting international trade and removing trade barriers, in addition to exploring mechanisms to support emerging economies and enhance joint investments.">يشهد المحور الاقتصادي للقمة نقاشات موسعة حول تعزيز التجارة الدولية وإزالة العوائق التجارية، بالإضافة إلى بحث آليات دعم الاقتصادات الناشئة وتعزيز الاستثمارات المشتركة.</p>
+
+                            <p data-ar="ومن المتوقع أن تخرج القمة ببيان ختامي يتضمن خارطة طريق للتعاون الدولي خلال العام المقبل، مع التأكيد على أهمية الحوار المستمر والعمل المشترك لتحقيق التنمية المستدامة والازدهار العالمي." data-en="The summit is expected to conclude with a final statement that includes a roadmap for international cooperation during the coming year, emphasizing the importance of continuous dialogue and joint action to achieve sustainable development and global prosperity.">ومن المتوقع أن تخرج القمة ببيان ختامي يتضمن خارطة طريق للتعاون الدولي خلال العام المقبل، مع التأكيد على أهمية الحوار المستمر والعمل المشترك لتحقيق التنمية المستدامة والازدهار العالمي.</p>
+                        </div>
+
+                        <!-- الوسوم -->
+                        <div class="mt-8 pt-6 border-t border-gray-200">
+                            <h3 class="text-sm font-semibold text-gray-700 mb-3" data-ar="الوسوم:" data-en="Tags:">الوسوم:</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm" data-ar="سياسة" data-en="Politics">سياسة</span>
+                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm" data-ar="قمة عالمية" data-en="Global Summit">قمة عالمية</span>
+                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm" data-ar="تغير المناخ" data-en="Climate Change">تغير المناخ</span>
+                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm" data-ar="تعاون دولي" data-en="International Cooperation">تعاون دولي</span>
+                            </div>
+                        </div>
+
+                        <!-- المشاركة -->
+                        <div class="mt-6 pt-6 border-t border-gray-200">
+                            <h3 class="text-sm font-semibold text-gray-700 mb-3" data-ar="شارك المقال:" data-en="Share Article:">شارك المقال:</h3>
+                            <div class="flex space-x-3 space-x-reverse">
+                                <button class="share-btn w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-all">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+                                <button class="share-btn w-10 h-10 bg-sky-400 text-white rounded-full flex items-center justify-center hover:bg-sky-500 transition-all">
+                                    <i class="fab fa-twitter"></i>
+                                </button>
+                                <button class="share-btn w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition-all">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
+                                <button class="share-btn w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-all">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </button>
+                                <button class="share-btn w-10 h-10 bg-gray-600 text-white rounded-full flex items-center justify-center hover:bg-gray-700 transition-all">
+                                    <i class="fas fa-link"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- قسم التعليقات -->
+                <div class="bg-white rounded-lg shadow-md p-6 md:p-8 mt-8">
+                    <h2 class="text-xl font-bold mb-6" data-ar="التعليقات (12)" data-en="Comments (12)">التعليقات (12)</h2>
+
+                    <!-- نموذج إضافة تعليق -->
+                    <div class="mb-8 pb-8 border-b border-gray-200">
+                        <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 resize-none" rows="4" placeholder="اكتب تعليقك هنا..."></textarea>
+                        <button class="mt-3 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors font-medium" data-ar="نشر التعليق" data-en="Post Comment">نشر التعليق</button>
+                    </div>
+
+                    <!-- التعليقات -->
+                    <div class="space-y-6">
+                        <!-- تعليق 1 -->
+                        <div class="flex space-x-4 space-x-reverse">
+                            <img src="https://i.pravatar.cc/150?img=12" alt="User" class="w-10 h-10 rounded-full">
+                            <div class="flex-1">
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-semibold text-gray-900" data-ar="سارة أحمد" data-en="Sara Ahmed">سارة أحمد</h4>
+                                        <span class="text-xs text-gray-500" data-ar="منذ ساعتين" data-en="2 hours ago">منذ ساعتين</span>
+                                    </div>
+                                    <p class="text-gray-700 text-sm" data-ar="مقال رائع وشامل، يعطي نظرة واضحة عن أهمية التعاون الدولي في مواجهة التحديات العالمية." data-en="Excellent and comprehensive article, providing a clear view of the importance of international cooperation in facing global challenges.">مقال رائع وشامل، يعطي نظرة واضحة عن أهمية التعاون الدولي في مواجهة التحديات العالمية.</p>
+                                </div>
+                                <div class="flex items-center mt-2 space-x-4 space-x-reverse text-sm text-gray-500">
+                                    <button class="hover:text-red-600 transition-colors"><i class="far fa-thumbs-up ml-1"></i><span data-ar="إعجاب" data-en="Like">إعجاب</span></button>
+                                    <button class="hover:text-red-600 transition-colors" data-ar="رد" data-en="Reply">رد</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- تعليق 2 -->
+                        <div class="flex space-x-4 space-x-reverse">
+                            <img src="https://i.pravatar.cc/150?img=28" alt="User" class="w-10 h-10 rounded-full">
+                            <div class="flex-1">
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-semibold text-gray-900" data-ar="محمد علي" data-en="Mohamed Ali">محمد علي</h4>
+                                        <span class="text-xs text-gray-500" data-ar="منذ 5 ساعات" data-en="5 hours ago">منذ 5 ساعات</span>
+                                    </div>
+                                    <p class="text-gray-700 text-sm" data-ar="نأمل أن تخرج القمة بنتائج إيجابية تصب في مصلحة جميع الشعوب والدول." data-en="We hope the summit produces positive results that benefit all peoples and nations.">نأمل أن تخرج القمة بنتائج إيجابية تصب في مصلحة جميع الشعوب والدول.</p>
+                                </div>
+                                <div class="flex items-center mt-2 space-x-4 space-x-reverse text-sm text-gray-500">
+                                    <button class="hover:text-red-600 transition-colors"><i class="far fa-thumbs-up ml-1"></i><span data-ar="إعجاب" data-en="Like">إعجاب</span></button>
+                                    <button class="hover:text-red-600 transition-colors" data-ar="رد" data-en="Reply">رد</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الشريط الجانبي -->
+            <div class="space-y-6">
+                <!-- أخبار ذات صلة -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold border-r-4 border-red-600 pr-2 mb-6" data-ar="أخبار ذات صلة" data-en="Related News">أخبار ذات صلة</h3>
+
+                    <div class="space-y-4">
+                        <div class="pb-4 border-b border-gray-200">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Related News" class="w-full h-32 object-cover rounded mb-3">
+                            <h4 class="font-bold text-sm mb-2 hover:text-red-600 transition-colors cursor-pointer" data-ar="ارتفاع أسعار النفط عالمياً بنسبة 5%" data-en="Global oil prices rise by 5%">ارتفاع أسعار النفط عالمياً بنسبة 5%</h4>
+                            <p class="text-xs text-gray-500" data-ar="منذ ساعة • 543 مشاهدة" data-en="1 hour ago • 543 views">منذ ساعة • 543 مشاهدة</p>
+                        </div>
+
+                        <div class="pb-4 border-b border-gray-200">
+                            <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Related News" class="w-full h-32 object-cover rounded mb-3">
+                            <h4 class="font-bold text-sm mb-2 hover:text-red-600 transition-colors cursor-pointer" data-ar="فوز مفاجئ للفريق المحلي في البطولة" data-en="Surprise win for local team in championship">فوز مفاجئ للفريق المحلي في البطولة</h4>
+                            <p class="text-xs text-gray-500" data-ar="منذ 4 ساعات • 892 مشاهدة" data-en="4 hours ago • 892 views">منذ 4 ساعات • 892 مشاهدة</p>
+                        </div>
+
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Related News" class="w-full h-32 object-cover rounded mb-3">
+                            <h4 class="font-bold text-sm mb-2 hover:text-red-600 transition-colors cursor-pointer" data-ar="إطلاق هاتف ذكي جديد بميزات مبتكرة" data-en="Launch of new smartphone with innovative features">إطلاق هاتف ذكي جديد بميزات مبتكرة</h4>
+                            <p class="text-xs text-gray-500" data-ar="منذ 6 ساعات • 721 مشاهدة" data-en="6 hours ago • 721 views">منذ 6 ساعات • 721 مشاهدة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الأكثر قراءة -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold border-r-4 border-red-600 pr-2 mb-6" data-ar="الأكثر قراءة" data-en="Most Read">الأكثر قراءة</h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3 space-x-reverse pb-4 border-b border-gray-200">
+                            <span class="text-2xl font-bold text-red-600">1</span>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-sm mb-1 hover:text-red-600 transition-colors cursor-pointer" data-ar="دراسة جديدة تكشف فوائد الشاي الأخضر" data-en="New study reveals benefits of green tea">دراسة جديدة تكشف فوائد الشاي الأخضر</h4>
+                                <p class="text-xs text-gray-500" data-ar="2,453 مشاهدة" data-en="2,453 views">2,453 مشاهدة</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3 space-x-reverse pb-4 border-b border-gray-200">
+                            <span class="text-2xl font-bold text-red-600">2</span>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-sm mb-1 hover:text-red-600 transition-colors cursor-pointer" data-ar="جامعات محلية تدخل التصنيف العالمي" data-en="Local universities enter global ranking">جامعات محلية تدخل التصنيف العالمي</h4>
+                                <p class="text-xs text-gray-500" data-ar="1,987 مشاهدة" data-en="1,987 views">1,987 مشاهدة</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3 space-x-reverse pb-4 border-b border-gray-200">
+                            <span class="text-2xl font-bold text-red-600">3</span>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-sm mb-1 hover:text-red-600 transition-colors cursor-pointer" data-ar="مشروع زراعة 10 ملايين شجرة" data-en="Project to plant 10 million trees">مشروع زراعة 10 ملايين شجرة</h4>
+                                <p class="text-xs text-gray-500" data-ar="1,654 مشاهدة" data-en="1,654 views">1,654 مشاهدة</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3 space-x-reverse pb-4 border-b border-gray-200">
+                            <span class="text-2xl font-bold text-red-600">4</span>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-sm mb-1 hover:text-red-600 transition-colors cursor-pointer" data-ar="اكتشاف علمي جديد في مجال الطاقة" data-en="New scientific discovery in energy">اكتشاف علمي جديد في مجال الطاقة</h4>
+                                <p class="text-xs text-gray-500" data-ar="1,421 مشاهدة" data-en="1,421 views">1,421 مشاهدة</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3 space-x-reverse">
+                            <span class="text-2xl font-bold text-red-600">5</span>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-sm mb-1 hover:text-red-600 transition-colors cursor-pointer" data-ar="تطورات جديدة في الذكاء الاصطناعي" data-en="New developments in artificial intelligence">تطورات جديدة في الذكاء الاصطناعي</h4>
+                                <p class="text-xs text-gray-500" data-ar="1,238 مشاهدة" data-en="1,238 views">1,238 مشاهدة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعلان -->
+                <div class="bg-gradient-to-br from-red-500 to-red-700 rounded-lg shadow-md p-6 text-white text-center">
+                    <h3 class="text-xl font-bold mb-2" data-ar="اشترك في نشرتنا البريدية" data-en="Subscribe to Our Newsletter">اشترك في نشرتنا البريدية</h3>
+                    <p class="text-sm mb-4 opacity-90" data-ar="احصل على آخر الأخبار مباشرة في بريدك" data-en="Get latest news directly to your email">احصل على آخر الأخبار مباشرة في بريدك</p>
+                    <input type="email" placeholder="بريدك الإلكتروني" class="w-full px-4 py-2 rounded-lg text-gray-800 mb-3 focus:outline-none">
+                    <button class="w-full bg-white text-red-600 font-bold py-2 rounded-lg hover:bg-gray-100 transition-colors" data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</button>
+                </div>
+
+                <!-- وسوم شائعة -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold border-r-4 border-red-600 pr-2 mb-6" data-ar="وسوم شائعة" data-en="Popular Tags">وسوم شائعة</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="سياسة" data-en="Politics">سياسة</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="اقتصاد" data-en="Economy">اقتصاد</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="تكنولوجيا" data-en="Technology">تكنولوجيا</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="رياضة" data-en="Sports">رياضة</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="صحة" data-en="Health">صحة</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="بيئة" data-en="Environment">بيئة</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="تعليم" data-en="Education">تعليم</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="فن" data-en="Art">فن</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="ثقافة" data-en="Culture">ثقافة</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs hover:bg-red-600 hover:text-white transition-colors cursor-pointer" data-ar="سفر" data-en="Travel">سفر</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- التذييل -->
+    <footer class="bg-gray-800 text-white pt-10 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- معلومات الموقع -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="عن الموقع" data-en="About Us">عن الموقع</h3>
+                    <p class="text-gray-300 text-sm mb-4" data-ar="موقع إخباري متخصص يقدم آخر الأخبار المحلية والعالمية في مختلف المجالات بموضوعية ومهنية عالية." data-en="A specialized news website that provides the latest local and international news in various fields with high objectivity and professionalism.">موقع إخباري متخصص يقدم آخر الأخبار المحلية والعالمية في مختلف المجالات بموضوعية ومهنية عالية.</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- روابط سريعة -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="عن الموقع" data-en="About Us">عن الموقع</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="اتصل بنا" data-en="Contact Us">اتصل بنا</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="سياسة الخصوصية" data-en="Privacy Policy">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="شروط الاستخدام" data-en="Terms of Service">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+
+                <!-- الأقسام -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="الأقسام" data-en="Sections">الأقسام</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="السياسة" data-en="Politics">السياسة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الاقتصاد" data-en="Economy">الاقتصاد</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الرياضة" data-en="Sports">الرياضة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="التكنولوجيا" data-en="Technology">التكنولوجيا</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الصحة" data-en="Health">الصحة</a></li>
+                    </ul>
+                </div>
+
+                <!-- النشرة البريدية -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="النشرة البريدية" data-en="Newsletter">النشرة البريدية</h3>
+                    <p class="text-gray-300 text-sm mb-4" data-ar="اشترك في نشرتنا البريدية لتلقي آخر الأخبار والتحديثات مباشرة إلى بريدك الإلكتروني." data-en="Subscribe to our newsletter to receive the latest news and updates directly to your email.">اشترك في نشرتنا البريدية لتلقي آخر الأخبار والتحديثات مباشرة إلى بريدك الإلكتروني.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="px-4 py-2 w-full rounded-r-lg focus:outline-none text-gray-800 text-sm">
+                        <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-l-lg text-sm font-medium transition-colors" data-ar="اشتراك" data-en="Subscribe">اشتراك</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- حقوق النشر -->
+            <div class="pt-6 border-t border-gray-700 text-center text-sm text-gray-400">
+                <p data-ar="جميع الحقوق محفوظة © 2023 موقع NewsHub" data-en="All rights reserved © 2023 NewsHub">جميع الحقوق محفوظة © 2023 موقع NewsHub</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تبديل اللغة
+        document.getElementById('ar-btn').addEventListener('click', function() {
+            if (!this.classList.contains('bg-white')) {
+                switchLanguage('ar');
+            }
+        });
+
+        document.getElementById('en-btn').addEventListener('click', function() {
+            if (!this.classList.contains('bg-white')) {
+                switchLanguage('en');
+            }
+        });
+
+        function switchLanguage(lang) {
+            const body = document.body;
+            const arBtn = document.getElementById('ar-btn');
+            const enBtn = document.getElementById('en-btn');
+
+            if (lang === 'ar') {
+                body.setAttribute('dir', 'rtl');
+                arBtn.classList.add('bg-white', 'shadow');
+                enBtn.classList.remove('bg-white', 'shadow');
+                arBtn.classList.remove('text-gray-600');
+                enBtn.classList.add('text-gray-600');
+            } else {
+                body.setAttribute('dir', 'ltr');
+                enBtn.classList.add('bg-white', 'shadow');
+                arBtn.classList.remove('bg-white', 'shadow');
+                enBtn.classList.remove('text-gray-600');
+                arBtn.classList.add('text-gray-600');
+            }
+
+            // تحديث النصوص
+            document.querySelectorAll('[data-ar]').forEach(element => {
+                if (lang === 'ar') {
+                    element.textContent = element.getAttribute('data-ar');
+                } else {
+                    element.textContent = element.getAttribute('data-en');
+                }
+            });
+        }
+
+        // عرض التاريخ الحالي
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const lang = document.body.getAttribute('dir') === 'rtl' ? 'ar-SA' : 'en-US';
+            document.getElementById('current-date').textContent = now.toLocaleDateString(lang, options);
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+        });
+    </script>
+</body>
+</html>

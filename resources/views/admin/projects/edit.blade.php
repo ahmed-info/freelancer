@@ -23,13 +23,13 @@
             <div class="card" dir="rtl">
                 <div class="card-body">
                     <div class="p-4 border rounded">
-                        <form method="POST" action="{{ route('fields.update', $field) }}" class="row g-3">
+                        <form method="POST" action="{{ route('projects.update', $project) }}" class="row g-3">
                             @csrf
                             @method('PUT')
                             <div class="col-md-4">
                                 <label for="title" class="form-label">عنوان المجال المتاح</label>
                                 <input type="text" class="form-control" id="title" name="name"
-                                    value="{{ old('name', $field->name) }}">
+                                    value="{{ old('name', $project->name) }}">
                                 @error('name')
                                     <div class="text-danger">
                                         {{ $message }}
@@ -39,7 +39,7 @@
 
                             <div class="col-md-8">
                                 <label for="description" class="form-label">وصف المجال</label>
-                                <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $field->description) }}</textarea>
+                                <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $project->description) }}</textarea>
                                 @error('description')
                                     <div class="text-danger">
                                         {{ $message }}
@@ -47,109 +47,13 @@
                                 @enderror
                             </div>
 
-                            <!-- قسم الأيقونات المحسّن -->
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header bg-light">
-                                        <h6 class="mb-0">اختر أيقونة</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <label for="icon-search" class="form-label">ابحث عن أيقونة</label>
-                                        <input type="text" id="icon-search" class="form-control mb-3" placeholder="اكتب للبحث عن أيقونة...">
 
-                                        <!-- معاينة الأيقونة المختارة -->
-                                        <div class="selected-icon-preview mb-3 p-3 border rounded bg-light text-center"
-                                             style="{{ $field->icon ? '' : 'display:none;' }}">
-                                            <h6>الأيقونة المختارة:</h6>
-                                            <div class="preview-container">
-                                                <ion-icon name="{{ old('icon', $field->icon) }}" id="icon-preview"
-                                                          style="font-size: 40px; color: #007bff;"></ion-icon>
-                                                <span id="icon-name-preview" class="d-block mt-2 text-muted">
-                                                    {{ old('icon', $field->icon) }}
-                                                </span>
-                                            </div>
-                                        </div>
 
-                                        <!-- حقل مخفي لتخزين الأيقونة المختارة -->
-                                        <input type="hidden" name="icon" id="selected-icon" value="{{ old('icon', $field->icon) }}">
 
-                                        <!-- شبكة عرض الأيقونات -->
-                                        <div class="icons-grid mt-3 border rounded p-3 bg-white"
-                                             style="max-height: 400px; overflow-y: auto;">
-                                            @foreach ($icons as $icon)
-                                                <div class="icon-item {{ old('icon', $field->icon) == $icon ? 'selected' : '' }}"
-                                                     data-icon="{{ $icon }}">
-                                                    <ion-icon name="{{ $icon }}"></ion-icon>
-                                                    <span class="icon-name">{{ $icon }}</span>
-                                                </div>
-                                            @endforeach
-                                        </div>
-
-                                        @error('icon')
-                                            <div class="text-danger mt-2">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- قسم الألوان المحسّن -->
-                            <div class="col-md-12">
-                                <div class="card mt-3">
-                                    <div class="card-header bg-light">
-                                        <h6 class="mb-0">اختر لون</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <!-- معاينة اللون المختار -->
-                                        <div class="selected-color-preview mb-3 p-3 border rounded bg-light text-center"
-                                             style="{{ $field->color ? '' : 'display:none;' }}">
-                                            <h6>اللون المختار:</h6>
-                                            <div class="preview-container d-flex align-items-center justify-content-center">
-                                                <div class="color-preview-box me-2 rounded border"
-                                                     style="background-color: {{ old('color', $field->color) }};
-                                                            width: 40px; height: 40px;">
-                                                </div>
-                                                <span id="color-value-preview" class="text-muted">
-                                                    {{ old('color', $field->color) }}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <!-- حقل الإدخال المخفي لتخزين اللون المختار -->
-                                        <input type="hidden" name="color" id="selected_color"
-                                               value="{{ old('color', $field->color) }}">
-
-                                        <!-- شبكة عرض الألوان -->
-                                        <div class="colors-grid border rounded p-3 bg-white">
-                                            <div class="row g-2" id="colors_container">
-                                                @foreach ($colors as $color)
-                                                    <div class="col-2 col-sm-1 text-center color-item">
-                                                        <div class="color-option p-2 border rounded cursor-pointer
-                                                            {{ old('color', $field->color) == $color ? 'selected' : '' }}"
-                                                            data-color="{{ $color }}" title="{{ $color }}"
-                                                            style="background-color: {{ $color }}; height: 40px;">
-                                                            @if(old('color', $field->color) == $color)
-                                                                <i class="bx bx-check text-white"></i>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-
-                                        @error('color')
-                                            <div class="text-danger mt-2">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="col-12 mt-4">
                                 <button class="btn btn-primary" type="submit">حفظ التعديلات</button>
-                                <a href="{{ route('fields.index') }}" class="btn btn-secondary">إلغاء</a>
+                                <a href="{{ route('projects.index') }}" class="btn btn-secondary">إلغاء</a>
                             </div>
                         </form>
                     </div>

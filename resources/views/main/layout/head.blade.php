@@ -234,4 +234,8 @@
             transform: translateX(0);
         }
     </style>
+
+    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
 </head>

@@ -559,49 +559,51 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-function show_confirm(id) {
-    Swal.fire({
-        title: 'تأكيد الحذف',
-        text: "هل أنت متأكد من حذف هذا العنصر؟ لن تتمكن من التراجع عن هذا الإجراء!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'نعم، احذف',
-        cancelButtonText: 'إلغاء',
-        reverseButtons: true, // لعكس ترتيب الأزرار (مناسب للعربية)
-        customClass: {
-            popup: 'rtl-popup' // لدعم الاتجاه من اليمين لليسار
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // إرسال النموذج
-            document.getElementById('delete_form_' + id).submit();
-
-            // أو يمكنك عرض رسالة تحميل
+        function show_confirm(id) {
             Swal.fire({
-                title: 'جاري الحذف...',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
+                title: 'تأكيد الحذف',
+                text: "هل أنت متأكد من حذف هذا العنصر؟ لن تتمكن من التراجع عن هذا الإجراء!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'نعم، احذف',
+                cancelButtonText: 'إلغاء',
+                reverseButtons: true, // لعكس ترتيب الأزرار (مناسب للعربية)
+                customClass: {
+                    popup: 'rtl-popup' // لدعم الاتجاه من اليمين لليسار
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // إرسال النموذج
+                    document.getElementById('delete_form_' + id).submit();
+
+                    // أو يمكنك عرض رسالة تحميل
+                    Swal.fire({
+                        title: 'جاري الحذف...',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    document.getElementById('delete_form_' + id).submit();
+                } else if (result.isDismissed) {
+                    // اختياري: رسالة عند الإلغاء
+                    Swal.fire({
+                        title: 'تم الإلغاء',
+                        text: 'لم يتم حذف العنصر',
+                        icon: 'info',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
                 }
             });
-
-            document.getElementById('delete_form_' + id).submit();
-        } else if (result.isDismissed) {
-            // اختياري: رسالة عند الإلغاء
-            Swal.fire({
-                title: 'تم الإلغاء',
-                text: 'لم يتم حذف العنصر',
-                icon: 'info',
-                timer: 2000,
-                showConfirmButton: false
-            });
         }
-    });
-}
 </script>
+
+@stack('scripts')
 </body>
 
 </html>

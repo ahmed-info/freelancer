@@ -57,11 +57,11 @@
                   $myactive = '';
                 @endphp
             @endif
-            <a href="#" class="{{ $myactive }}">
+            <a href="{{ route('projects.index') }}" class="{{ $myactive }}">
                 <div class="parent-icon">
                     <i class="bx bx-category"></i>
                 </div>
-                <div class="menu-title">الأخبار</div>
+                <div class="menu-title">المشاريع</div>
             </a>
         </li>
 
@@ -75,11 +75,11 @@
                   $myactive = '';
                 @endphp
             @endif
-            <a href="#" class="{{ $myactive }}">
+            <a href="{{ route('specializations.index') }}" class="{{ $myactive }}">
                 <div class="parent-icon">
                     <i class="bx bx-category"></i>
                 </div>
-                <div class="menu-title">الأخبار العاجلة</div>
+                <div class="menu-title">التخصصات والمسميات الوظيفية</div>
             </a>
         </li>
 

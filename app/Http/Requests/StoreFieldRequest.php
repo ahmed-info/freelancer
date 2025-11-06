@@ -25,6 +25,7 @@ class StoreFieldRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'icon' => 'nullable|string',
+            'color' => 'nullable|string',
         ];
     }
 
@@ -37,6 +38,7 @@ class StoreFieldRequest extends FormRequest
             'description.required' => 'حقل الوصف مطلوب.',
             'description.string' => 'حقل الوصف يجب أن يكون نصًا.',
             'icon.string' => 'حقل الأيقونة يجب أن يكون نصًا.',
+            'color.string' => 'حقل اللون يجب أن يكون نصًا.',
         ];
     }
 }

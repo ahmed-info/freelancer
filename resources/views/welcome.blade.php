@@ -211,34 +211,19 @@
                 <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">اكتشف مجموعة واسعة من المجالات التي يمكنك العمل فيها كمستقل</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 service-icon">
-                        <i class="fas fa-laptop-code text-primary text-xl"></i>
+                @foreach ($fields as $field)
+                    <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 service-icon">
+                            <ion-icon name="{{ $field->icon }}"
+                                                            style="font-size: 1.75rem; color: {{ $field->color }}"></ion-icon>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $field->name }}</h3>
+                        <p class="text-gray-600">{{ $field->description }}</p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">برمجة وتطوير</h3>
-                    <p class="text-gray-600">تطوير المواقع، التطبيقات، البرمجيات والتقنيات المختلفة</p>
-                </div>
-                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.2s">
-                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 service-icon">
-                        <i class="fas fa-pen-nib text-red-600 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">تصميم وأعمال فنية</h3>
-                    <p class="text-gray-600">تصميم الجرافيك، UI/UX، الرسوم المتحركة والفنون الرقمية</p>
-                </div>
-                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.3s">
-                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 service-icon">
-                        <i class="fas fa-chart-line text-green-600 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">تسويق إلكتروني</h3>
-                    <p class="text-gray-600">التسويق عبر وسائل التواصل، تحسين محركات البحث وتحليل البيانات</p>
-                </div>
-                <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.4s">
-                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4 service-icon">
-                        <i class="fas fa-pencil-alt text-yellow-600 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">كتابة وترجمة</h3>
-                    <p class="text-gray-600">كتابة المحتوى، التدقيق اللغوي، الترجمة والنسخ</p>
-                </div>
+                @endforeach
+
+
             </div>
             <div class="text-center mt-10">
                 <a href="#" class="text-primary hover:text-secondary font-bold inline-flex items-center animate-pulse">

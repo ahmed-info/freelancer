@@ -51,7 +51,11 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        return view('admin.fields.edit', ['field' => $field]);
+        $json = file_get_contents(resource_path('json/icons.json'));
+        $data = json_decode($json, true);
+        $icons = $data['icons'] ?? [];
+        $colors = $data['colors'] ?? [];
+        return view('admin.fields.edit', ['field' => $field, 'icons' => $icons, 'colors' => $colors]);
     }
 
     /**
@@ -59,7 +63,18 @@ class FieldController extends Controller
      */
     public function update(Request $request, Field $field)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'icon' => 'nullable|string|max:255',
+            'color' => 'nullable|string|max:255',
+        ]);
+
+        //return $request->all();
+
+        $field->update($request->only(['name', 'description', 'icon', 'color']));
+
+        return redirect()->route('fields.index')->with('status', 'تم تحديث المجال بنجاح');
     }
 
     /**
@@ -67,6 +82,7 @@ class FieldController extends Controller
      */
     public function destroy(Field $field)
     {
-        //
+        Field::destroy($field->id);
+        return redirect()->route('fields.index', )->with('status', 'تم حذف المجال بنجاح');
     }
 }

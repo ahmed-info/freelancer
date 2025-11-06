@@ -33,6 +33,15 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+    public function proposals()
+    {
+        return $this->hasMany(Proposal::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

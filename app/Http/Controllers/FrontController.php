@@ -19,6 +19,10 @@ class FrontController extends Controller
         return view('main.projects.index', ['projects' => $projects]);
     }
 
+    public function freelance(){
+        return view('main.freelance.index');
+    }
+
     public function index()
     {
         //$projects = auth()->user()->projects()->withCount('proposals')->get();

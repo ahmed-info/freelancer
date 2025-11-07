@@ -20,15 +20,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Ahmed',
-        //     'email' => 'ahmed.razzaq.yahya@gmail.com',
-        //     'password' => bcrypt('123456aa'),
-        //     'role' => 'project',
-        // ]);
-       // $this->call(ProjectSeeder::class);
+        User::factory()->create([
+            'name' => 'Ahmed',
+            'email' => 'ahmed.razzaq.yahya@gmail.com',
+            'password' => bcrypt('123456aa'),
+            'role' => 'project',
+        ]);
+        $this->call(ProjectSeeder::class);
         // $this->call(SpecializationSeeder::class);
         // $this->call(MyJobSeeder::class);
-        $this->call(SpecializationsAndMyjobsSeeder::class);
+        //$this->call(SpecializationsAndMyjobsSeeder::class);
     }
 }

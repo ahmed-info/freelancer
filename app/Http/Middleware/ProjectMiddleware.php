@@ -15,6 +15,10 @@ class ProjectMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if (auth()->check() && auth()->user()->role === 'project') {
+            return $next($request);
+        }
+
+        return redirect('/aaaa')->with('error', 'غير مصرح لك بالدخول');
     }
 }

@@ -23,10 +23,31 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::resource('projects', ProjectController::class)->except(['show']);
+Route::resource('projects', ProjectController::class)->except(['show','create']);
 Route::get('/projects/main', [FrontController::class, 'index'])->name('projects.main');
+Route::get('/freelance/main', [FrontController::class, 'freelance'])->name('freelance.main');
 Route::get('/projects/show', [FrontController::class, 'projects'])->name('projects.show');
 Route::resource('specializations', SpecializationController::class);
 Route::post('/myjobs', [SpecializationController::class, 'storeJobs'])->name('myjobs.store');
+
+Route::prefix('teacher')
+    ->middleware('teacher')
+    ->group(function () {
+        Route::get('/dashboard', [TeacherController::class, 'dashboard']);
+        Route::get('/courses', [TeacherController::class, 'courses']);
+    });
+
+Route::middleware('freelance')
+    ->group(function () {
+        //Route::get('/dashboard', [StudentController::class, 'dashboard']);
+        //Route::get('/courses', [StudentController::class, 'courses']);
+    });
+
+
+Route::middleware('project')
+    ->group(function () {
+        Route::get('/myprojects/create', [ProjectController::class, 'create'])->name('myprojects.create');
+        //Route::get('/courses', [StudentController::class, 'courses']);
+    });
 
 require __DIR__.'/auth.php';

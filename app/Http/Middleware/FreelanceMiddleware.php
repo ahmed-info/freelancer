@@ -15,10 +15,10 @@ class FreelanceMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'freelance') {
-            return $next($request);
+        if (!auth()->check() || auth()->user()->role !== 'freelance') {
+            return redirect('/')->with('error', 'غير مصرح لك بالوصول إلى هذه الصفحة');
         }
 
-        return redirect('/')->with('error', 'غير مصرح لك بالدخول');
+        return $next($request);
     }
 }

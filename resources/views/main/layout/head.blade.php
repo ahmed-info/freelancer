@@ -233,7 +233,93 @@
         .mobile-menu.open {
             transform: translateX(0);
         }
+
+                .form-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            background: #edf2f7;
+            border-radius: 20px;
+            padding: 6px 12px;
+            margin: 4px;
+            font-size: 0.875rem;
+        }
+
+        .skill-tag i {
+            margin-right: 6px;
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .skill-tag i:hover {
+            color: #e53e3e;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
+        .file-item:hover {
+            background: #edf2f7;
+        }
+
+        .file-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-icon {
+            margin-left: 12px;
+            color: #4a5568;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .file-size {
+            font-size: 0.875rem;
+            color: #718096;
+            margin-right: 12px;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .drag-over {
+            border-color: #4299e1;
+            background-color: #ebf8ff;
+        }
     </style>
+
+
 
     <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>

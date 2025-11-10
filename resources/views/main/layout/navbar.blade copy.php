@@ -11,7 +11,8 @@
                     <div class="mr-10 flex items-baseline space-x-4 space-x-reverse">
                         <a href="{{ route('home') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">الرئيسية</a>
                         <a href="{{ route('projects.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">المشاريع</a>
-                        <a href="{{ route('freelance.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">المستقلون</a>
+                        <a href="{{ route('freelance.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">اصحاب العمل الحر</a>
+                        <a href="{{ route('company.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">الشركات</a>
                     </div>
                 </div>
             </div>
@@ -56,7 +57,7 @@
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="#" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:translate-x-2">الرئيسية</a>
             <a href="{{ route('projects.main') }}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:translate-x-2">المشاريع</a>
-            <a href="#" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:translate-x-2">المستقلون</a>
+            <a href="#" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:translate-x-2">فرصةون</a>
             <div class="border-t border-gray-200 pt-4">
                 @auth
                     @if(auth()->user()->role === 'freelance')

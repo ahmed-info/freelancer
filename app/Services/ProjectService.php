@@ -33,7 +33,6 @@ class ProjectService
                 'budget_type' => $data['budget_type'],
                 'budget_amount' => $data['budget_type'] === 'fixed' ? $data['budget_amount'] : null,
                 'hourly_rate' => $data['budget_type'] === 'hourly' ? $data['hourly_rate'] : null,
-                'weekly_hours' => $data['budget_type'] === 'hourly' ? $data['weekly_hours'] : null,
                 'duration' => $data['duration'],
                 'skills' => $data['skills'],
                 'attachments' => $attachments,

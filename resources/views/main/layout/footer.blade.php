@@ -4,7 +4,7 @@
                 <div class="animate-fade-in-up">
                     <div class="flex items-center mb-4">
                         <i class="fas fa-rocket text-primary text-2xl ml-2"></i>
-                        <span class="font-bold text-xl">مستقل</span>
+                        <span class="font-bold text-xl">فرصة</span>
                     </div>
                     <p class="text-gray-400">أكبر منصة عربية للعمل الحر، توفر فرص عمل عبر الإنترنت للمستقلين في مختلف المجالات.</p>
                 </div>
@@ -13,7 +13,7 @@
                     <ul class="space-y-2">
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">الرئيسية</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">المشاريع</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">المستقلون</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">فرصةون</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">الأسعار</a></li>
                     </ul>
                 </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2025 مستقل. جميع الحقوق محفوظة.</p>
+                <p>© 2025 فرصة. جميع الحقوق محفوظة.</p>
             </div>
         </div>
     </footer>

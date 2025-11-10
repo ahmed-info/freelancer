@@ -9,11 +9,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0 animate-fade-in">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up">اكتشف أفضل المستقلين العرب</h1>
-                    <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">ابحث عن مستقل محترف لتنفيذ مشروعك من بين آلاف المواهب العربية المتخصصة في مختلف المجالات</p>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up">اختر افضل اصحاب العمل الحر</h1>
+                    <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">ابحث عن صاحب عمل حر محترف لتنفيذ مشروعك من بين آلاف المواهب العربية المتخصصة في مختلف المجالات</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                        <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابحث عن مستقل</a>
-                        <a href="./register.html" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انضم كمستقل</a>
+                        <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابحث عن صاحب عمل حر</a>
+                        <a href="./register.html" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انضم كصاحب عمل حر</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center animate-slide-up">
@@ -99,13 +99,13 @@
         </div>
     </section>
 
-    <!-- قسم عرض المستقلين -->
+    <!-- قسم عرض فرصةين -->
     <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center mb-12">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-800 mb-2 animate-fade-in-up">اكتشف أفضل المواهب العربية</h2>
-                    <p class="text-gray-600 animate-fade-in-up" style="animation-delay: 0.2s">تصفح آلاف المستقلين الموهوبين وابحث عن المناسب لمشروعك</p>
+                    <p class="text-gray-600 animate-fade-in-up" style="animation-delay: 0.2s">تصفح آلاف فرصةين الموهوبين وابحث عن المناسب لمشروعك</p>
                 </div>
                 <div class="mt-4 md:mt-0">
                     <div class="flex items-center space-x-2 space-x-reverse">
@@ -424,7 +424,7 @@
 
             <div class="text-center mt-12">
                 <a href="#" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
-                    عرض المزيد من المستقلين
+                    عرض المزيد من فرصةين
                     <i class="fas fa-arrow-left mr-2"></i>
                 </a>
             </div>
@@ -445,7 +445,7 @@
                         <i class="fas fa-user-check text-primary text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-2">مستقلون موثوقون</h3>
-                    <p class="text-gray-600">جميع المستقلين في منصتنا خضعوا لمراجعة ملفاتهم وتقييماتهم لضمان جودة عملهم</p>
+                    <p class="text-gray-600">جميع فرصةين في منصتنا خضعوا لمراجعة ملفاتهم وتقييماتهم لضمان جودة عملهم</p>
                 </div>
 
                 <div class="bg-white rounded-xl shadow-md p-6 text-center card-hover animate-fade-in-up" style="animation-delay: 0.3s">
@@ -474,9 +474,9 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up">هل أنت مستقل تبحث عن فرص عمل؟</h2>
-            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى آلاف المستقلين العرب وابدأ في كسب المال من مهاراتك عبر الإنترنت</p>
+            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى آلاف فرصةين العرب وابدأ في كسب المال من مهاراتك عبر الإنترنت</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">انضم كمستقل</a>
+                <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">انضم كصاحب عمل حر</a>
                 <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">اعرف المزيد</a>
             </div>
         </div>

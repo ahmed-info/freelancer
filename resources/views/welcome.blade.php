@@ -1,5 +1,121 @@
 @extends('main.layout.layout')
 @section('main_content')
+
+<style>
+    .company-slider {
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 0;
+    }
+
+    .slider-container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        padding: 0 3rem;
+    }
+
+    .company-item {
+        flex: 0 0 auto;
+    }
+
+    .company-logo {
+        transition: all 0.3s ease;
+    }
+
+    .company-logo:hover {
+        transform: scale(1.1);
+    }
+
+    .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+        font-size: 18px;
+        color: #3b82f6;
+    }
+
+    .slider-btn:hover {
+        background: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .slider-btn:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+
+    .prev-btn {
+        right: 10px;
+    }
+
+    .next-btn {
+        left: 10px;
+    }
+
+    .slider-dots {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        gap: 0.75rem;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #d1d5db;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .dot:hover {
+        background: #9ca3af;
+        transform: scale(1.2);
+    }
+
+    .dot.active {
+        background: #3b82f6;
+        border-color: #93c5fd;
+        transform: scale(1.3);
+    }
+
+    @media (max-width: 768px) {
+        .slide {
+            padding: 0 1rem;
+            gap: 1rem;
+        }
+
+        .slider-btn {
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+        }
+    }
+
+
+</style>
  <!-- قسم الهيرو -->
     <section class="gradient-bg text-white py-16 md:py-24 relative overflow-hidden">
         <div class="floating-shape"></div>
@@ -12,8 +128,8 @@
                     <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up">أكبر منصة عربية للعمل الحر</h1>
                     <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">حوّل مهاراتك إلى مشاريع حقيقية واربح من خلال العمل عبر الإنترنت مع آلاف العملاء العرب</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                        <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابدأ كمستقل</a>
-                        <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انشر مشروعك</a>
+                        <a href="#" id="joinFreelancerBtn" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابدأ كمقدم خدمة</a>
+                        <a href="{{ route('myprojects.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انشر مشروعك</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center animate-slide-up">
@@ -43,10 +159,89 @@
         </div>
     </section>
 
+     <!-- قسم الشركات الجديد -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">الشركات الرائدة تثق بنا</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى آلاف الشركات التي تستخدم منصتنا لإنجاز مشاريعها بأعلى جودة</p>
+            </div>
+
+            <!-- شعارات الشركات -->
+            <div class="company-slider mb-16">
+            <div class="slider-container" id="sliderContainer">
+                <!-- سيتم إضافة الشرائح ديناميكياً -->
+            </div>
+
+            <button class="slider-btn prev-btn" id="prevBtn">&#10094;</button>
+            <button class="slider-btn next-btn" id="nextBtn">&#10095;</button>
+
+            <div class="slider-dots" id="sliderDots">
+                <!-- سيتم إضافة النقاط ديناميكياً -->
+            </div>
+        </div>
+
+            <!-- فوائد الشركات -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-sm p-6 border border-blue-100 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
+                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">توظيف مستقلين متميزين</h3>
+                    <p class="text-gray-600">اختر من بين آلاف المستقلين المؤهلين في مختلف المجالات والتخصصات</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-white rounded-xl shadow-sm p-6 border border-green-100 card-hover animate-fade-in-up" style="animation-delay: 0.3s">
+                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-briefcase text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">إدارة مشاريع مبسطة</h3>
+                    <p class="text-gray-600">نوفر لك أدوات متكاملة لمتابعة وتقييم تقدم المشاريع بسهولة</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-50 to-white rounded-xl shadow-sm p-6 border border-purple-100 card-hover animate-fade-in-up" style="animation-delay: 0.5s">
+                    <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">حماية وضمان حقوق</h3>
+                    <p class="text-gray-600">نضمن لك الحصول على العمل المتفق عليه مع حماية حقوقك المالية</p>
+                </div>
+            </div>
+
+            <!-- إحصائيات الشركات -->
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-white text-center">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="animate-fade-in-up" style="animation-delay: 0.1s">
+                        <div class="text-3xl md:text-4xl font-bold mb-2">+5,000</div>
+                        <p class="text-blue-100">شركة عربية</p>
+                    </div>
+                    <div class="animate-fade-in-up" style="animation-delay: 0.3s">
+                        <div class="text-3xl md:text-4xl font-bold mb-2">+50,000</div>
+                        <p class="text-blue-100">مشروع مكتمل</p>
+                    </div>
+                    <div class="animate-fade-in-up" style="animation-delay: 0.5s">
+                        <div class="text-3xl md:text-4xl font-bold mb-2">98%</div>
+                        <p class="text-blue-100">رضا العملاء</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- دعوة للعمل للشركات -->
+            <div class="text-center mt-12">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4 animate-fade-in-up">جاهز لتعزيز فريقك بالمستقلين الموهوبين؟</h3>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى الشركات الرائدة وابدأ في إنجاز مشاريعك بكفاءة وجودة عالية</p>
+                <a href="#" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                    سجل شركتك الآن
+                    <i class="fas fa-arrow-left mr-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- قسم كيف تعمل -->
     <section class="py-16 bg-white">
         <div class="bg-white">
-            <div class="container mx-auto px-4 py-12">
+            <div class="container mx-auto px-4 py-6">
                 <!-- العنوان الرئيسي -->
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 animate-fade-in-up">هل لديك عمل تريد إنجازه</h2>
@@ -67,7 +262,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-xl font-semibold text-gray-800 mb-2">أضف مشروع</h4>
-                                    <p class="text-gray-600 leading-relaxed">أضف تفاصيل المشروع الذي تحتاج إنجازه والمهارات المطلوبة واحصل على عروض المستقلين المتخصصين في دقائق.</p>
+                                    <p class="text-gray-600 leading-relaxed">أضف تفاصيل المشروع الذي تحتاج إنجازه والمهارات المطلوبة واحصل على عروض فرصةين المتخصصين في دقائق.</p>
                                 </div>
                             </div>
 
@@ -81,8 +276,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 class="text-xl font-semibold text-gray-800 mb-2">اختر المستقل المناسب</h4>
-                                    <p class="text-gray-600 leading-relaxed">قارن عروض المستقلين وتصفح ملفاتهم وتقيماتهم وأعمالهم، تفاوض معهم عبر الرسائل واختر الأفضل لتنفيذ مشروعك.</p>
+                                    <h4 class="text-xl font-semibold text-gray-800 mb-2">اختر فرصة المناسب</h4>
+                                    <p class="text-gray-600 leading-relaxed">قارن عروض فرصةين وتصفح ملفاتهم وتقيماتهم وأعمالهم، تفاوض معهم عبر الرسائل واختر الأفضل لتنفيذ مشروعك.</p>
                                 </div>
                             </div>
 
@@ -97,7 +292,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-xl font-semibold text-gray-800 mb-2">استلم المشروع</h4>
-                                    <p class="text-gray-600 leading-relaxed">سيعمل المستقل الذي اخترته على مشروعك ويتابع معك حتى حصولك على نتائج العمل المتفق عليه وتسليم المشروع.</p>
+                                    <p class="text-gray-600 leading-relaxed">سيعمل فرصة الذي اخترته على مشروعك ويتابع معك حتى حصولك على نتائج العمل المتفق عليه وتسليم المشروع.</p>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +344,7 @@
                         <i class="fas fa-dollar-sign text-purple-600 text-2xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-2">+$200 مليون</h3>
-                    <p class="text-gray-600">أرباح المستقلين</p>
+                    <p class="text-gray-600">أرباح فرصةين</p>
                 </div>
             </div>
         </div>
@@ -188,12 +383,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="absolute -bottom-4 -left-4 w-8 h-8 bg-accent rounded-full pulse-dot"></div>
                     </div>
                 </div>
                 <div class="md:w-1/2 text-center md:text-right animate-slide-in-right">
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">انضم إلى مجتمع العمل الحر الأكبر عربياً</h3>
-                    <p class="text-gray-600 mb-6 max-w-md mx-auto md:mr-0">سجّل الآن وابدأ رحلتك في عالم العمل الحر مع آلاف المستقلين العرب الناجحين</p>
+                    <p class="text-gray-600 mb-6 max-w-md mx-auto md:mr-0">سجّل الآن وابدأ رحلتك في عالم العمل الحر مع آلاف فرصةين العرب الناجحين</p>
                     <a href="#" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
                         سجل حسابك الآن
                         <i class="fas fa-arrow-left mr-2"></i>
@@ -236,12 +430,16 @@
 
 
 
+
+
+
+
     <!-- قسم آراء العملاء -->
     <section class="py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">آراء عملائنا</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">ما يقوله المستقلون والعملاء عن تجربتهم مع منصة مستقل</p>
+                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">ما يقوله فرصةون والعملاء عن تجربتهم مع منصة مستقل</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
@@ -306,11 +504,268 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up">جاهز لبدء رحلتك في العمل الحر؟</h2>
-            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى ملايين المستقلين العرب وابدأ في كسب المال من مهاراتك اليوم</p>
+            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى ملايين فرصةين العرب وابدأ في كسب المال من مهاراتك اليوم</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
                 <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">سجل كمستقل</a>
-                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">انشر مشروعك</a>
+                <a href="{{ route('myprojects.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">انشر مشروعك</a>
             </div>
         </div>
     </section>
+
+   <script>
+(function() {
+    // بيانات الشركات من قاعدة البيانات
+    const companies = @json($companies ?? []);
+
+    // إذا لم توجد شركات، لا نقوم بتنفيذ أي شيء
+    if (!companies || companies.length === 0) {
+        document.querySelector('.company-slider').style.display = 'none';
+        return;
+    }
+
+    // العناصر
+    const sliderContainer = document.getElementById('sliderContainer');
+    const sliderDots = document.getElementById('sliderDots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // المتغيرات
+    let currentSlide = 0;
+    let itemsPerSlide = getItemsPerSlide();
+    let totalSlides = Math.ceil(companies.length / itemsPerSlide);
+    let autoSlideInterval;
+
+    // حساب عدد العناصر لكل شريحة
+    function getItemsPerSlide() {
+        const width = window.innerWidth;
+        if (width >= 1024) return 6; // شاشات كبيرة
+        if (width >= 768) return 4;  // شاشات متوسطة
+        if (width >= 480) return 2;  // شاشات صغيرة
+        return 1;                    // شاشات صغيرة جداً
+    }
+
+    // إنشاء HTML لشركة واحدة
+    function createCompanyHTML(company, index) {
+        return `
+            <div class="company-item" style="animation: fadeInUp 0.5s ease forwards ${(index % itemsPerSlide) * 0.1}s; opacity: 0;">
+                <div class="text-center">
+                    <div class="company-logo">
+                        <div class="w-28 h-20 md:w-32 md:h-24 bg-white rounded-xl flex items-center justify-center p-4 shadow-md hover:shadow-xl transition-all duration-300">
+                            ${company.logo ?
+                                `<img src="${company.logo}" alt="${company.company_name}" class="max-w-full max-h-full object-contain">` :
+                                `<span class="text-gray-400 font-bold text-sm">${company.company_name}</span>`
+                            }
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2 font-medium">${company.company_name}</p>
+                </div>
+            </div>
+        `;
+    }
+
+    // إنشاء جميع الشرائح
+    function createSlides() {
+        sliderContainer.innerHTML = '';
+        sliderDots.innerHTML = '';
+
+        // إعادة حساب المتغيرات
+        itemsPerSlide = getItemsPerSlide();
+        totalSlides = Math.ceil(companies.length / itemsPerSlide);
+
+        // إذا كان عدد الشركات أقل من itemsPerSlide، ضبط itemsPerSlide
+        if (companies.length < itemsPerSlide) {
+            itemsPerSlide = companies.length;
+            totalSlides = 1;
+        }
+
+        console.log(`عدد الشركات: ${companies.length}, عناصر لكل شريحة: ${itemsPerSlide}, عدد الشرائح: ${totalSlides}`);
+
+        // إنشاء كل شريحة
+        for (let i = 0; i < totalSlides; i++) {
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+
+            // إضافة الشركات للشريحة
+            const startIdx = i * itemsPerSlide;
+            const endIdx = Math.min(startIdx + itemsPerSlide, companies.length);
+
+            let slideHTML = '';
+            for (let j = startIdx; j < endIdx; j++) {
+                slideHTML += createCompanyHTML(companies[j], j - startIdx);
+            }
+            slide.innerHTML = slideHTML;
+            sliderContainer.appendChild(slide);
+        }
+
+        // إنشاء نقاط التنقل فقط إذا كان هناك أكثر من شريحة
+        if (totalSlides > 1) {
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('button');
+                dot.className = `dot ${i === 0 ? 'active' : ''}`;
+                dot.setAttribute('aria-label', `الانتقال إلى الشريحة ${i + 1}`);
+                dot.addEventListener('click', () => goToSlide(i));
+                sliderDots.appendChild(dot);
+            }
+        } else {
+            // إخفاء الأزرار والنقاط إذا كان هناك شريحة واحدة فقط
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            sliderDots.style.display = 'none';
+        }
+    }
+
+    // تحديث موضع السلايدر
+    function updateSlider() {
+        const offset = -currentSlide * 100;
+        sliderContainer.style.transform = `translateX(${offset}%)`;
+
+        // تحديث النقاط
+        const dots = sliderDots.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+
+        // تحديث حالة الأزرار
+        updateButtonStates();
+    }
+
+    // تحديث حالة الأزرار
+    function updateButtonStates() {
+        if (totalSlides <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            return;
+        }
+
+        prevBtn.style.display = 'flex';
+        nextBtn.style.display = 'flex';
+    }
+
+    // الانتقال إلى شريحة معينة
+    function goToSlide(index) {
+        currentSlide = index;
+        updateSlider();
+        resetAutoSlide();
+    }
+
+    // الشريحة التالية
+    function nextSlide() {
+        if (totalSlides <= 1) return;
+
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+        resetAutoSlide();
+    }
+
+    // الشريحة السابقة
+    function prevSlide() {
+        if (totalSlides <= 1) return;
+
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider();
+        resetAutoSlide();
+    }
+
+    // بدء التشغيل التلقائي
+    function startAutoSlide() {
+        if (totalSlides <= 1) return;
+
+        autoSlideInterval = setInterval(nextSlide, 4000);
+    }
+
+    // إيقاف وإعادة بدء التشغيل التلقائي
+    function resetAutoSlide() {
+        if (totalSlides <= 1) return;
+
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    }
+
+    // إعادة البناء عند تغيير حجم الشاشة
+    let resizeTimeout;
+    function handleResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const oldItemsPerSlide = itemsPerSlide;
+            itemsPerSlide = getItemsPerSlide();
+
+            // إعادة البناء فقط إذا تغير عدد العناصر في الشريحة
+            if (oldItemsPerSlide !== itemsPerSlide) {
+                currentSlide = 0;
+                createSlides();
+                updateSlider();
+            }
+        }, 250);
+    }
+
+    // إضافة مستمعي الأحداث
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    window.addEventListener('resize', handleResize);
+
+    // إيقاف التشغيل التلقائي عند التمرير
+    const slider = document.querySelector('.company-slider');
+    slider.addEventListener('mouseenter', () => {
+        if (autoSlideInterval) clearInterval(autoSlideInterval);
+    });
+    slider.addEventListener('mouseleave', startAutoSlide);
+
+    // دعم اللمس للأجهزة المحمولة
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        if (autoSlideInterval) clearInterval(autoSlideInterval);
+    });
+
+    slider.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        startAutoSlide();
+    });
+
+    function handleSwipe() {
+        if (totalSlides <= 1) return;
+
+        const swipeThreshold = 50;
+        if (touchStartX - touchEndX > swipeThreshold) {
+            nextSlide(); // سحب لليسار
+        } else if (touchEndX - touchStartX > swipeThreshold) {
+            prevSlide(); // سحب لليمين
+        }
+    }
+
+    // التهيئة الأولية
+    function init() {
+        createSlides();
+        updateSlider();
+        startAutoSlide();
+    }
+
+    // الانتظار حتى تحميل الصفحة
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    // إضافة CSS للأنيميشن
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+})();
+</script>
+
 @endsection

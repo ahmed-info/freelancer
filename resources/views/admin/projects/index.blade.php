@@ -23,7 +23,7 @@
             <div class="card" dir="rtl">
                 <div class="card-body">
                     <div class="d-lg-flex align-items-center mb-4 gap-3">
-    
+
                         <div class="position-relative">
                             <input type="text" class="form-control ps-5 radius-30" placeholder="بحث"> <span
                                 class="position-absolute top-50 product-show translate-middle-y"><i
@@ -39,7 +39,7 @@
                                     <th>المشاريع</th>
                                     <th>وصف المشروع</th>
                                     <th>مبلغ المشروع</th>
-                                    <th>عدد الساعات</th>
+                                    <th>ملفات</th>
                                     <th>حالة المشروع</th>
                                     <th>المهارات</th>
                                     <th>الحدث</th>
@@ -64,7 +64,7 @@
                                             </td>
 
 
-                                             <td>
+                                            <td>
                                                 <div class="text-black">
                                                     {{ $project->budget_amount }}
                                                 </div>
@@ -72,7 +72,38 @@
 
                                             <td>
                                                 <div class="text-black">
-                                                    {{ $project->weekly_hours }}
+                                                    @if ($project->attachments)
+                                                        @foreach (json_decode($project->attachments) as $attachmentPath)
+                                                            @php
+                                                                $fileExtension = strtolower(
+                                                                    pathinfo($attachmentPath, PATHINFO_EXTENSION),
+                                                                );
+                                                                $imageExtensions = [
+                                                                    'jpg',
+                                                                    'jpeg',
+                                                                    'png',
+                                                                    'gif',
+                                                                    'bmp',
+                                                                    'svg',
+                                                                    'webp',
+                                                                ];
+                                                                $fileExists = file_exists(public_path($attachmentPath));
+                                                            @endphp
+
+                                                            @if (in_array($fileExtension, $imageExtensions) && $fileExists)
+                                                                <img src="{{ asset($attachmentPath) }}" alt="Attachment"
+                                                                    style="width: 80px; height: 80px; object-fit: cover; margin-right: 5px;">
+                                                            @elseif($fileExists)
+                                                                <a href="{{ asset($attachmentPath) }}" target="_blank"
+                                                                    class="btn btn-sm btn-primary mb-1">عرض الملف</a>
+                                                            @else
+                                                                <span class="text-danger">الملف غير موجود</span>
+                                                            @endif
+                                                        @endforeach
+                                                        @else
+                                                        <span class="text-muted">لا توجد ملفات مرفقة</span>
+                                                    @endif
+
                                                 </div>
                                             </td>
 

@@ -34,30 +34,22 @@ class StoreProjectRequest extends FormRequest
                 'min:50',
                 'max:5000'
             ],
-            'budget_type' => [
-                'required',
-                'in:fixed,hourly'
-            ],
+
             'budget_amount' => [
-                'required_if:budget_type,fixed',
+                'required',
                 'nullable',
                 'numeric',
                 'min:5',
                 'max:1000000'
             ],
             'hourly_rate' => [
-                'required_if:budget_type,hourly',
+                'required',
                 'nullable',
                 'numeric',
                 'min:5',
                 'max:500'
             ],
-            'weekly_hours' => [
-                'required_if:budget_type,hourly',
-                'nullable',
-                'string',
-                'in:10,20,30,40,40+'
-            ],
+
             'duration' => [
                 'required',
                 'in:1,2,3,4,5'
@@ -104,8 +96,6 @@ class StoreProjectRequest extends FormRequest
             'description.max' => 'الوصف طويل جداً (الحد الأقصى 5000 حرف)',
 
             // الميزانية
-            'budget_type.required' => 'نوع الميزانية مطلوب',
-            'budget_type.in' => 'نوع الميزانية غير صحيح',
             'budget_amount.required_if' => 'مبلغ الميزانية مطلوب',
             'budget_amount.min' => 'الحد الأدنى للميزانية هو 5 دولار',
             'budget_amount.max' => 'الميزانية تتجاوز الحد المسموح',
@@ -114,7 +104,6 @@ class StoreProjectRequest extends FormRequest
             'hourly_rate.required_if' => 'السعر بالساعة مطلوب',
             'hourly_rate.min' => 'الحد الأدنى للسعر هو 5 دولار بالساعة',
             'hourly_rate.max' => 'السعر بالساعة يتجاوز الحد المسموح',
-            'weekly_hours.required_if' => 'عدد الساعات الأسبوعية مطلوب',
 
             // المدة
             'duration.required' => 'مدة المشروع مطلوبة',
@@ -146,8 +135,6 @@ class StoreProjectRequest extends FormRequest
             'description' => 'وصف المشروع',
             'budget_type' => 'نوع الميزانية',
             'budget_amount' => 'مبلغ الميزانية',
-            'hourly_rate' => 'السعر بالساعة',
-            'weekly_hours' => 'عدد الساعات',
             'duration' => 'المدة',
             'skills' => 'المهارات',
             'attachments' => 'الملفات المرفقة',

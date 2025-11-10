@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const skillsContainer = document.getElementById('skills-container');
     const skillsHiddenInput = document.createElement('input');
     skillsHiddenInput.type = 'hidden';
-    skillsHiddenInput.name = 'skills';
+    skillsHiddenInput.name = 'skills[]';
     skillsHiddenInput.id = 'skills-hidden';
     document.getElementById('project-form').appendChild(skillsHiddenInput);
 
@@ -41,13 +41,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // عرض المهارات
     function updateSkillsDisplay() {
-        skillsContainer.innerHTML = skills.map((skill, index) => `
-            <div class="skill-tag" data-index="${index}">
-                ${skill}
-                <i class="fas fa-times mr-2" onclick="removeSkill(${index})"></i>
-            </div>
-        `).join('');
-    }
+                skillsContainer.innerHTML = '';
+                skills.forEach((skill, index) => {
+                    const skillTag = document.createElement('div');
+                    skillTag.className = 'skill-tag';
+                    skillTag.setAttribute('data-index', index);
+
+                    const skillText = document.createTextNode(skill + ' ');
+                    const removeIcon = document.createElement('i');
+                    removeIcon.className = 'fas fa-times mr-2';
+                    removeIcon.style.cursor = 'pointer';
+                    removeIcon.addEventListener('click', () => removeSkill(index));
+
+                    skillTag.appendChild(skillText);
+                    skillTag.appendChild(removeIcon);
+                    skillsContainer.appendChild(skillTag);
+                });
+            }
 
     // تحديث الحقل المخفي للمهارات
     function updateSkillsInput() {

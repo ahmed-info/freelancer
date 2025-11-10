@@ -17,7 +17,7 @@ class SpecializationController extends Controller
 
     public function create()
     {
-        $specializations = Specialization::pluck('name')->toArray();
+        $specializations = Specialization::latest()->get();
 
         return view('admin.specializations.create', compact('specializations'));
     }
@@ -45,6 +45,8 @@ class SpecializationController extends Controller
         $validated = $request->validate([
             'new_jobs' => 'sometimes|array',
             'new_jobs.*' => 'required|string|max:255',
+            //'name' => 'required|string|max:255|unique:specializations,name',
+            'specialization_id' => 'sometimes|exists:specializations,id',
         ],
             [
                 'name.unique' => 'هذا التخصص موجود بالفعل.',
@@ -54,8 +56,9 @@ class SpecializationController extends Controller
         // إضافة الوظائف الفرعية إذا وجدت
         if (isset($validated['new_jobs']) && count($validated['new_jobs']) > 0) {
             foreach ($validated['new_jobs'] as $jobName) {
-                $specialization->myjobs()->create([
+                MyJob::create([
                     'name' => $jobName,
+                    'specialization_id' => $validated['specialization_id'] ?? null,
                 ]);
             }
         }

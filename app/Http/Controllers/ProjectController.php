@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Proposals;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -13,29 +14,29 @@ class ProjectController extends Controller
      */
     //return view('admin.projects.index', compact('projects'));
     public function index()
-{
-    $projects = Project::withCount('proposals')->get();
+    {
+        $projects = Project::withCount('proposals')->get();
 
-    // قم بتحويل كل project manually
-    $projects->transform(function ($project) {
-        // معالجة حقل skills
-        if (is_string($project->skills)) {
-            $skillsArray = json_decode($project->skills, true);
-            if (is_array($skillsArray)) {
-                $decodedSkills = [];
-                foreach ($skillsArray as $skill) {
-                    // فك تشفير Unicode escape sequences
-                    $decodedSkill = json_decode('"' . $skill . '"');
-                    $decodedSkills[] = $decodedSkill;
+        // قم بتحويل كل project manually
+        $projects->transform(function ($project) {
+            // معالجة حقل skills
+            if (is_string($project->skills)) {
+                $skillsArray = json_decode($project->skills, true);
+                if (is_array($skillsArray)) {
+                    $decodedSkills = [];
+                    foreach ($skillsArray as $skill) {
+                        // فك تشفير Unicode escape sequences
+                        $decodedSkill = json_decode('"' . $skill . '"');
+                        $decodedSkills[] = $decodedSkill;
+                    }
+                    $project->skills = $decodedSkills;
                 }
-                $project->skills = $decodedSkills;
             }
-        }
-        return $project;
-    });
+            return $project;
+        });
 
-    return view('admin.projects.index', compact('projects'));
-}
+        return view('admin.projects.index', compact('projects'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -49,34 +50,52 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'budget_type' => 'required|in:fixed,hourly',
-            'budget_amount' => 'required_if:budget_type,fixed|numeric|min:0',
-            'hourly_rate' => 'required_if:budget_type,hourly|numeric|min:0',
-            'weekly_hours' => 'required_if:budget_type,hourly|string',
-            'project_duration' => 'required|string',
-            'experience_level' => 'required|in:beginner,intermediate,expert',
-            'skills' => 'array', // إذا كنا نستخدم مهارات كمصفوفة
-            'file_attachments' => 'nullable|array',
-        ]);
+{
+   // return $request->all();
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'budget_amount' => 'required|numeric',
+        'duration' => 'required|string',
+        'attachments' => 'nullable|array',
+        'attachments.*' => 'file|max:10240', // 10MB
+        'skills' => 'nullable|array'
+    ]);
 
-        return $request;
-
-        // إنشاء المشروع
-        $project = Project::create($validated);
-
-        // إذا كان لدينا مهارات، نربطها
-        if ($request->has('skills')) {
-            $project->skills()->attach($request->skills);
+    $project = new Project();
+    $project->user_id = auth()->id() ?? 1;
+    $project->title = $request->title;
+    $project->description = $request->description;
+    $project->budget_amount = $request->budget_amount;
+    $project->duration = $request->duration;
+    $project->status = 'draft';
+    $project->skills = json_encode($request->skills ?? []);
+    $project->attachments = null; // Initialize
+    //return $request->all();
+    // Handle attachments
+    if ($request->hasFile('attachments')) {
+        $attachmentsPaths = [];
+        $uploadPath = public_path('uploads/projects');
+        // Ensure the directory exists
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
         }
 
-        // معالجة المرفقات إذا وجدت
+        foreach ($request->file('attachments') as $file) {
+            $fileName = time() . '_' . uniqid() . '_' . $file->getClientOriginalName();
+            // Move the file to the public directory
+            $file->move($uploadPath, $fileName);
+            // Save the path relative to public, so we can use it in the frontend
+            $attachmentsPaths[] = 'uploads/projects/' . $fileName;
+        }
 
-        return redirect()->route('projects.show', $project)->with('status', 'تم إنشاء المشروع ويتطلب مراجعة من قبل الإدارة!');
+        $project->attachments = json_encode($attachmentsPaths);
     }
+
+    $project->save();
+
+    return redirect()->route('myprojects.create', $project)->with('status', 'تم إنشاء المشروع ويتطلب مراجعة من قبل الإدارة!');
+}
 
     /**
      * Display the specified resource.
@@ -102,7 +121,17 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $project->title = $request->input('title');
+        $project->description = $request->input('description');
+        $project->budget_amount = $request->input('budget_amount');
+        $project->duration = $request->input('duration');
+        $project->skills = json_encode($request->input('skills', []));
+        $project->status = $request->input('status');
+        // قم بتحديث الحقول الأخرى حسب الحاجة
+        $project->update();
+
+        return redirect()->route('projects.index')->with('status', 'تم تحديث المشروع بنجاح!');
     }
 
     /**
@@ -110,6 +139,8 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $project->delete();
+        return redirect()->route('projects.index')->with('status', 'تم حذف المشروع بنجاح!');
     }
 }

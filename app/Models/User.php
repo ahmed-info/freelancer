@@ -6,7 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Models\Project;
+use App\Models\Company;
+use App\Models\Proposal;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -21,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -37,6 +40,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
     public function proposals()
     {
         return $this->hasMany(Proposal::class);
@@ -53,5 +62,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isFreelance(): bool
+    {
+        return $this->role === 'freelance';
+    }
+
+    public function isProject(): bool
+    {
+        return $this->role === 'project';
     }
 }

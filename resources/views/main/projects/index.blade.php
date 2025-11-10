@@ -12,22 +12,24 @@
                 <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">ابحث عن مشاريع تناسب مهاراتك وابدأ في كسب المال من خلال العمل الحر</p>
 
                 <!-- شريط البحث -->
-                <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden animate-fade-in-up" style="animation-delay: 0.2s">
+                <form method="GET" action="{{ route('projects.main') }}" class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden animate-fade-in-up" style="animation-delay: 0.2s">
                     <div class="flex">
-                        <input type="text" placeholder="ابحث عن مشاريع في مجالك..." class="w-full py-4 px-6 text-gray-800 focus:outline-none">
-                        <button class="bg-primary hover:bg-secondary text-white px-6 transition duration-300">
+                        <input type="text" name="search" placeholder="ابحث عن مشاريع في مجالك..."
+                               class="w-full py-4 px-6 text-gray-800 focus:outline-none"
+                               value="{{ request('search') }}">
+                        <button type="submit" class="bg-primary hover:bg-secondary text-white px-6 transition duration-300">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
-                </div>
+                </form>
 
                 <!-- التصنيفات السريعة -->
                 <div class="flex flex-wrap justify-center mt-8 gap-2 animate-fade-in-up" style="animation-delay: 0.4s">
-                    <a href="#" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">برمجة وتطوير</a>
-                    <a href="#" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">تصميم</a>
-                    <a href="#" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">تسويق إلكتروني</a>
-                    <a href="#" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">كتابة وترجمة</a>
-                    <a href="#" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">استشارات أعمال</a>
+                    <a href="{{ request()->fullUrlWithQuery(['skill' => 'برمجة']) }}" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">برمجة وتطوير</a>
+                    <a href="{{ request()->fullUrlWithQuery(['skill' => 'تصميم']) }}" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">تصميم</a>
+                    <a href="{{ request()->fullUrlWithQuery(['skill' => 'تسويق']) }}" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">تسويق إلكتروني</a>
+                    <a href="{{ request()->fullUrlWithQuery(['skill' => 'كتابة']) }}" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">كتابة وترجمة</a>
+                    <a href="{{ request()->fullUrlWithQuery(['skill' => 'استشارات']) }}" class="bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-full text-sm transition duration-300">استشارات أعمال</a>
                 </div>
             </div>
         </div>
@@ -39,31 +41,31 @@
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <!-- عدد المشاريع -->
                 <div class="mb-4 md:mb-0 animate-fade-in-up">
-                    <h3 class="text-lg font-semibold text-gray-800">عرض <span class="text-primary">1,248</span> مشروع</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">عرض <span class="text-primary">{{ $projects->count() }}</span> مشروع من أصل <span class="text-primary">{{ $projects->total() }}</span></h3>
                 </div>
 
                 <!-- خيارات التصفية -->
-                <div class="flex flex-wrap gap-4 animate-fade-in-up" style="animation-delay: 0.2s">
-                    <!-- نوع المشروع -->
+                <form method="GET" action="{{ route('projects.main') }}" id="filterForm" class="flex flex-wrap gap-4 animate-fade-in-up" style="animation-delay: 0.2s">
+                    {{-- <!-- نوع المشروع -->
                     <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option>نوع المشروع</option>
-                            <option>مشاريع ثابتة السعر</option>
-                            <option>مشاريع بسعر بالساعة</option>
+                        <select name="budget_type" class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent filter-select">
+                            <option value="">نوع المشروع</option>
+                            <option value="fixed" {{ request('budget_type') == 'fixed' ? 'selected' : '' }}>مشاريع ثابتة السعر</option>
+                            <option value="hourly" {{ request('budget_type') == 'hourly' ? 'selected' : '' }}>مشاريع بسعر بالساعة</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                             <i class="fas fa-chevron-down"></i>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- الميزانية -->
                     <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option>الميزانية</option>
-                            <option>أقل من $100</option>
-                            <option>$100 - $500</option>
-                            <option>$500 - $1,000</option>
-                            <option>أكثر من $1,000</option>
+                        <select name="budget_range" class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent filter-select">
+                            <option value="">الميزانية</option>
+                            <option value="0-25000" {{ request('budget_range') == '0-25000' ? 'selected' : '' }}>أقل من 25,000</option>
+                            <option value="25000-100000" {{ request('budget_range') == '25000-100000' ? 'selected' : '' }}>25,000 - 100,000</option>
+                            <option value="100000-250000" {{ request('budget_range') == '100000-250000' ? 'selected' : '' }}>100,000 - 250,000</option>
+                            <option value="250000+" {{ request('budget_range') == '250000+' ? 'selected' : '' }}>أكثر من 250,000</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                             <i class="fas fa-chevron-down"></i>
@@ -72,31 +74,27 @@
 
                     <!-- المدة -->
                     <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option>المدة</option>
-                            <option>أقل من أسبوع</option>
-                            <option>أسبوع - شهر</option>
-                            <option>شهر - 3 أشهر</option>
-                            <option>أكثر من 3 أشهر</option>
+                        <select name="duration" class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent filter-select">
+                            <option value="">المدة</option>
+                            <option value="short" {{ request('duration') == 'short' ? 'selected' : '' }}>أقل من أسبوع</option>
+                            <option value="medium" {{ request('duration') == 'medium' ? 'selected' : '' }}>أسبوع - شهر</option>
+                            <option value="long" {{ request('duration') == 'long' ? 'selected' : '' }}>شهر - 3 أشهر</option>
+                            <option value="very_long" {{ request('duration') == 'very_long' ? 'selected' : '' }}>أكثر من 3 أشهر</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                             <i class="fas fa-chevron-down"></i>
                         </div>
                     </div>
 
-                    <!-- مستوى الخبرة -->
-                    <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-8 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option>مستوى الخبرة</option>
-                            <option>مبتدئ</option>
-                            <option>متوسط</option>
-                            <option>خبير</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                </div>
+
+                    <!-- زر إعادة التعيين -->
+                    @if(request()->hasAny(['budget_type', 'budget_range', 'duration', 'experience', 'search', 'skill']))
+                    <a href="{{ route('projects.main') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition duration-300 inline-flex items-center">
+                        <i class="fas fa-redo ml-2"></i>
+                        إعادة التعيين
+                    </a>
+                    @endif
+                </form>
             </div>
         </div>
     </section>
@@ -109,25 +107,22 @@
                 <div class="lg:col-span-2">
                     <!-- عناصر المشاريع -->
                     <div class="space-y-6">
-                        <!-- مشروع 1 -->
                         @forelse ($projects as $project)
-                        <div class="project-card bg-white rounded-xl shadow-sm p-6 animate-fade-in-up">
+                            <div class="project-card bg-white rounded-xl shadow-sm p-6 animate-fade-in-up">
                                 <div class="flex flex-col md:flex-row md:justify-between md:items-start">
                                     <div class="mb-4 md:mb-0">
                                         <div class="flex items-center mb-2">
                                             <h3 class="text-xl font-bold text-gray-800">{{ $project->title }}</h3>
                                             @if ($project->created_at->diffInDays(\Carbon\Carbon::now()) < 3)
-
                                             <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">جديد</span>
                                             @endif
                                         </div>
                                         <p class="text-gray-600 mb-4">{{ $project->description }}</p>
 
                                         <div class="flex flex-wrap gap-2 mb-4">
-                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">برمجة وتطوير</span>
-                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">PHP</span>
-                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">Laravel</span>
-                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">JavaScript</span>
+                                            @foreach ($project->skills as $skill)
+                                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">{{ $skill }}</span>
+                                            @endforeach
                                         </div>
 
                                         <div class="flex items-center text-sm text-gray-500">
@@ -139,46 +134,74 @@
                                                 <i class="far fa-clock ml-1"></i>
                                                 {{ $project->created_at->diffForHumans()}}
                                             </span>
-                                            <span class="flex items-center">
-                                                <i class="fas fa-briefcase ml-1"></i>
-                                                يفضل الخبرة
-                                            </span>
+
                                         </div>
                                     </div>
                                     <div class="flex-shrink-0">
                                         <div class="text-left md:text-right">
-                                            <div class="text-2xl font-bold text-gray-800 mb-2">$500 - $1,500</div>
-                                            <div class="text-sm text-gray-500 mb-4">ميزانية ثابتة</div>
-                                            <a href="#" class="bg-primary hover:bg-secondary text-white font-medium py-2 px-4 rounded-lg transition duration-300 inline-block">
-                                                تقديم عرض
-                                            </a>
+                                            <div class="text-2xl font-bold text-gray-800 mb-2">{{ $project->budget_display }}</div>
+                                           @foreach (json_decode($project->attachments) as  $index => $attachmentPath)
+                                                <a href="{{ asset($attachmentPath) }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300 inline-block mb-2">
+                                                    عرض مشروع مماثل {{ $index + 1 }}
+                                                </a>
+
+                                            @endforeach
+
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @empty
-
+                            <div class="text-center py-12">
+                                <i class="fas fa-folder-open text-4xl text-gray-400 mb-4"></i>
+                                <h3 class="text-xl font-semibold text-gray-600">لا توجد مشاريع متاحة حالياً</h3>
+                                <p class="text-gray-500 mt-2">يرجى المحاولة لاحقاً أو تعديل فلتر البحث</p>
+                            </div>
                         @endforelse
-
-
                     </div>
 
-                    <!-- ترقيم الصفحات -->
+                    <!-- ترقيم الصفحات الديناميكي -->
+                    @if($projects->hasPages())
                     <div class="flex justify-center mt-12 animate-fade-in-up" style="animation-delay: 0.5s">
                         <nav class="flex items-center space-x-2 space-x-reverse">
-                            <a href="#" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-lg transition duration-300">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                            <a href="#" class="min-w-[40px] min-h-[40px] flex items-center justify-center bg-primary text-white rounded-lg transition duration-300">1</a>
-                            <a href="#" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-700 hover:bg-gray-100 rounded-lg transition duration-300">2</a>
-                            <a href="#" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-700 hover:bg-gray-100 rounded-lg transition duration-300">3</a>
-                            <span class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-500">...</span>
-                            <a href="#" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-700 hover:bg-gray-100 rounded-lg transition duration-300">10</a>
-                            <a href="#" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-lg transition duration-300">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
+                            {{-- رابط الصفحة السابقة --}}
+                            @if($projects->onFirstPage())
+                                <span class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-400 rounded-lg cursor-not-allowed">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                            @else
+                                <a href="{{ $projects->previousPageUrl() }}" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-lg transition duration-300">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            @endif
+
+                            {{-- روابط الصفحات --}}
+                            @foreach($projects->getUrlRange(1, $projects->lastPage()) as $page => $url)
+                                @if($page == $projects->currentPage())
+                                    <span class="min-w-[40px] min-h-[40px] flex items-center justify-center bg-primary text-white rounded-lg transition duration-300 font-bold">
+                                        {{ $page }}
+                                    </span>
+                                @else
+                                    <a href="{{ $url }}" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-700 hover:bg-gray-100 rounded-lg transition duration-300">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            @endforeach
+
+                            {{-- رابط الصفحة التالية --}}
+                            @if($projects->hasMorePages())
+                                <a href="{{ $projects->nextPageUrl() }}" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-lg transition duration-300">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            @else
+                                <span class="min-w-[40px] min-h-[40px] flex items-center justify-center text-gray-400 rounded-lg cursor-not-allowed">
+                                    <i class="fas fa-chevron-left"></i>
+                                </span>
+                            @endif
                         </nav>
                     </div>
+                    @endif
                 </div>
 
                 <!-- العمود الأيمن: نصائح وإعلانات -->
@@ -256,4 +279,17 @@
             </div>
         </div>
     </section>
+
+    <!-- JavaScript للفلترة التلقائية -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterSelects = document.querySelectorAll('.filter-select');
+
+            filterSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    document.getElementById('filterForm').submit();
+                });
+            });
+        });
+    </script>
 @endsection

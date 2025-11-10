@@ -37,6 +37,21 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
+    public function profile()
+    {
+        return view('main.profile.profile');
+    }
+
+    public function reviews()
+    {
+        return view('main.profile.reviews');
+    }
+
+    public function portfolio()
+    {
+        return view('main.profile.portfolio');
+    }
+
     /**
      * Delete the user's account.
      */

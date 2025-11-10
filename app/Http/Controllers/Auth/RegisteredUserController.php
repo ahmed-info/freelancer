@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
-use App\Enums\UserRole;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+
 enum Role: string
 {
     case PROJECT = 'project';
@@ -39,30 +38,36 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required'],
-            //'role' => ['required', Rule::enum(UserRole::class)]
+           // 'role' => ['required', 'in:freelance,project,company'],
         ]);
+
+       // return $request->all();
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role'=> $request->role
+            'role' => $request->role,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-            return $this->redirectBasedOnRole($user->role);
+        //return $user;
+
+        if ($request->role === 'freelance') {
+            return redirect()->route('freelance.main')->with('status', 'مرحباً بك في لوحة تحكم فرصةين');
+        } elseif ($request->role === 'project') {
+            return redirect()->route('myprojects.create')->with('status', 'مرحباً بك في لوحة تحكم المشاريع');
+        } elseif ($request->role === 'company') {
+            return redirect()->route('company.main')->with('status', 'مرحباً بك في لوحة تحكم الشركات');
+        }else {
+            return redirect('/')->with('error', 'نوع حساب غير معروف');
+        }
+
 
     }
 
-    private function redirectBasedOnRole($role)
-{
-    return match($role) {
-        'project' => redirect()->route('projects.main'),
-        'freelance' => redirect()->route('freelance.main'),
-        default => redirect()->route('dashboard')
-    };
-}
+
 }

@@ -26,18 +26,29 @@
                         <form method="POST" action="{{ route('projects.update', $project) }}" class="row g-3">
                             @csrf
                             @method('PUT')
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="title" class="form-label">عنوان المجال المتاح</label>
-                                <input type="text" class="form-control" id="title" name="name"
-                                    value="{{ old('name', $project->name) }}">
-                                @error('name')
+                                <input type="text" class="form-control" id="title" name="title"
+                                    value="{{ old('title', $project->title) }}">
+                                @error('title')
                                     <div class="text-danger">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            <div class="col-md-8">
+                            <div class="col-md-3">
+                                <label for="budget_amount" class="form-label">مبلغ المشروع</label>
+                                <input type="number" class="form-control" id="budget_amount" name="budget_amount"
+                                    value="{{ old('budget_amount', $project->budget_amount) }}">
+                                @error('budget_amount')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
                                 <label for="description" class="form-label">وصف المجال</label>
                                 <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $project->description) }}</textarea>
                                 @error('description')
@@ -46,6 +57,29 @@
                                     </div>
                                 @enderror
                             </div>
+
+                            <div class="col-md-3">
+                                <label for="status" class="form-label">الحالة</label>
+                                <select class="form-select" id="status" name="status">
+
+                                    <option value="draft" {{ old('status', $project->status) == 'draft' ? 'selected' : '' }}>مسودة</option>
+                                    <option value="published"
+                                        {{ old('status', $project->status) == 'published' ? 'selected' : '' }}>منشور</option>
+                                    <option value="in_progress"
+                                        {{ old('status', $project->status) == 'in_progress' ? 'selected' : '' }}>قيد
+                                        التنفيذ</option>
+                                    <option value="completed"
+                                        {{ old('status', $project->status) == 'completed' ? 'selected' : '' }}>مكتمل</option>
+                                    <option value="cancelled"
+                                        {{ old('status', $project->status) == 'cancelled' ? 'selected' : '' }}>الغاء</option>
+                                </select>
+                                @error('status')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
 
 
 

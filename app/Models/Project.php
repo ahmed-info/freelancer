@@ -22,7 +22,6 @@ class Project extends Model
         'budget_type',      // fixed أو hourly
         'budget_amount',    // للمشاريع ذات الميزانية المحددة
         'hourly_rate',      // السعر بالساعة
-        'weekly_hours',     // عدد الساعات الأسبوعية
         'duration',         // مدة المشروع
         'status',           // draft, published, in_progress, completed, cancelled
         'skills',           // JSON array للمهارات المطلوبة
@@ -81,11 +80,8 @@ class Project extends Model
      */
     public function getBudgetDisplayAttribute()
     {
-        if ($this->budget_type === 'fixed') {
-            return '$'.number_format($this->budget_amount, 2);
-        } else {
-            return '$'.number_format($this->hourly_rate, 2).'/hour';
-        }
+        return number_format($this->budget_amount) . 'دينار';
+
     }
 
     /**
@@ -172,5 +168,10 @@ class Project extends Model
                 return $value;
             }
         );
+    }
+
+    protected function getBudgetTypeDisplayAttribute()
+    {
+        return $this->budget_type === 'fixed' ? 'ميزانية ثابتة' : 'ميزانية بالساعة';
     }
 }

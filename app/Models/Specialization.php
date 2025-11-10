@@ -8,9 +8,7 @@ class Specialization extends Model
 {
     //use HasFactory;
 
-    protected $fillable = [
-        'name'
-    ];
+    protected $guarded = [];
 
     /**
      * Get all myjobs for this specialization

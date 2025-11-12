@@ -9,6 +9,7 @@ use Database\Seeders\ProjectSeeder;
 use Database\Seeders\SpecializationSeeder;
 use Database\Seeders\MyJobSeeder;
 use Database\Seeders\SpecializationsAndMyjobsSeeder;
+use Database\Seeders\FreelancerSeeder;
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -26,9 +27,11 @@ class DatabaseSeeder extends Seeder
         //     'password' => bcrypt('123456aa'),
         //     'role' => 'project',
         // ]);
+        $this->call(FreelancerSeeder::class);
         $this->call(ProjectSeeder::class);
         // $this->call(SpecializationSeeder::class);
         // $this->call(MyJobSeeder::class);
-        //$this->call(SpecializationsAndMyjobsSeeder::class);
+        $this->call(SpecializationsAndMyjobsSeeder::class);
+        //$this->call(FreelancerSeeder::class);
     }
 }

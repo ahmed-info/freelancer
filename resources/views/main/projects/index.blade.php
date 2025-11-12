@@ -120,16 +120,13 @@
                                         <p class="text-gray-600 mb-4">{{ $project->description }}</p>
 
                                         <div class="flex flex-wrap gap-2 mb-4">
-                                            @foreach ($project->skills as $skill)
+                                            {{-- @foreach ($project->skills as $skill)
                                                 <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">{{ $skill }}</span>
-                                            @endforeach
+                                            @endforeach --}}
                                         </div>
 
                                         <div class="flex items-center text-sm text-gray-500">
-                                            <span class="flex items-center ml-4">
-                                                <i class="fas fa-map-marker-alt ml-1"></i>
-                                                السعودية
-                                            </span>
+                                           
                                             <span class="flex items-center ml-4">
                                                 <i class="far fa-clock ml-1"></i>
                                                 {{ $project->created_at->diffForHumans()}}
@@ -140,12 +137,14 @@
                                     <div class="flex-shrink-0">
                                         <div class="text-left md:text-right">
                                             <div class="text-2xl font-bold text-gray-800 mb-2">{{ $project->budget_display }}</div>
-                                           @foreach (json_decode($project->attachments) as  $index => $attachmentPath)
+                                           @if (json_decode($project->attachments) != null)
+                                            @foreach (json_decode($project->attachments) as  $index => $attachmentPath)
                                                 <a href="{{ asset($attachmentPath) }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300 inline-block mb-2">
                                                     عرض مشروع مماثل {{ $index + 1 }}
                                                 </a>
 
                                             @endforeach
+                                           @endif
 
 
                                         </div>

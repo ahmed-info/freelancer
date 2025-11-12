@@ -21,7 +21,6 @@ class ProjectResource extends JsonResource
 
             // معلومات الميزانية
             'budget' => [
-                'type' => $this->budget_type,
                 'amount' => $this->budget_amount,
                 'hourly_rate' => $this->hourly_rate,
                 'weekly_hours' => $this->weekly_hours,

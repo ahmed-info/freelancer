@@ -133,7 +133,6 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => 'عنوان المشروع',
             'description' => 'وصف المشروع',
-            'budget_type' => 'نوع الميزانية',
             'budget_amount' => 'مبلغ الميزانية',
             'duration' => 'المدة',
             'skills' => 'المهارات',

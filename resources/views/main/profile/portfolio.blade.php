@@ -33,94 +33,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- العمود الأيسر -->
-            <div class="md:w-1/3">
-                <!-- صورة البروفايل -->
-                <div class="bg-white rounded-lg shadow-sm p-6 text-center mb-6">
-                    <div class="relative inline-block">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                             alt="Andrew Alfy"
-                             class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-lg">
-                        <div class="absolute bottom-2 right-2 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
-                    </div>
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Andrew Alfy</h1>
-                    <p class="text-gray-600 mb-4">مطور واجهات أمامية | Frontend Developer</p>
-
-                    <!-- التقييم -->
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="flex text-yellow-400 ml-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <span class="text-gray-700 font-bold">4.7</span>
-                        <span class="text-gray-500 mx-2">|</span>
-                        <span class="text-gray-600">(124 تقييم)</span>
-                    </div>
-
-                    <!-- معلومات الاتصال -->
-                    <div class="space-y-3 mb-6">
-                        <div class="flex items-center justify-center text-gray-600">
-                            <i class="fas fa-map-marker-alt ml-2"></i>
-                            <span>مصر</span>
-                        </div>
-                        <div class="flex items-center justify-center text-gray-600">
-                            <i class="fas fa-clock ml-2"></i>
-                            <span>مستقل منذ 2020</span>
-                        </div>
-                        <div class="flex items-center justify-center text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 ml-2"></i>
-                            <span>الهوية موثقة</span>
-                        </div>
-                    </div>
-
-                    <!-- الأزرار -->
-                    <div class="space-y-3">
-                        <button class="w-full bg-primary hover:bg-secondary text-white font-bold py-3 px-4 rounded-lg transition duration-300">
-                            <i class="fas fa-comment ml-2"></i>
-                            مراسلة
-                        </button>
-                        <button class="w-full border border-primary text-primary hover:bg-blue-50 font-bold py-3 px-4 rounded-lg transition duration-300">
-                            <i class="fas fa-briefcase ml-2"></i>
-                            طلب خدمة
-                        </button>
-                    </div>
-                </div>
-
-                <!-- الإحصائيات -->
-                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-                    <h3 class="font-bold text-gray-800 mb-4">الإحصائيات</h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">معدل الاستجابة</span>
-                            <span class="font-bold text-gray-800">98%</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">سرعة الاستجابة</span>
-                            <span class="font-bold text-gray-800">ساعتين</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">إنجاز المشاريع في الوقت</span>
-                            <span class="font-bold text-gray-800">100%</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">إعادة التوظيف</span>
-                            <span class="font-bold text-gray-800">87%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- المهارات -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="font-bold text-gray-800 mb-4">المهارات</h3>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach(['HTML', 'CSS', 'JavaScript', 'React', 'Vue.js', 'Bootstrap', 'Tailwind CSS', 'jQuery'] as $skill)
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">{{ $skill }}</span>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
+            @include('main.profile.sidebar')
 
             <!-- العمود الأيمن -->
             <div class="md:w-2/3">
@@ -155,10 +68,11 @@
 
                     <!-- شبكة الأعمال -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                        <!-- عمل 1 -->
+                        <!-- عمل  -->
+                        @foreach($freelancer->projects as $project)
                         <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-300 group">
                             <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                <img src="{{ asset($project->image) }}"
                                      alt="موقع تجارة إلكترونية"
                                      class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
                                 <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
@@ -173,8 +87,8 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="font-bold text-gray-800 mb-2">موقع تجارة إلكترونية متكامل</h3>
-                                <p class="text-gray-600 text-sm mb-3">تطوير موقع تجارة إلكترونية باستخدام React.js مع نظام دفع إلكتروني متكامل</p>
+                                <h3 class="font-bold text-gray-800 mb-2">{{ $project->title }}</h3>
+                                <p class="text-gray-600 text-sm mb-3">{{ $project->description }}</p>
                                 <div class="flex flex-wrap gap-2 mb-3">
                                     <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">React</span>
                                     <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Node.js</span>
@@ -189,181 +103,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endforeach
 
-                        <!-- عمل 2 -->
-                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-300 group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
-                                     alt="تطبيق إدارة المهام"
-                                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
-                                    <div class="opacity-0 group-hover:opacity-100 transition duration-300 flex space-x-2 space-x-reverse">
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-expand"></i>
-                                        </button>
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-link"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-bold text-gray-800 mb-2">تطبيق إدارة المهام</h3>
-                                <p class="text-gray-600 text-sm mb-3">تطبيق ويب لإدارة المهام والمشاريع مع ميزات التعاون بين الفرق</p>
-                                <div class="flex flex-wrap gap-2 mb-3">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Vue.js</span>
-                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Firebase</span>
-                                    <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">Tailwind</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm text-gray-500">
-                                    <span>تم النشر: ديسمبر 2023</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-eye ml-1"></i>
-                                        <span>987</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- عمل 3 -->
-                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-300 group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80"
-                                     alt="منصة تعليمية"
-                                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
-                                    <div class="opacity-0 group-hover:opacity-100 transition duration-300 flex space-x-2 space-x-reverse">
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-expand"></i>
-                                        </button>
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-link"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-bold text-gray-800 mb-2">منصة تعليمية تفاعلية</h3>
-                                <p class="text-gray-600 text-sm mb-3">منصة للتعلم الإلكتروني مع نظام فيديو تفاعلي واختبارات</p>
-                                <div class="flex flex-wrap gap-2 mb-3">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">React</span>
-                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Express</span>
-                                    <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">MySQL</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm text-gray-500">
-                                    <span>تم النشر: نوفمبر 2023</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-eye ml-1"></i>
-                                        <span>1.5K</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- عمل 4 -->
-                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-300 group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                     alt="لوحة تحكم إدارية"
-                                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
-                                    <div class="opacity-0 group-hover:opacity-100 transition duration-300 flex space-x-2 space-x-reverse">
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-expand"></i>
-                                        </button>
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-link"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-bold text-gray-800 mb-2">لوحة تحكم إدارية</h3>
-                                <p class="text-gray-600 text-sm mb-3">لوحة تحكم شاملة للإدارة مع رسوم بيانية وتقارير متقدمة</p>
-                                <div class="flex flex-wrap gap-2 mb-3">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Angular</span>
-                                    <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">TypeScript</span>
-                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Chart.js</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm text-gray-500">
-                                    <span>تم النشر: أكتوبر 2023</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-eye ml-1"></i>
-                                        <span>856</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- عمل 5 -->
-                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-300 group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                     alt="تطبيق مطعم"
-                                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
-                                    <div class="opacity-0 group-hover:opacity-100 transition duration-300 flex space-x-2 space-x-reverse">
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-expand"></i>
-                                        </button>
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-link"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-bold text-gray-800 mb-2">تطبيق طلبات مطعم</h3>
-                                <p class="text-gray-600 text-sm mb-3">تطبيق ويب لإدارة طلبات المطعم مع نظام حجز طاولات</p>
-                                <div class="flex flex-wrap gap-2 mb-3">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">React</span>
-                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Firebase</span>
-                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Stripe</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm text-gray-500">
-                                    <span>تم النشر: سبتمبر 2023</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-eye ml-1"></i>
-                                        <span>1.1K</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- عمل 6 -->
-                        <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-300 group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                                     alt="موقع شركة سياحية"
-                                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
-                                    <div class="opacity-0 group-hover:opacity-100 transition duration-300 flex space-x-2 space-x-reverse">
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-expand"></i>
-                                        </button>
-                                        <button class="bg-white text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200">
-                                            <i class="fas fa-link"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-bold text-gray-800 mb-2">موقع شركة سياحية</h3>
-                                <p class="text-gray-600 text-sm mb-3">موقع لعرض الرحلات والسياحه مع نظام حجوزات متكامل</p>
-                                <div class="flex flex-wrap gap-2 mb-3">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">HTML/CSS</span>
-                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">JavaScript</span>
-                                    <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">Bootstrap</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm text-gray-500">
-                                    <span>تم النشر: أغسطس 2023</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-eye ml-1"></i>
-                                        <span>723</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- الترقيم -->

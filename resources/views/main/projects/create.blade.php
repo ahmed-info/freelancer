@@ -1,7 +1,7 @@
 @extends('main.layout.layout')
 @section('main_content')
     <!-- محتوى الصفحة -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             <div class="lg:col-span-2">
@@ -68,18 +68,10 @@
                             </div>
                             <div class="flex flex-wrap gap-2 mt-4" id="skills-container">
                                 <!-- سيتم إضافة المهارات هنا ديناميكياً -->
-                                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1.5 rounded-full flex items-center gap-2">
-
-                                    <button type="button" class="text-blue-600 hover:text-blue-800 text-lg leading-none remove-skill" data-id="1"></button>
-                                </span>
-                                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1.5 rounded-full flex items-center gap-2">
-                                    <button type="button" class="text-blue-600 hover:text-blue-800 text-lg leading-none remove-skill" data-id="2"></button>
-                                </span>
-                                <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1.5 rounded-full flex items-center gap-2">
-                                    <button type="button" class="text-blue-600 hover:text-blue-800 text-lg leading-none remove-skill" data-id="3"></button>
-                                </span>
                             </div>
-                            <input type="hidden" name="skills" id="skills-input-hidden" value='["تصميم", "تطوير ويب", "UI/UX"]'>
+                            <div id="hidden-skills-fields">
+                                <!-- سيتم إضافة الحقول المخفية للمهارات هنا -->
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -145,17 +137,15 @@
 
                     <div class="bg-gray-50 rounded-xl p-5 border border-gray-200">
                         <div class="flex items-center gap-2 mb-3">
-                            <h3 class="text-lg font-bold text-gray-800" id="preview-title">اول عنوان</h3>
+                            <h3 class="text-lg font-bold text-gray-800" id="preview-title">عنوان المشروع</h3>
                             <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">جديد</span>
                         </div>
                         <p class="text-gray-600 text-sm mb-4" id="preview-description">
-                            وصف المشروع يظهر هنا بطريقة مختصرة وجذابة للمطورين المحتملين.
+                            وصف المشروع سيظهر هنا
                         </p>
 
                         <div class="flex flex-wrap gap-2 mb-4" id="preview-skills">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">تصميم</span>
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">تطوير ويب</span>
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">UI/UX</span>
+                            <!-- المهارات ستظهر هنا -->
                         </div>
 
                         <div class="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
@@ -212,3 +202,205 @@
         </div>
     </div>
 @endsection
+
+@push('main_scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const skillsInput = document.getElementById('skills-input');
+        const addSkillBtn = document.getElementById('add-skill-btn'); // تم التصحيح
+        const skillsContainer = document.getElementById('skills-container');
+        const hiddenSkillsFields = document.getElementById('hidden-skills-fields');
+        const projectForm = document.getElementById('projectForm'); // تم التصحيح
+
+        // عناصر المعاينة
+        const previewTitle = document.getElementById('preview-title');
+        const previewDescription = document.getElementById('preview-description');
+        const previewSkills = document.getElementById('preview-skills');
+        const previewBudget = document.getElementById('preview-budget');
+        const saveDraftBtn = document.getElementById('save-draft');
+
+        let skills = [];
+
+        // تحديث المعاينة
+        function updatePreview() {
+            // تحديث العنوان
+            const titleInput = document.getElementById('project-title');
+            previewTitle.textContent = titleInput.value || 'عنوان المشروع';
+
+            // تحديث الوصف
+            const descriptionInput = document.getElementById('project-details');
+            previewDescription.textContent = descriptionInput.value || 'وصف المشروع سيظهر هنا';
+
+            // تحديث الميزانية
+            const budgetInput = document.getElementById('budget-amount');
+            previewBudget.textContent = (budgetInput.value || '25000') + ' د.أ';
+
+            // تحديث المهارات في المعاينة
+            updatePreviewSkills();
+        }
+
+        // تحديث مهارات المعاينة
+        function updatePreviewSkills() {
+            previewSkills.innerHTML = '';
+            skills.forEach(skill => {
+                const skillSpan = document.createElement('span');
+                skillSpan.className = 'bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full';
+                skillSpan.textContent = skill;
+                previewSkills.appendChild(skillSpan);
+            });
+        }
+
+        // إضافة مهارة جديدة
+        function addSkill() {
+            const skillValue = skillsInput.value.trim();
+
+            if (skillValue && !skills.includes(skillValue)) {
+                skills.push(skillValue);
+                updateSkillsDisplay();
+                updatePreview();
+                skillsInput.value = '';
+                skillsInput.focus();
+            }
+        }
+
+        // إضافة مهارة بالضغط على Enter
+        skillsInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSkill();
+            }
+        });
+
+        // زر الإضافة
+        addSkillBtn.addEventListener('click', addSkill);
+
+        // تحديث عرض المهارات
+        function updateSkillsDisplay() {
+            skillsContainer.innerHTML = '';
+
+            skills.forEach((skill, index) => {
+                const skillTag = document.createElement('span');
+                skillTag.className = 'bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1.5 rounded-full flex items-center gap-2';
+                skillTag.innerHTML = `
+                    ${skill}
+                    <button type="button" class="text-blue-600 hover:text-blue-800 text-lg leading-none remove-skill" data-index="${index}">×</button>
+                `;
+                skillsContainer.appendChild(skillTag);
+            });
+
+            // إضافة event listeners لأزرار الحذف
+            document.querySelectorAll('.remove-skill').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    removeSkill(index);
+                });
+            });
+
+            updateHiddenSkillsField();
+        }
+
+        // إزالة مهارة
+        function removeSkill(index) {
+            skills.splice(index, 1);
+            updateSkillsDisplay();
+            updatePreview();
+        }
+
+        // تحديث الحقول المخفية
+        function updateHiddenSkillsField() {
+            hiddenSkillsFields.innerHTML = '';
+
+            skills.forEach(skill => {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'skills[]';
+                hiddenInput.value = skill;
+                hiddenSkillsFields.appendChild(hiddenInput);
+            });
+        }
+
+        // حفظ المسودة
+        saveDraftBtn.addEventListener('click', function() {
+            // التحقق من صحة البيانات الأساسية
+            if (!validateForm()) {
+                return;
+            }
+
+            // هنا يمكنك إرسال البيانات لحفظ المسودة
+            alert('تم حفظ المشروع كمسودة');
+
+            // يمكنك إضافة كود AJAX هنا لإرسال البيانات
+            /*
+            const formData = new FormData(projectForm);
+            formData.append('is_draft', '1');
+
+            fetch("{{ route('projects.store') }}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('تم حفظ المشروع كمسودة');
+                }
+            });
+            */
+        });
+
+        // التحقق من صحة النموذج
+        function validateForm() {
+            const title = document.getElementById('project-title').value.trim();
+            const description = document.getElementById('project-details').value.trim();
+
+            if (!title) {
+                alert('يرجى إدخال عنوان للمشروع');
+                document.getElementById('project-title').focus();
+                return false;
+            }
+
+            if (!description) {
+                alert('يرجى إدخال وصف للمشروع');
+                document.getElementById('project-details').focus();
+                return false;
+            }
+
+            if (skills.length === 0) {
+                alert('يرجى إضافة مهارة واحدة على الأقل');
+                skillsInput.focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        // التحقق قبل إرسال النموذج
+        projectForm.addEventListener('submit', function(e) {
+            if (!validateForm()) {
+                e.preventDefault();
+                return;
+            }
+
+            // تحديث الحقول المخفية قبل الإرسال
+            updateHiddenSkillsField();
+        });
+
+        // استمع لتغييرات المدخلات لتحديث المعاينة
+        document.getElementById('project-title').addEventListener('input', updatePreview);
+        document.getElementById('project-details').addEventListener('input', updatePreview);
+        document.getElementById('budget-amount').addEventListener('input', updatePreview);
+
+        // منع إرسال النموذج عند الضغط على Enter في حقل المهارات
+        skillsInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+
+        // التهيئة الأولية
+        updatePreview();
+    });
+</script>
+@endpush

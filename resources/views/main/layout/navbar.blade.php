@@ -123,9 +123,7 @@
             <div class="relative mb-2">
 
                     <input type="hidden" name="role" id="role" value="freelance">
-                    <div class="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
+                    
                 </div>
 
             <div class="mb-6">

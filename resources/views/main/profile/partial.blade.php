@@ -9,7 +9,7 @@
                   $activeLink = '';
                 @endphp
             @endif
-        <a href="{{ route('profile.main', 'andrew_alfy1') }}"
+        <a href="{{ route('profile.main', $freelancer->id) }}"
             class="text-gray-600 hover:text-primary {{  $activeLink }} py-4 px-2 font-medium">الملف الشخصي</a>
 
 
@@ -23,7 +23,7 @@
                   $activeLink = '';
                 @endphp
             @endif
-        <a href="{{ route('profile.reviews', 'andrew_alfy1') }}"
+        <a href="{{ route('profile.reviews', $freelancer->id) }}"
             class="{{  $activeLink }} py-4 px-2 font-medium">التقييمات</a>
 
             @if(Route::is('profile.portfolio'))
@@ -35,7 +35,7 @@
                   $activeLink = '';
                 @endphp
             @endif
-        <a href="{{ route('profile.portfolio', 'andrew_alfy1') }}"
+        <a href="{{ route('profile.portfolio', $freelancer->id) }}"
             class="text-gray-600 hover:text-primary {{  $activeLink }} py-4 px-2 font-medium">معرض الاعمال</a>
     </nav>
 </div>

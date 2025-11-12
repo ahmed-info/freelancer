@@ -1,16 +1,15 @@
 @extends('main.layout.layout')
 @section('main_content')
 
-<!-- قسم الهيدر -->
 <section class="bg-white border-b border-gray-200 py-4">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-4 space-x-reverse">
-                <a href="#" class="text-gray-600 hover:text-primary">
+                <a href="{{ route('home') }}" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-home"></i>
                 </a>
                 <span class="text-gray-300">|</span>
-                <a href="#" class="text-gray-600 hover:text-primary">المستقلون</a>
+                <a href="{{ route('freelancers.index') }}" class="text-gray-600 hover:text-primary">المستقلون</a>
             </div>
             <div class="flex items-center space-x-4 space-x-reverse">
                 <a href="#" class="text-gray-600 hover:text-primary">
@@ -29,94 +28,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- العمود الأيسر -->
-            <div class="md:w-1/3">
-                <!-- صورة البروفايل -->
-                <div class="bg-white rounded-lg shadow-sm p-6 text-center mb-6">
-                    <div class="relative inline-block">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
-                             alt="Andrew Alfy"
-                             class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-lg">
-                        <div class="absolute bottom-2 right-2 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
-                    </div>
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Andrew Alfy</h1>
-                    <p class="text-gray-600 mb-4">مطور واجهات أمامية | Frontend Developer</p>
-
-                    <!-- التقييم -->
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="flex text-yellow-400 ml-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <span class="text-gray-700 font-bold">4.7</span>
-                        <span class="text-gray-500 mx-2">|</span>
-                        <span class="text-gray-600">(124 تقييم)</span>
-                    </div>
-
-                    <!-- معلومات الاتصال -->
-                    <div class="space-y-3 mb-6">
-                        <div class="flex items-center justify-center text-gray-600">
-                            <i class="fas fa-map-marker-alt ml-2"></i>
-                            <span>مصر</span>
-                        </div>
-                        <div class="flex items-center justify-center text-gray-600">
-                            <i class="fas fa-clock ml-2"></i>
-                            <span>مستقل منذ 2020</span>
-                        </div>
-                        <div class="flex items-center justify-center text-gray-600">
-                            <i class="fas fa-check-circle text-green-500 ml-2"></i>
-                            <span>الهوية موثقة</span>
-                        </div>
-                    </div>
-
-                    <!-- الأزرار -->
-                    <div class="space-y-3">
-                        <button class="w-full bg-primary hover:bg-secondary text-white font-bold py-3 px-4 rounded-lg transition duration-300">
-                            <i class="fas fa-comment ml-2"></i>
-                            مراسلة
-                        </button>
-                        <button class="w-full border border-primary text-primary hover:bg-blue-50 font-bold py-3 px-4 rounded-lg transition duration-300">
-                            <i class="fas fa-briefcase ml-2"></i>
-                            طلب خدمة
-                        </button>
-                    </div>
-                </div>
-
-                <!-- الإحصائيات -->
-                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-                    <h3 class="font-bold text-gray-800 mb-4">الإحصائيات</h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">معدل الاستجابة</span>
-                            <span class="font-bold text-gray-800">98%</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">سرعة الاستجابة</span>
-                            <span class="font-bold text-gray-800">ساعتين</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">إنجاز المشاريع في الوقت</span>
-                            <span class="font-bold text-gray-800">100%</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">إعادة التوظيف</span>
-                            <span class="font-bold text-gray-800">87%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- المهارات -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="font-bold text-gray-800 mb-4">المهارات</h3>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach(['HTML', 'CSS', 'JavaScript', 'React', 'Vue.js', 'Bootstrap', 'Tailwind CSS', 'jQuery'] as $skill)
-                            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">{{ $skill }}</span>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
+            @include('main.profile.sidebar')
 
             <!-- العمود الأيمن -->
             <div class="md:w-2/3">
@@ -128,7 +40,7 @@
                 <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
                     <h3 class="font-bold text-gray-800 mb-4">نبذة عني</h3>
                     <p class="text-gray-700 leading-relaxed">
-                        مطور واجهات أمامية بخبرة تزيد عن 5 سنوات في مجال تطوير الويب. متخصص في تطوير واجهات المستخدم باستخدام React.js و Vue.js. أحب العمل على مشاريع مبتكرة وأحرص على تقديم أعلى معايير الجودة في العمل.
+                        {{ $freelancer->bio }}
                     </p>
                 </div>
 

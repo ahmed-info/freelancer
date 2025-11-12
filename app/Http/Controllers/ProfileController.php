@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Freelancer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,19 +38,22 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    public function profile()
+    public function profile(string $id)
     {
-        return view('main.profile.profile');
+        $freelancer = Freelancer::find($id);
+        return view('main.profile.profile', compact('freelancer'));
     }
 
-    public function reviews()
+    public function reviews(string $id)
     {
-        return view('main.profile.reviews');
+        $freelancer = Freelancer::find($id);
+        return view('main.profile.reviews', compact('freelancer'));
     }
 
-    public function portfolio()
+    public function portfolio(string $id)
     {
-        return view('main.profile.portfolio');
+        $freelancer = Freelancer::find($id);
+        return view('main.profile.portfolio', compact('freelancer'));
     }
 
     /**

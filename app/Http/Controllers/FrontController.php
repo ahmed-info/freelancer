@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Field;
 use App\Models\Project;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use App\Models\company;
+
 class FrontController extends Controller
 {
     public function home()
@@ -23,8 +25,6 @@ class FrontController extends Controller
         return view('main.projects.index', ['projects' => $projects]);
     }
 
-
-
     public function freelance()
     {
         return view('main.freelance.index');
@@ -38,86 +38,73 @@ class FrontController extends Controller
     }
 
     public function index(Request $request)
-{
-    // بناء الاستعلام الأساسي
-    $query = Project::withCount('proposals');
-
-    // البحث بالنص
-    if ($request->filled('search')) {
-        $search = $request->search;
-        $query->where(function ($q) use ($search) {
-            $q->where('title', 'like', '%' . $search . '%')
-                ->orWhere('description', 'like', '%' . $search . '%');
-        });
-    }
-
-    // البحث بالمهارات
-    if ($request->filled('skill')) {
-        $query->where('skills', 'like', '%"' . $request->skill . '"%');
-    }
-
-
-    // فلترة نطاق الميزانية
-    if ($request->filled('budget_range')) {
-        switch ($request->budget_range) {
-            case '0-100':
-                $query->where('budget_amount', '<', 100);
-                break;
-            case '100-500':
-                $query->whereBetween('budget_amount', [100, 500]);
-                break;
-            case '500-1000':
-                $query->whereBetween('budget_amount', [500, 1000]);
-                break;
-            case '1000+':
-                $query->where('budget_amount', '>', 1000);
-                break;
+    {
+        // بناء الاستعلام الأساسي مع علاقة المهارات
+        $query = Project::with(['user']);
+        //return $query;
+        // البحث بالنص
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
         }
-    }
 
-    // فلترة المدة
-    if ($request->filled('duration')) {
-        switch ($request->duration) {
-            case 'short':
-                $query->whereIn('duration', ['1-3', 'أقل من أسبوع']);
-                break;
-            case 'medium':
-                $query->whereIn('duration', ['1-2', 'أسبوع - شهر']);
-                break;
-            case 'long':
-                $query->whereIn('duration', ['2-4', '3-6', 'شهر - 3 أشهر']);
-                break;
-            case 'very_long':
-                $query->whereIn('duration', ['4-8', 'أكثر من 3 أشهر']);
-                break;
+        // البحث بالمهارات - استخدام العلاقة الصحيحة
+        if ($request->filled('skill')) {
+            $query->whereHas('skills', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->skill . '%');
+            });
         }
-    }
 
-    // فلترة مستوى الخبرة
-    if ($request->filled('experience')) {
-        $query->where('experience_level', $request->experience);
-    }
-
-    // الترتيب والترقيم (بعد تطبيق جميع الفلاتر)
-    $projects = $query->latest()->paginate(5)->withQueryString();
-
-    // معالجة حقل skills بعد جلب البيانات
-    $projects->getCollection()->transform(function ($project) {
-        if (is_string($project->skills)) {
-            $skillsArray = json_decode($project->skills, true);
-            if (is_array($skillsArray)) {
-                $decodedSkills = [];
-                foreach ($skillsArray as $skill) {
-                    // فك تشفير Unicode escape sequences
-                    $decodedSkill = json_decode('"' . $skill . '"');
-                    $decodedSkills[] = $decodedSkill;
-                }
-                $project->skills = $decodedSkills;
+        // فلترة نطاق الميزانية
+        if ($request->filled('budget_range')) {
+            switch ($request->budget_range) {
+                case '0-25000':
+                    $query->where('budget_amount', '<', 25000);
+                    break;
+                case '25000-100000':
+                    $query->whereBetween('budget_amount', [25000, 100000]);
+                    break;
+                case '100000-250000':
+                    $query->whereBetween('budget_amount', [100000, 250000]);
+                    break;
+                case '250000+':
+                    $query->where('budget_amount', '>', 250000);
+                    break;
             }
         }
-        return $project;
-    });
 
-    return view('main.projects.index', compact('projects'));
-}
+        // فلترة المدة - استخدام القيم الرقمية من جدول projects
+        if ($request->filled('duration')) {
+            switch ($request->duration) {
+                case 'short':
+                    $query->where('duration', '1'); // أقل من أسبوع
+                    break;
+                case 'medium':
+                    $query->whereIn('duration', ['2', '3']); // أسبوع - شهر
+                    break;
+                case 'long':
+                    $query->where('duration', '4'); // شهر - 3 أشهر
+                    break;
+                case 'very_long':
+                    $query->where('duration', '5'); // أكثر من 3 أشهر
+                    break;
+            }
+        }
+
+        // فلترة مستوى الخبرة
+        if ($request->filled('experience')) {
+            $query->where('experience_level', $request->experience);
+        }
+
+        // فلترة المشاريع المنشورة فقط
+        $query->where('status', 'published');
+
+        // الترتيب والترقيم (بعد تطبيق جميع الفلاتر)
+        $projects = $query->latest()->paginate(10)->withQueryString();
+        //return $projects;
+        return view('main.projects.index', compact('projects'));
+    }
 }

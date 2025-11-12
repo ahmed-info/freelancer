@@ -29,6 +29,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request->all();
         $validator = Validator::make($request->all(), [
             'company_name' => 'required|string|max:255',
             'business_field' => 'required|string|max:255',
@@ -51,17 +52,24 @@ class CompanyController extends Controller
             'user_id.exists' => 'المستخدم المحدد غير موجود.',
         ]);
 
+        $validator['user_id'] = auth()->user()->id;
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        Company::create($request->all());
-        User::updateOrCreate(
-                        ['id' => $request->user_id],
-                        ['role' => 'company']
-                    );
+        Company::create([
+        'company_name' => $request->company_name,
+        'business_field' => $request->business_field,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'description' => $request->description,
+        'terms_accepted' => $request->terms_accepted,
+        'user_id' => $request->user_id
+    ]);
+        User::where('id', $request->user_id)->update(['role' => 'company']);
 
         return redirect()->back()
             ->with('status', 'تم تسجيل شركتك بنجاح! سنقوم بالتواصل معك قريباً.');

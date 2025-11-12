@@ -1,183 +1,30 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الشركات - منصة العمل الحر</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #3b82f6;
-            --secondary: #10b981;
-            --accent: #f59e0b;
+@extends('main.layout.layout')
+<style>
+    .animate-scale-in {
+        animation: scaleIn 0.3s ease-out;
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
         }
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-        }
-
-        .floating-shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-shape:nth-child(1) {
-            width: 200px;
-            height: 200px;
-            top: -100px;
-            left: -100px;
-        }
-
-        .floating-shape:nth-child(2) {
-            width: 300px;
-            height: 300px;
-            bottom: -150px;
-            right: -150px;
-            animation-delay: 2s;
-        }
-
-        .floating-shape:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            top: 50%;
-            left: 10%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        .animate-fade-in-up {
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .animate-slide-up {
-            animation: slideUp 1s ease-out;
-        }
-
-        .animate-float {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        .animate-pulse-glow {
-            animation: pulseGlow 2s infinite;
-        }
-
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes floating {
-            0%, 100% { transform: translateY(0) rotate(3deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
-        }
-
-        .company-logo {
-            filter: grayscale(100%);
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-
-        .company-logo:hover {
-            filter: grayscale(0%);
+        to {
             opacity: 1;
+            transform: scale(1);
         }
+    }
 
-        .service-icon {
-            transition: all 0.3s ease;
-        }
+    .hidden {
+        display: none !important;
+    }
 
-        .service-card:hover .service-icon {
-            transform: scale(1.1);
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
-    <!-- الهيدر -->
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                        TEST
-                    </div>
-    <header class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg flex items-center justify-center text-white font-bold ml-3">
-                        ش
-                    </div>
-                    <span class="text-xl font-bold text-gray-800">منصة العمل الحر</span>
-                </div>
-
-                <nav class="hidden md:flex space-x-8 space-x-reverse">
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition duration-300">الرئيسية</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition duration-300">المشاريع</a>
-                    <a href="#" class="text-blue-500 font-bold transition duration-300">الشركات</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition duration-300">المستقلين</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition duration-300">المدونة</a>
-                </nav>
-
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <a href="#" class="text-gray-600 hover:text-blue-500 transition duration-300">
-                        <i class="fas fa-user"></i>
-                    </a>
-                    <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">
-                        تسجيل الدخول
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    .flex {
+        display: flex !important;
+    }
+</style>
+@section('main_content')
     <!-- قسم الهيرو للشركات -->
     <section class="gradient-bg text-white py-20 md:py-28 relative overflow-hidden">
         <div class="floating-shape"></div>
@@ -187,11 +34,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0 animate-fade-in">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up">الحل الأمثل للشركات لإنجاز المشاريع</h1>
-                    <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">وظّف أفضل المواهب العربية لإنجاز مشاريعك بجودة عالية وتكلفة مناسبة</p>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in-up">الحل الأمثل للشركات
+                        لإنجاز المشاريع</h1>
+                    <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">وظّف أفضل المواهب
+                        العربية لإنجاز مشاريعك بجودة عالية وتكلفة مناسبة</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                        <a href="#register" class="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">سجل شركتك الآن</a>
-                        <a href="#services" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">استعرض الخدمات</a>
+                        <a href="#register"
+                            class="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">سجل
+                            شركتك الآن</a>
+                        <a href="#services"
+                            class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">استعرض
+                            الخدمات</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center animate-slide-up">
@@ -206,13 +59,15 @@
                                     <p class="text-gray-600 text-sm">50+ مشروع مكتمل</p>
                                 </div>
                             </div>
-                            <p class="text-gray-700 mb-4">"وفرنا أكثر من 40% من التكاليف باستخدام المنصة لإنجاز مشاريع التطوير"</p>
+                            <p class="text-gray-700 mb-4">"وفرنا أكثر من 40% من التكاليف باستخدام المنصة لإنجاز مشاريع
+                                التطوير"</p>
                             <div class="flex justify-between text-sm text-gray-500">
                                 <span><i class="fas fa-star text-yellow-400 ml-1"></i> 4.9/5</span>
                                 <span><i class="fas fa-check-circle text-green-500 ml-1"></i> نشطة منذ 2020</span>
                             </div>
                         </div>
-                        <div class="absolute -top-4 -right-4 bg-green-500 text-white py-1 px-3 rounded-full text-sm font-bold animate-pulse">
+                        <div
+                            class="absolute -top-4 -right-4 bg-green-500 text-white py-1 px-3 rounded-full text-sm font-bold animate-pulse">
                             شركة موثوقة
                         </div>
                     </div>
@@ -226,11 +81,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">لماذا تختار منصتنا لشركتك؟</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">نوفر لك بيئة آمنة وفعالة للتواصل مع أفضل المواهب العربية</p>
+                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">نوفر لك بيئة
+                    آمنة وفعالة للتواصل مع أفضل المواهب العربية</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-sm p-6 border border-blue-100 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
+                <div class="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-sm p-6 border border-blue-100 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.1s">
                     <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
                         <i class="fas fa-users text-white text-xl"></i>
                     </div>
@@ -238,7 +95,8 @@
                     <p class="text-gray-600">اختر من بين آلاف المستقلين المؤهلين في مختلف المجالات والتخصصات</p>
                 </div>
 
-                <div class="bg-gradient-to-br from-green-50 to-white rounded-xl shadow-sm p-6 border border-green-100 card-hover animate-fade-in-up" style="animation-delay: 0.2s">
+                <div class="bg-gradient-to-br from-green-50 to-white rounded-xl shadow-sm p-6 border border-green-100 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.2s">
                     <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
                         <i class="fas fa-briefcase text-white text-xl"></i>
                     </div>
@@ -246,7 +104,8 @@
                     <p class="text-gray-600">نوفر لك أدوات متكاملة لمتابعة وتقييم تقدم المشاريع بسهولة</p>
                 </div>
 
-                <div class="bg-gradient-to-br from-purple-50 to-white rounded-xl shadow-sm p-6 border border-purple-100 card-hover animate-fade-in-up" style="animation-delay: 0.3s">
+                <div class="bg-gradient-to-br from-purple-50 to-white rounded-xl shadow-sm p-6 border border-purple-100 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.3s">
                     <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
                         <i class="fas fa-shield-alt text-white text-xl"></i>
                     </div>
@@ -254,7 +113,8 @@
                     <p class="text-gray-600">نضمن لك الحصول على العمل المتفق عليه مع حماية حقوقك المالية</p>
                 </div>
 
-                <div class="bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-sm p-6 border border-orange-100 card-hover animate-fade-in-up" style="animation-delay: 0.4s">
+                <div class="bg-gradient-to-br from-orange-50 to-white rounded-xl shadow-sm p-6 border border-orange-100 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.4s">
                     <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
                         <i class="fas fa-rocket text-white text-xl"></i>
                     </div>
@@ -270,7 +130,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">كيف تبدأ مع منصتنا</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">4 خطوات بسيطة تفصلك عن إنجاز مشاريعك بأفضل المواهب</p>
+                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">4 خطوات بسيطة
+                    تفصلك عن إنجاز مشاريعك بأفضل المواهب</p>
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center">
@@ -278,28 +139,33 @@
                     <div class="relative">
                         <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-auto">
                             <div class="flex items-start mb-6">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse">1</div>
+                                <div
+                                    class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse">
+                                    1</div>
                                 <div>
                                     <h3 class="font-bold text-gray-800 text-lg">سجل شركتك</h3>
                                     <p class="text-gray-600 mt-1">أنشئ حساب شركة وأكمل معلوماتك خلال دقائق</p>
                                 </div>
                             </div>
                             <div class="flex items-start mb-6">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse" style="animation-delay: 0.2s">2</div>
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse"
+                                    style="animation-delay: 0.2s">2</div>
                                 <div>
                                     <h3 class="font-bold text-gray-800 text-lg">انشر مشروعك</h3>
                                     <p class="text-gray-600 mt-1">صف مشروعك بدقة وحدد الميزانية والمهارات المطلوبة</p>
                                 </div>
                             </div>
                             <div class="flex items-start mb-6">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse" style="animation-delay: 0.4s">3</div>
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse"
+                                    style="animation-delay: 0.4s">3</div>
                                 <div>
                                     <h3 class="font-bold text-gray-800 text-lg">اختر المستقل المناسب</h3>
                                     <p class="text-gray-600 mt-1">اطلع على العروض واختر المستقل المناسب لمشروعك</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse" style="animation-delay: 0.6s">4</div>
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse"
+                                    style="animation-delay: 0.6s">4</div>
                                 <div>
                                     <h3 class="font-bold text-gray-800 text-lg">استلم مشروعك</h3>
                                     <p class="text-gray-600 mt-1">تابع التقدم واستلم المشروع النهائي مع ضمان الجودة</p>
@@ -310,8 +176,10 @@
                 </div>
                 <div class="md:w-1/2 text-center md:text-right animate-slide-in-right">
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">انضم إلى آلاف الشركات الناجحة</h3>
-                    <p class="text-gray-600 mb-6 max-w-md mx-auto md:mr-0">سجّل شركتك الآن وابدأ في إنجاز مشاريعك مع أفضل المواهب العربية المؤهلة</p>
-                    <a href="#register" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                    <p class="text-gray-600 mb-6 max-w-md mx-auto md:mr-0">سجّل شركتك الآن وابدأ في إنجاز مشاريعك مع أفضل
+                        المواهب العربية المؤهلة</p>
+                    <a href="#register"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
                         ابدأ الآن
                         <i class="fas fa-arrow-left mr-2"></i>
                     </a>
@@ -325,11 +193,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">خدمات مخصصة للشركات</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">نوفر حزمة متكاملة من الخدمات المصممة خصيصًا لتلبية احتياجات شركتك</p>
+                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">نوفر حزمة
+                    متكاملة من الخدمات المصممة خصيصًا لتلبية احتياجات شركتك</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.1s">
                     <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4 service-icon">
                         <i class="fas fa-code text-blue-600 text-2xl"></i>
                     </div>
@@ -351,7 +221,8 @@
                     </ul>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.3s">
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.3s">
                     <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4 service-icon">
                         <i class="fas fa-pen-nib text-green-600 text-2xl"></i>
                     </div>
@@ -373,7 +244,8 @@
                     </ul>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.5s">
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.5s">
                     <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4 service-icon">
                         <i class="fas fa-chart-line text-purple-600 text-2xl"></i>
                     </div>
@@ -403,38 +275,45 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">الشركات التي تثق بنا</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى آلاف الشركات الناجحة التي تستخدم منصتنا لإنجاز مشاريعها</p>
+                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى آلاف
+                    الشركات الناجحة التي تستخدم منصتنا لإنجاز مشاريعها</p>
             </div>
 
             <div class="mb-16">
                 <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16">
                     <div class="company-logo animate-fade-in-up" style="animation-delay: 0.1s">
-                        <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
+                        <div
+                            class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
                             <span class="text-blue-500 font-bold text-lg">شركة 1</span>
                         </div>
                     </div>
                     <div class="company-logo animate-fade-in-up" style="animation-delay: 0.2s">
-                        <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
+                        <div
+                            class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
                             <span class="text-green-500 font-bold text-lg">شركة 2</span>
                         </div>
                     </div>
                     <div class="company-logo animate-fade-in-up" style="animation-delay: 0.3s">
-                        <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
+                        <div
+                            class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
                             <span class="text-purple-500 font-bold text-lg">شركة 3</span>
                         </div>
                     </div>
                     <div class="company-logo animate-fade-in-up" style="animation-delay: 0.4s">
-                        <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
+                        <div
+                            class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
                             <span class="text-orange-500 font-bold text-lg">شركة 4</span>
                         </div>
                     </div>
                     <div class="company-logo animate-fade-in-up" style="animation-delay: 0.5s">
-                        <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
+                        <div
+                            class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
                             <span class="text-red-500 font-bold text-lg">شركة 5</span>
                         </div>
                     </div>
                     <div class="company-logo animate-fade-in-up" style="animation-delay: 0.6s">
-                        <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
+                        <div
+                            class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl flex items-center justify-center p-4 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-110">
                             <span class="text-indigo-500 font-bold text-lg">شركة 6</span>
                         </div>
                     </div>
@@ -470,19 +349,24 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">آراء الشركات عن منصتنا</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">ما تقوله الشركات عن تجربتها مع منصة العمل الحر</p>
+                <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">ما تقوله
+                    الشركات عن تجربتها مع منصة العمل الحر</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.1s">
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.1s">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold ml-3">ت</div>
+                        <div
+                            class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold ml-3">
+                            ت</div>
                         <div>
                             <h3 class="font-bold text-gray-800">شركة التقنية</h3>
                             <p class="text-gray-600 text-sm">شركة ناشئة</p>
                         </div>
                     </div>
-                    <p class="text-gray-700">"منصة العمل الحر غيرت طريقة عملنا بالكامل. وفرنا أكثر من 40% من تكاليف التطوير وتمكنا من إنجاز مشاريعنا بجودة عالية."</p>
+                    <p class="text-gray-700">"منصة العمل الحر غيرت طريقة عملنا بالكامل. وفرنا أكثر من 40% من تكاليف التطوير
+                        وتمكنا من إنجاز مشاريعنا بجودة عالية."</p>
                     <div class="flex text-yellow-400 mt-4">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -492,15 +376,19 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.3s">
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.3s">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold ml-3">إ</div>
+                        <div
+                            class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold ml-3">
+                            إ</div>
                         <div>
                             <h3 class="font-bold text-gray-800">إبداع للتسويق</h3>
                             <p class="text-gray-600 text-sm">وكالة تسويق</p>
                         </div>
                     </div>
-                    <p class="text-gray-700">"بفضل المنصة، تمكنا من توسيع فريقنا بشكل مرن حسب احتياجات المشاريع. الخبرات المتنوعة متاحة دائمًا عندما نحتاجها."</p>
+                    <p class="text-gray-700">"بفضل المنصة، تمكنا من توسيع فريقنا بشكل مرن حسب احتياجات المشاريع. الخبرات
+                        المتنوعة متاحة دائمًا عندما نحتاجها."</p>
                     <div class="flex text-yellow-400 mt-4">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -510,15 +398,19 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up" style="animation-delay: 0.5s">
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
+                    style="animation-delay: 0.5s">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold ml-3">د</div>
+                        <div
+                            class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold ml-3">
+                            د</div>
                         <div>
                             <h3 class="font-bold text-gray-800">ديجيتال سوليوشنز</h3>
                             <p class="text-gray-600 text-sm">شركة تطوير</p>
                         </div>
                     </div>
-                    <p class="text-gray-700">"نظام الحماية المالي وفر لنا راحة البال عند التعامل مع المستقلين. نعرف أن أموالنا في أمان حتى استلام العمل."</p>
+                    <p class="text-gray-700">"نظام الحماية المالي وفر لنا راحة البال عند التعامل مع المستقلين. نعرف أن
+                        أموالنا في أمان حتى استلام العمل."</p>
                     <div class="flex text-yellow-400 mt-4">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -538,23 +430,27 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up">جاهز لتعزيز فريقك بالمستقلين الموهوبين؟</h2>
-            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى الشركات الرائدة وابدأ في إنجاز مشاريعك بكفاءة وجودة عالية</p>
+            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم
+                إلى الشركات الرائدة وابدأ في إنجاز مشاريعك بكفاءة وجودة عالية</p>
 
-            <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl mx-auto text-gray-800 animate-fade-in-up" style="animation-delay: 0.4s">
+            <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl mx-auto text-gray-800 animate-fade-in-up"
+                style="animation-delay: 0.4s">
                 <h3 class="text-2xl font-bold mb-6">سجل شركتك الآن</h3>
 
-                @if(session('status'))
+                @if (session('status'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                         {{ session('status') }}
                     </div>
                 @endif
 
-                <form class="space-y-6 text-right"  method="POST" action="{{ route('company.register') }}">
+                <form class="space-y-6 text-right" method="POST" action="{{ route('company.register') }}">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-gray-700 mb-2">اسم الشركة</label>
-                            <input type="text" name="company_name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل اسم الشركة">
+                            <input type="text" name="company_name"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="أدخل اسم الشركة">
 
                             @error('company_name')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -562,12 +458,13 @@
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-2">مجال العمل</label>
-                            <select name="business_field" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select name="business_field"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option>اختر مجال العمل</option>
                                 @foreach ($fields as $field)
                                     <option value="{{ $field->id }}">{{ $field->name }}</option>
                                 @endforeach
-                                <option>أخرى</option>
+                                <option value="اخرى">أخرى</option>
                             </select>
                         </div>
                     </div>
@@ -575,115 +472,41 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-gray-700 mb-2">البريد الإلكتروني</label>
-                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="ادخل البريد الإلكتروني">
+                            <input type="email" name="email"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="ادخل البريد الإلكتروني">
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-2">رقم الهاتف</label>
-                            <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="ادخل رقم الهاتف">
+                            <input type="tel" name="phone"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="ادخل رقم الهاتف">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-gray-700 mb-2">وصف الشركة</label>
-                        <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3" placeholder="صف نشاط شركتك باختصار"></textarea>
+                        <textarea name="description"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            rows="3" placeholder="صف نشاط شركتك باختصار"></textarea>
                     </div>
 
                     <div class="flex items-center">
-                        <input type="checkbox" id="terms" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 ml-2">
-                        <label for="terms" class="text-gray-700">أوافق على <a href="#" class="text-blue-600 hover:underline">الشروط والأحكام</a> و <a href="#" class="text-blue-600 hover:underline">سياسة الخصوصية</a></label>
+                        <input type="checkbox" name="terms_accepted" id="terms"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 ml-2">
+                        <label for="terms" class="text-gray-700">أوافق على <a href="#"
+                                class="text-blue-600 hover:underline">الشروط والأحكام</a> و <a href="#"
+                                class="text-blue-600 hover:underline">سياسة الخصوصية</a></label>
                     </div>
 
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+
+
+                    <button type="button" id="showLoginModal"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
                         سجل شركتك الآن
                     </button>
                 </form>
             </div>
         </div>
     </section>
-
-    <!-- الفوتر -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg flex items-center justify-center text-white font-bold ml-3">
-                            ش
-                        </div>
-                        <span class="text-xl font-bold">منصة العمل الحر</span>
-                    </div>
-                    <p class="text-gray-400">أكبر منصة عربية للعمل الحر، نوفر بيئة آمنة للتواصل بين المستقلين وأصحاب المشاريع.</p>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold mb-4">روابط سريعة</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition duration-300">الرئيسية</a></li>
-                        <li><a href="#" class="hover:text-white transition duration-300">المشاريع</a></li>
-                        <li><a href="#" class="hover:text-white transition duration-300">المستقلين</a></li>
-                        <li><a href="#" class="hover:text-white transition duration-300">الشركات</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold mb-4">المساعدة</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition duration-300">الأسئلة الشائعة</a></li>
-                        <li><a href="#" class="hover:text-white transition duration-300">الشروط والأحكام</a></li>
-                        <li><a href="#" class="hover:text-white transition duration-300">سياسة الخصوصية</a></li>
-                        <li><a href="#" class="hover:text-white transition duration-300">اتصل بنا</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold mb-4">تابعنا</h3>
-                    <div class="flex space-x-4 space-x-reverse">
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-500 transition duration-300">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-700 transition duration-300">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition duration-300">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition duration-300">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2023 منصة العمل الحر. جميع الحقوق محفوظة.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // إضافة تأثيرات تفاعلية بسيطة
-        document.addEventListener('DOMContentLoaded', function() {
-            // إضافة تأثير عند التمرير
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animationPlayState = 'running';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // مراقبة العناصر ذات الأنيميشن
-            document.querySelectorAll('.animate-fade-in-up, .animate-slide-in-left, .animate-slide-in-right').forEach(el => {
-                el.style.animationPlayState = 'paused';
-                observer.observe(el);
-            });
-        });
-    </script>
-</body>
-</html>
+@endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Field;
 use App\Models\Project;
 use App\Models\Skill;
+use App\Models\Freelancer;
 use Illuminate\Http\Request;
 use App\Models\company;
 
@@ -27,7 +28,8 @@ class FrontController extends Controller
 
     public function freelance()
     {
-        return view('main.freelance.index');
+        $freelancers = Freelancer::with('skills')->get();
+        return view('main.freelance.index', ['freelancers' => $freelancers]);
     }
 
     public function company()

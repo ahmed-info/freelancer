@@ -126,7 +126,7 @@
                                         </div>
 
                                         <div class="flex items-center text-sm text-gray-500">
-                                           
+
                                             <span class="flex items-center ml-4">
                                                 <i class="far fa-clock ml-1"></i>
                                                 {{ $project->created_at->diffForHumans()}}

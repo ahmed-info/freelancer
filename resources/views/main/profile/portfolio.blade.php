@@ -10,9 +10,9 @@
                     <i class="fas fa-home"></i>
                 </a>
                 <span class="text-gray-300">|</span>
-                <a href="#" class="text-gray-600 hover:text-primary">المستقلون</a>
+                <a href="#" class="text-gray-600 hover:text-primary">صاحب عمل حر</a>
                 <span class="text-gray-300">|</span>
-                <a href="#" class="text-gray-600 hover:text-primary">Andrew Alfy</a>
+                <a href="#" class="text-gray-600 hover:text-primary">{{ $freelancer->user->name }}</a>
                 <span class="text-gray-300">|</span>
                 <span class="text-primary">معرض الأعمال</span>
             </div>

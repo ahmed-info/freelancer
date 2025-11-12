@@ -21,7 +21,7 @@
                         </div>
                         <span class="text-gray-700 font-bold">4.7</span>
                         <span class="text-gray-500 mx-2">|</span>
-                        <span class="text-gray-600">(124 تقييم)</span>
+                        <span class="text-gray-600">({{ $freelancer->reviews_count }} تقييم)</span>
                     </div>
 
                     <!-- معلومات الاتصال -->

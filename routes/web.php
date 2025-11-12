@@ -9,6 +9,7 @@ use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\MyjobController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ConversationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontController::class, 'home'])->name('home');
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
 Route::resource('projects', ProjectController::class)->except(['show','create']);
 Route::get('/projects/main', [FrontController::class, 'index'])->name('projects.main');
 Route::get('/freelance/main', [FrontController::class, 'freelance'])->name('freelance.main');
+Route::get('/messages/start/{freelancerId}', [ConversationController::class, 'start'])->name('messages.start');
 Route::get('/company/main', [FrontController::class, 'company'])->name('company.main');
 Route::post('/register-company', [CompanyController::class, 'store'])->name('company.register');
 
@@ -91,6 +93,9 @@ Route::prefix('freelancers')->name('freelancers.')->group(function () {
     Route::get('/', [FreelancerController::class, 'index'])
         ->name('index');
 
+        Route::get('/admin/index', [FreelancerController::class, 'adminIndex'])
+        ->name('admin.index');
+
     // صفحة البروفايل الرئيسية
     Route::get('/{freelancer}', [FreelancerController::class, 'show'])
         ->name('show');
@@ -107,6 +112,18 @@ Route::prefix('freelancers')->name('freelancers.')->group(function () {
     Route::get('/{freelancer}/reviews', [FreelancerController::class, 'reviews'])
         ->name('reviews');
 });
+
+    // عرض محادثة محددة
+    Route::get('/messages/{id}', [ConversationController::class, 'show'])->name('messages.show');
+
+    // بدء محادثة جديدة مع مستقل
+    Route::get('/messages/start/{freelancerId}', [ConversationController::class, 'start'])->name('messages.start');
+
+    // إرسال رسالة
+    Route::post('/messages/{id}/send', [ConversationController::class, 'sendMessage'])->name('messages.send');
+
+    // حذف محادثة
+    Route::delete('/messages/{id}', [ConversationController::class, 'destroy'])->name('messages.destroy');
 
 Route::middleware('project')
     ->group(function () {

@@ -84,7 +84,7 @@
         </li>
 
         <li>
-            @if(Route::is('ads.*'))
+            @if(Route::is('freelancers.*'))
                 @php
                   $myactive = 'myactive';
                 @endphp
@@ -93,11 +93,11 @@
                   $myactive = '';
                 @endphp
             @endif
-            <a href="#" class="{{ $myactive }}">
+            <a href="{{ route('freelancers.admin.index') }}" class="{{ $myactive }}">
                 <div class="parent-icon">
                     <i class="bx bx-category"></i>
                 </div>
-                <div class="menu-title">الأعلانات</div>
+                <div class="menu-title">اصحاب العمل الحر</div>
             </a>
         </li>
 

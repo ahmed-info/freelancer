@@ -9,7 +9,7 @@
                     <i class="fas fa-home"></i>
                 </a>
                 <span class="text-gray-300">|</span>
-                <a href="{{ route('freelancers.index') }}" class="text-gray-600 hover:text-primary">المستقلون</a>
+                <a href="{{ route('freelancers.index') }}" class="text-gray-600 hover:text-primary">صاحب عمل حر</a>
             </div>
             <div class="flex items-center space-x-4 space-x-reverse">
                 <a href="#" class="text-gray-600 hover:text-primary">
@@ -52,17 +52,12 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        @foreach([
-                            ['title' => 'تطوير واجهة موقع إلكتروني', 'price' => '500', 'days' => '5'],
-                            ['title' => 'تصميم متجاوب باستخدام Bootstrap', 'price' => '300', 'days' => '3'],
-                            ['title' => 'تطوير تطبيق ويب باستخدام React', 'price' => '800', 'days' => '7'],
-                            ['title' => 'تحسين أداء الموقع', 'price' => '200', 'days' => '2']
-                        ] as $service)
+                        @foreach($freelancer->services as $service)
                         <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition duration-300">
-                            <h4 class="font-bold text-gray-800 mb-2">{{ $service['title'] }}</h4>
+                            <h4 class="font-bold text-gray-800 mb-2">{{ $service->title }}</h4>
                             <div class="flex justify-between items-center text-sm text-gray-600">
-                                <span>يبدأ من ${{ $service['price'] }}</span>
-                                <span>{{ $service['days'] }} أيام</span>
+                                <span>يبدأ من ${{ $service->price }}</span>
+                                <span>{{ $service->delivery_days }} أيام</span>
                             </div>
                         </div>
                         @endforeach

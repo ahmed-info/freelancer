@@ -169,6 +169,62 @@ class FreelancerController extends Controller
         return view('main.freelance.index', compact('freelancers'));
     }
 
+    public function adminIndex(Request $request): View
+    {
+        $query = Freelancer::with('user', 'skills');
+
+        // البحث بالاسم
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        }
+
+        // فلترة حسب المهارة
+        if ($request->filled('skill')) {
+            $query->whereHas('skills', function ($q) use ($request) {
+                $q->where('slug', $request->skill);
+            });
+        }
+
+        // فلترة حسب الدولة
+        if ($request->filled('country')) {
+            $query->where('country', $request->country);
+        }
+
+        // فلترة الموثقين فقط
+        if ($request->boolean('verified')) {
+            $query->verified();
+        }
+
+        // فلترة المتصلين فقط
+        if ($request->boolean('online')) {
+            $query->online();
+        }
+
+        // الترتيب
+        $sort = $request->get('sort', 'rating');
+        switch ($sort) {
+            case 'rating':
+                $query->orderBy('rating', 'desc');
+                break;
+            case 'projects':
+                $query->orderBy('projects_count', 'desc');
+                break;
+            case 'reviews':
+                $query->orderBy('reviews_count', 'desc');
+                break;
+            case 'newest':
+                $query->latest();
+                break;
+        }
+
+        $freelancers = $query->paginate(12);
+
+        return view('admin.freelance.index', compact('freelancers'));
+    }
+
 
     private function getCountries(): array
     {

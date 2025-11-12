@@ -122,59 +122,65 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- بطاقة مستقل 1 -->
-                <div class="freelancer-card bg-white rounded-xl shadow-md overflow-hidden animate-fade-in-up" style="animation-delay: 0.1s">
-                    <div class="p-6">
-                        <div class="flex items-start mb-4">
-                            <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold text-xl ml-4">
-                                س
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="font-bold text-gray-800 text-lg">سارة الخالد</h3>
-                                <p class="text-gray-600">مصممة UI/UX محترفة</p>
-                            </div>
-                            <div class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
-                                متاحة
-                            </div>
-                        </div>
 
-                        <div class="flex items-center mb-4">
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                @foreach ($freelancers as $freelancer)
+                 <div class="freelancer-card bg-white rounded-xl shadow-md overflow-hidden animate-fade-in-up" style="animation-delay: 0.1s">
+                        <div class="p-6">
+                            <div class="flex items-start mb-4">
+                                <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold text-xl ml-4">
+                                    {{ substr($freelancer->user->name, 0, 1)}}
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-bold text-gray-800 text-lg">{{ $freelancer->user->name }}</h3>
+                                    <p class="text-gray-600">{{ $freelancer->title }}</p>
+                                </div>
+                                <div class="{{ $freelancer->is_online ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }} text-xs font-semibold px-2 py-1 rounded">
+                                    {{ $freelancer->is_online ? 'متاح للعمل' : 'غير متاح' }}
+                                </div>
                             </div>
-                            <span class="text-gray-600 text-sm mr-2">(4.9)</span>
-                            <span class="text-gray-500 text-sm">• 42 مشروع مكتمل</span>
-                        </div>
 
-                        <p class="text-gray-700 mb-4">مصممة واجهات مستخدم وتجربة مستخدم بخبرة 4 سنوات، متخصصة في تصميم تطبيقات الجوال والمواقع الإلكترونية.</p>
-
-                        <div class="flex flex-wrap mb-4">
-                            <span class="skill-tag">UI Design</span>
-                            <span class="skill-tag">UX Research</span>
-                            <span class="skill-tag">Figma</span>
-                            <span class="skill-tag">Adobe XD</span>
-                        </div>
-
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="text-gray-500 text-sm">بداية من</span>
-                                <span class="font-bold text-gray-800">$25</span>
-                                <span class="text-gray-500 text-sm">/ ساعة</span>
+                            <div class="flex items-center mb-4">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-gray-600 text-sm mr-2">({{ $freelancer->rating }})</span>
+                                <span class="text-gray-500 text-sm">• {{ $freelancer->reviews_count }} مشروع مكتمل</span>
                             </div>
-                            <a href="{{ route('profile.main') }}" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105">
-                                عرض الملف
-                            </a>
+
+                            <p class="text-gray-700 mb-4">{{ $freelancer->bio }}</p>
+
+                            <div class="flex flex-wrap mb-4">
+                                @foreach ($freelancer->skills as $skill)
+                                    <span class="skill-tag">{{ $skill->name }}</span>
+                                @endforeach
+                            </div>
+
+                            <div class="flex justify-between items-center">
+
+                                <a href="{{ route('profile.main', ['id' => $freelancer->id]) }}" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105">
+                                    عرض مشاريع مماثلة
+                                </a>
+                                <a href="{{ route('messages.start', ['freelancerId' => $freelancer->id]) }}"
+   class="bg-lime-500 hover:bg-lime-600 text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105 flex items-center">
+    <i class="fas fa-envelope ml-2"></i>
+    مراسلة
+</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
+
+
+
             </div>
 
             <div class="text-center mt-12">
                 <a href="#" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
-                    عرض المزيد من فرصةين
+                    عرض المزيد من اصحاب العمل الحر
                     <i class="fas fa-arrow-left mr-2"></i>
                 </a>
             </div>

@@ -37,10 +37,10 @@
                     </form>
                 @else
                     <!-- إذا لم يكن مسجل دخول -->
-                    <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">تسجيل الدخول</a>
+                    {{-- <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">تسجيل الدخول</a>
                     <button id="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">
                         انضم إلينا
-                    </button>
+                    </button> --}}
                 @endauth
             </div>
             <div class="md:hidden flex items-center">
@@ -123,7 +123,7 @@
             <div class="relative mb-2">
 
                     <input type="hidden" name="role" id="role" value="freelance">
-                    
+
                 </div>
 
             <div class="mb-6">

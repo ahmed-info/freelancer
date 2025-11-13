@@ -31,6 +31,25 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
+    public function storeRole(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        if ($request->role === 'freelance') {
+            return redirect()->route('freelance.main')->with('status', 'مرحباً بك في لوحة تحكم فرصةين');
+        } elseif ($request->role === 'project') {
+            return redirect()->route('project.create')->with('status', 'مرحباً بك في لوحة تحكم المشاريع');
+        } elseif ($request->role === 'company') {
+            return redirect()->route('company.main')->with('status', 'مرحباً بك في لوحة تحكم الشركات');
+        }else {
+            return redirect('/')->with('error', 'نوع حساب غير معروف');
+        }
+
+        //return redirect()->intended(route('dashboard', absolute: false));
+    }
+
     /**
      * Destroy an authenticated session.
      */

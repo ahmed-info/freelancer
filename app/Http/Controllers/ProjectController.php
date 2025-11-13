@@ -94,7 +94,7 @@ class ProjectController extends Controller
 
     $project->save();
 
-    return redirect()->route('myprojects.create', $project)->with('status', 'تم إنشاء المشروع ويتطلب مراجعة من قبل الإدارة!');
+    return redirect()->route('project.create', $project)->with('status', 'تم إنشاء المشروع ويتطلب مراجعة من قبل الإدارة!');
 }
 
     /**

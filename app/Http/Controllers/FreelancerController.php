@@ -32,6 +32,14 @@ class FreelancerController extends Controller
         return view('main.profile.show', compact('freelancer'));
     }
 
+    public function dashboardfreelance()
+    {
+       $userId =  auth()->user()->id;
+       $freelancer = Freelancer::where('user_id', $userId)->with('projects')->first();
+       //return ['userId' => $userId, 'freelancer' => $freelancer];
+        return view('dashboardfreelance', compact('freelancer'));
+    }
+
     public function create(): View
     {
         $skills = Skill::all();

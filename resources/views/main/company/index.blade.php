@@ -159,8 +159,8 @@
                                 <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse"
                                     style="animation-delay: 0.4s">3</div>
                                 <div>
-                                    <h3 class="font-bold text-gray-800 text-lg">اختر المستقل المناسب</h3>
-                                    <p class="text-gray-600 mt-1">اطلع على العروض واختر المستقل المناسب لمشروعك</p>
+                                    <h3 class="font-bold text-gray-800 text-lg">اختر مقدم الخدمة المناسب</h3>
+                                    <p class="text-gray-600 mt-1">اطلع على العروض واختر مقدم الخدمة المناسب لمشروعك</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
@@ -484,6 +484,16 @@
                         </div>
                     </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2">كلمة المرور</label>
+                            <input type="password" name="password"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="ادخل كلمة المرور">
+                        </div>
+
+                    </div>
+
                     <div>
                         <label class="block text-gray-700 mb-2">وصف الشركة</label>
                         <textarea name="description"
@@ -501,7 +511,7 @@
 
 
 
-                    <button type="button" id="showLoginModal"
+                    <button type="submit" id="showLoginModal"
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
                         سجل شركتك الآن
                     </button>

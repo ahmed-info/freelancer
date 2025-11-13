@@ -21,8 +21,7 @@
                     @if(auth()->user()->role === 'freelance')
                         <!-- إذا كان مستقل -->
                         <a href="{{ route('freelancer.dashboard') }}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">
-                            لوحة التحكم
-                        </a>
+لوحة تحكم صاحب عمل حر                        </a>
                     @else
                         <!-- إذا كان عميل -->
                         <a href="#" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">
@@ -61,7 +60,7 @@
                 @auth
                     @if(auth()->user()->role === 'freelance')
                         <a href="{{ route('freelancer.dashboard') }}" class="bg-primary hover:bg-secondary text-white block px-3 py-2 rounded-md text-base font-medium mt-2 transition duration-300 text-center">
-                            لوحة التحكم
+                            لوحة تحكم صاحب عمل حر
                         </a>
                     @else
                         <a href="#" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition duration-300">
@@ -86,6 +85,7 @@
 </nav>
 
 <!-- Modal تسجيل Rgister -->
+
 @guest
 <div id="registerModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
@@ -152,18 +152,16 @@
                 </button>
 
                 <div class="text-center text-gray-600 text-sm">
-                    ليس لديك حساب؟
-                    <a href="{{ route('login') }}" class="text-primary hover:text-secondary font-bold">
-                        سجل الآن كمقدم خدمة
+                    هل لديك حساب؟
+                    <a href="#" id="" class="text-primary hover:text-secondary font-bold">
+                        سجل الدخول كمقدم خدمة
                     </a>
                 </div>
             </div>
         </form>
     </div>
 </div>
-@endguest
 
-@guest
 <div id="loginModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
         <div class="flex justify-between items-center mb-4">
@@ -173,11 +171,16 @@
             </button>
         </div>
 
-        <form action="{{ route('login') }}" method="POST" class="mt-4">
+        <form action="{{ route('storeRole') }}" method="POST" class="mt-4">
             @csrf
 
 
             <div class="mb-4">
+                @if (Route::is('freelance.main'))
+                <input type="hidden" name="role" id="role" value="freelance">
+@else
+<input type="hidden" name="role" id="role" value="project">
+                @endif
                 <label for="email2" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الإلكتروني</label>
                 <input type="email" id="email2" name="email" required
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
@@ -222,6 +225,9 @@
     </div>
 </div>
 @endguest
+
+
+
 
 
 <!-- JavaScript -->

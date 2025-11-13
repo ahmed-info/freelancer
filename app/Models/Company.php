@@ -14,7 +14,8 @@ class Company extends Model
         'email',
         'phone',
         'description',
-        'terms_accepted'
+        'terms_accepted',
+        'user_id',
     ];
 
     protected $casts = [

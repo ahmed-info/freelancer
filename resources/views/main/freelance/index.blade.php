@@ -1,5 +1,143 @@
 @extends('main.layout.layout')
 @section('main_content')
+
+
+<!-- Modal تسجيل Rgister -->
+
+@guest
+<div id="registerModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-gray-900">ابدأ كمقدم خدمة</h3>
+            <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+            <p class="text-sm text-blue-800 text-right">
+                <i class="fas fa-info-circle ml-2"></i>
+                 انضم كمقدم خدمة
+            </p>
+        </div>
+
+        <form action="{{ route('register') }}" method="POST" class="mt-4">
+            @csrf
+
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2 text-right">الاسم الكامل</label>
+                <input type="text" id="name" name="name" required
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                    placeholder="أدخل اسمك">
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الإلكتروني</label>
+                <input type="email" id="email" name="email" required
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                    placeholder="أدخل بريدك الإلكتروني">
+            </div>
+
+            <div class="relative mb-2">
+
+                    <input type="hidden" name="role" id="role" value="freelance">
+
+                </div>
+
+            <div class="mb-6">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2 text-right">كلمة المرور</label>
+                <input type="password" id="password" name="password" required
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                    placeholder="أدخل كلمة المرور">
+            </div>
+
+            <div class="flex items-center justify-between mb-4">
+                <a href="{{ route('password.request') }}" class="inline-block align-baseline font-bold text-sm text-primary hover:text-secondary">
+                    نسيت كلمة المرور؟
+                </a>
+                <div class="flex items-center">
+                    <label class="flex items-center">
+                        <span class="ml-2 text-sm text-gray-700">تذكرني</span>
+                        <input type="checkbox" name="remember" class="form-checkbox h-4 w-4 text-primary rounded">
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <button type="submit"
+                    class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full transition duration-300">
+                    تسجيل الدخول
+                </button>
+
+                <div class="text-center text-gray-600 text-sm">
+                    ليس لديك حساب؟
+                    <a href="{{ route('login') }}" class="text-primary hover:text-secondary font-bold">
+                        سجل الآن كمقدم خدمة
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="loginModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-gray-900">تسجيل الدخول</h3>
+            <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <form action="{{ route('storeRole') }}" method="POST" class="mt-4">
+            @csrf
+
+
+            <div class="mb-4">
+                <label for="email2" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الإلكتروني</label>
+                <input type="email" id="email2" name="email" required
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                    placeholder="أدخل بريدك الإلكتروني">
+            </div>
+
+
+
+            <div class="mb-6">
+                <label for="password2" class="block text-gray-700 text-sm font-bold mb-2 text-right">كلمة المرور</label>
+                <input type="password" id="password2" name="password" required
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                    placeholder="أدخل كلمة المرور">
+            </div>
+
+            <div class="flex items-center justify-between mb-4">
+                <a href="{{ route('password.request') }}" class="inline-block align-baseline font-bold text-sm text-primary hover:text-secondary">
+                    نسيت كلمة المرور؟
+                </a>
+                <div class="flex items-center">
+                    <label class="flex items-center">
+                        <span class="ml-2 text-sm text-gray-700">تذكرني</span>
+                        <input type="checkbox" name="remember" class="form-checkbox h-4 w-4 text-primary rounded">
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <button type="submit"
+                    class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full transition duration-300">
+                    تسجيل الدخول
+                </button>
+
+                <div class="text-center text-gray-600 text-sm">
+                    ليس لديك حساب؟
+                    <a href="{{ route('login') }}" class="text-primary hover:text-secondary font-bold">
+                        سجل الآن كمقدم خدمة
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@endguest
     <!-- قسم الهيرو للمستقلين -->
     <section class="gradient-bg text-white py-16 md:py-24 relative overflow-hidden">
         <div class="floating-shape"></div>
@@ -13,10 +151,14 @@
                     <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">ابحث عن صاحب عمل حر محترف لتنفيذ مشروعك من بين آلاف المواهب العربية المتخصصة في مختلف المجالات</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
                         <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابحث عن صاحب عمل حر</a>
+                        @if(auth()->check() && auth()->user()->role == 'freelance')
                         <a href="{{ route('profile.freelancer.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انضم كصاحب عمل حر</a>
+                        @else
+                        <a href="#" id="loginModalLink" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابدأ كمقدم خدمة</a>
+                     @endif
                     </div>
                 </div>
-                <div class="md:w-1/2 flex justify-center animate-slide-up">
+                {{-- <div class="md:w-1/2 flex justify-center animate-slide-up">
                     <div class="relative rotate-3">
                         <div class="bg-white rounded-2xl shadow-2xl p-6 w-80 transform rotate-3 animate-float">
                             <div class="flex items-center mb-4">
@@ -50,7 +192,7 @@
                             متاح للعمل
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -238,3 +380,34 @@
         </div>
     </section>
 @endsection
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // فتح modal تسجيل الدخول
+    const loginLink = document.getElementById('loginModalLink');
+    const loginModal = document.getElementById('loginModal');
+
+    if (loginLink && loginModal) {
+        loginLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.classList.remove('hidden');
+        });
+    }
+
+    // إغلاق modal تسجيل الدخول
+    const closeLoginModal = loginModal?.querySelector('#closeModal');
+    if (closeLoginModal) {
+        closeLoginModal.addEventListener('click', function() {
+            loginModal.classList.add('hidden');
+        });
+    }
+
+    // إغلاق modal عند النقر خارج المحتوى
+    if (loginModal) {
+        loginModal.addEventListener('click', function(e) {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
+    }
+});
+</script>

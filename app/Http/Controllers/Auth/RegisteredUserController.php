@@ -59,7 +59,7 @@ class RegisteredUserController extends Controller
         if ($request->role === 'freelance') {
             return redirect()->route('freelance.main')->with('status', 'مرحباً بك في لوحة تحكم فرصةين');
         } elseif ($request->role === 'project') {
-            return redirect()->route('myprojects.create')->with('status', 'مرحباً بك في لوحة تحكم المشاريع');
+            return redirect()->route('project.create')->with('status', 'مرحباً بك في لوحة تحكم المشاريع');
         } elseif ($request->role === 'company') {
             return redirect()->route('company.main')->with('status', 'مرحباً بك في لوحة تحكم الشركات');
         }else {

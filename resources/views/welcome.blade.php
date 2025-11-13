@@ -129,11 +129,17 @@
                     <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">حوّل مهاراتك إلى مشاريع حقيقية واربح من خلال العمل عبر الإنترنت مع آلاف العملاء العرب</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
                         <a href="#" id="joinFreelancerBtn" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابدأ كمقدم خدمة</a>
-                        <a href="{{ route('myprojects.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انشر مشروعك</a>
+                        @if(auth()->check() && auth()->user()->role == 'project')
+
+                        <a href="{{ route('project.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انشر مشروعك</a>
+                        @else
+                        <a href="#" id="loginModalLink" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انشر مشروعك</a>
+
+                        @endif
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center animate-slide-up">
-                    <div class="relative rotate-3">
+                    {{-- <div class="relative rotate-3">
                         <div class="bg-white rounded-2xl shadow-2xl p-6 w-80 transform rotate-3 animate-float">
                             <div class="flex items-center mb-4">
                                 <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
@@ -153,7 +159,7 @@
                         <div class="absolute -top-4 -right-4 bg-accent text-white py-1 px-3 rounded-full text-sm font-bold animate-bounce-slow">
                             جاري التوظيف
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -506,8 +512,8 @@
             <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up">جاهز لبدء رحلتك في العمل الحر؟</h2>
             <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى ملايين فرصةين العرب وابدأ في كسب المال من مهاراتك اليوم</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                <a href="#" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">سجل كمستقل</a>
-                <a href="{{ route('myprojects.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">انشر مشروعك</a>
+                <a href="#" id="joinFreelancerBtn" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">سجل كصاحب عمل حر</a>
+                <a href="{{ route('project.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">انشر مشروعك</a>
             </div>
         </div>
     </section>
@@ -769,3 +775,34 @@
 </script>
 
 @endsection
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // فتح modal تسجيل الدخول
+    const loginLink = document.getElementById('loginModalLink');
+    const loginModal = document.getElementById('loginModal');
+
+    if (loginLink && loginModal) {
+        loginLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.classList.remove('hidden');
+        });
+    }
+
+    // إغلاق modal تسجيل الدخول
+    const closeLoginModal = loginModal?.querySelector('#closeModal');
+    if (closeLoginModal) {
+        closeLoginModal.addEventListener('click', function() {
+            loginModal.classList.add('hidden');
+        });
+    }
+
+    // إغلاق modal عند النقر خارج المحتوى
+    if (loginModal) {
+        loginModal.addEventListener('click', function(e) {
+            if (e.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
+    }
+});
+</script>

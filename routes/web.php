@@ -35,6 +35,12 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
+    Route::post('/start-conversation', [ChatController::class, 'startConversation'])->name('start.conversation');
+    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.message');
+    Route::get('/get-messages/{conversationId}', [ChatController::class, 'getMessages'])->name('get.messages');
+    Route::get('/get-conversations', [ChatController::class, 'getConversations'])->name('get.conversations');
+
+
     Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
     Route::post('/myjobs', [SpecializationController::class, 'storeJobs'])->name('myjobs.store');
 

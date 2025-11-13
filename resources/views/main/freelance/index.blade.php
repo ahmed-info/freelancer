@@ -1,9 +1,7 @@
 @extends('main.layout.layout')
 @section('main_content')
 
-
-<!-- Modal تسجيل Rgister -->
-
+<!-- Modal تسجيل الدخول -->
 @guest
 <div id="registerModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
@@ -39,10 +37,8 @@
             </div>
 
             <div class="relative mb-2">
-
-                    <input type="hidden" name="role" id="role" value="freelance">
-
-                </div>
+                <input type="hidden" name="role" id="role" value="freelance">
+            </div>
 
             <div class="mb-6">
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2 text-right">كلمة المرور</label>
@@ -84,7 +80,7 @@
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-bold text-gray-900">تسجيل الدخول</h3>
-            <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+            <button id="closeLoginModal" class="text-gray-400 hover:text-gray-500">
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>
@@ -92,15 +88,12 @@
         <form action="{{ route('storeRole') }}" method="POST" class="mt-4">
             @csrf
 
-
             <div class="mb-4">
                 <label for="email2" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الإلكتروني</label>
                 <input type="email" id="email2" name="email" required
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
                     placeholder="أدخل بريدك الإلكتروني">
             </div>
-
-
 
             <div class="mb-6">
                 <label for="password2" class="block text-gray-700 text-sm font-bold mb-2 text-right">كلمة المرور</label>
@@ -138,6 +131,7 @@
     </div>
 </div>
 @endguest
+
     <!-- قسم الهيرو للمستقلين -->
     <section class="gradient-bg text-white py-16 md:py-24 relative overflow-hidden">
         <div class="floating-shape"></div>
@@ -154,45 +148,10 @@
                         @if(auth()->check() && auth()->user()->role == 'freelance')
                         <a href="{{ route('profile.freelancer.create') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انضم كصاحب عمل حر</a>
                         @else
-                        <a href="#" id="loginModalLink" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابدأ كمقدم خدمة</a>
+                        <a href="#" id="heroLoginModalLink" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابدأ كمقدم خدمة</a>
                      @endif
                     </div>
                 </div>
-                {{-- <div class="md:w-1/2 flex justify-center animate-slide-up">
-                    <div class="relative rotate-3">
-                        <div class="bg-white rounded-2xl shadow-2xl p-6 w-80 transform rotate-3 animate-float">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold ml-3">
-                                    م
-                                </div>
-                                <div class="mr-3">
-                                    <h3 class="font-bold text-gray-800">محمد أحمد</h3>
-                                    <p class="text-gray-600 text-sm">مطور ويب متكامل</p>
-                                </div>
-                            </div>
-                            <div class="flex mb-4">
-                                <div class="flex text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <span class="text-gray-600 text-sm mr-2">(4.7)</span>
-                            </div>
-                            <p class="text-gray-700 mb-4">مطور ويب بخبرة 5 سنوات، متخصص في تطوير تطبيقات الويب والتجارة الإلكترونية باستخدام أحدث التقنيات.</p>
-                            <div class="flex flex-wrap">
-                                <span class="skill-tag">HTML/CSS</span>
-                                <span class="skill-tag">JavaScript</span>
-                                <span class="skill-tag">React</span>
-                                <span class="skill-tag">Node.js</span>
-                            </div>
-                        </div>
-                        <div class="absolute -top-4 -right-4 bg-accent text-white py-1 px-3 rounded-full text-sm font-bold animate-bounce-slow">
-                            متاح للعمل
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </section>
@@ -241,13 +200,13 @@
         </div>
     </section>
 
-    <!-- قسم عرض فرصةين -->
+    <!-- قسم عرض المستقلين -->
     <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center mb-12">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-800 mb-2 animate-fade-in-up">اكتشف أفضل المواهب العربية</h2>
-                    <p class="text-gray-600 animate-fade-in-up" style="animation-delay: 0.2s">تصفح آلاف فرصةين الموهوبين وابحث عن المناسب لمشروعك</p>
+                    <p class="text-gray-600 animate-fade-in-up" style="animation-delay: 0.2s">تصفح آلاف المستقلين الموهوبين وابحث عن المناسب لمشروعك</p>
                 </div>
                 <div class="mt-4 md:mt-0">
                     <div class="flex items-center space-x-2 space-x-reverse">
@@ -263,14 +222,12 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- بطاقة مستقل 1 -->
-
                 @foreach ($freelancers as $freelancer)
                  <div class="freelancer-card bg-white rounded-xl shadow-md overflow-hidden animate-fade-in-up" style="animation-delay: 0.1s">
                         <div class="p-6">
                             <div class="flex items-start mb-4">
                                 <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold text-xl ml-4">
-                                    {{ substr($freelancer->user->name, 0, 1)}}
+                                    {{ mb_substr($freelancer->user->name, 0, 1, 'UTF-8') }}
                                 </div>
                                 <div class="flex-1">
                                     <h3 class="font-bold text-gray-800 text-lg">{{ $freelancer->user->name }}</h3>
@@ -301,28 +258,27 @@
                                 @endforeach
                             </div>
 
-                            <div class="flex justify-between items-center">
-
-                                <a href="{{ route('profile.main', ['id' => $freelancer->id]) }}" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105">
-                                    عرض مشاريع مماثلة
+                            <div class="flex justify-between items-center gap-2">
+                                <a href="{{ route('profile.main', ['id' => $freelancer->id]) }}" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105 flex-1 text-center">
+                                    عرض الملف الشخصي
                                 </a>
-                                <a href="{{ route('messages.start', ['freelancerId' => $freelancer->id]) }}"
-   class="bg-lime-500 hover:bg-lime-600 text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105 flex items-center">
-    <i class="fas fa-envelope ml-2"></i>
-    مراسلة
-</a>
+                                <!-- زر المراسلة مع تمرير معرف المستقل -->
+                                <button class="msg-btn bg-lime-500 hover:bg-lime-600 text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105 flex items-center flex-1 justify-center"
+                                    data-freelancer-id="{{ $freelancer->id }}"
+                                    data-freelancer-name="{{ $freelancer->user->name }}">
+                                    <i class="fas fa-envelope ml-2"></i>
+                                    مراسلة
+                                </button>
                             </div>
                         </div>
                     </div>
                 @endforeach
 
-
-
             </div>
 
             <div class="text-center mt-12">
                 <a href="#" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
-                    عرض المزيد من اصحاب العمل الحر
+                    عرض المزيد من المستقلين
                     <i class="fas fa-arrow-left mr-2"></i>
                 </a>
             </div>
@@ -343,7 +299,7 @@
                         <i class="fas fa-user-check text-primary text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-2">مستقلون موثوقون</h3>
-                    <p class="text-gray-600">جميع فرصةين في منصتنا خضعوا لمراجعة ملفاتهم وتقييماتهم لضمان جودة عملهم</p>
+                    <p class="text-gray-600">جميع المستقلين في منصتنا خضعوا لمراجعة ملفاتهم وتقييماتهم لضمان جودة عملهم</p>
                 </div>
 
                 <div class="bg-white rounded-xl shadow-md p-6 text-center card-hover animate-fade-in-up" style="animation-delay: 0.3s">
@@ -372,42 +328,471 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up">هل أنت مستقل تبحث عن فرص عمل؟</h2>
-            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى آلاف فرصةين العرب وابدأ في كسب المال من مهاراتك عبر الإنترنت</p>
+            <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم إلى آلاف المستقلين العرب وابدأ في كسب المال من مهاراتك عبر الإنترنت</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
                 <a href="{{ route('profile.freelancer.create') }}" class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">انضم كصاحب عمل حر</a>
                 <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">اعرف المزيد</a>
             </div>
         </div>
     </section>
-@endsection
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // فتح modal تسجيل الدخول
-    const loginLink = document.getElementById('loginModalLink');
-    const loginModal = document.getElementById('loginModal');
 
-    if (loginLink && loginModal) {
-        loginLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            loginModal.classList.remove('hidden');
-        });
-    }
+    <!-- شريط الدردشة الجانبي -->
+    <div id="chatSidebar" class="fixed inset-y-0 right-0 w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 border-r border-gray-200">
+        <div class="flex flex-col h-full">
+            <!-- رأس الشريط -->
+            <div class="bg-primary text-white p-4 flex justify-between items-center">
+                <h3 class="text-lg font-bold">الدردشة مع <span id="chatFreelancerName"></span></h3>
+                <button id="closeChat" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
 
-    // إغلاق modal تسجيل الدخول
-    const closeLoginModal = loginModal?.querySelector('#closeModal');
-    if (closeLoginModal) {
-        closeLoginModal.addEventListener('click', function() {
-            loginModal.classList.add('hidden');
-        });
-    }
+            <!-- منطقة الرسائل -->
+            <div class="flex-1 overflow-y-auto p-4" id="chatMessages">
+                <!-- سيتم ملء الرسائل هنا -->
+                <div class="text-center text-gray-500 py-10">
+                    <i class="fas fa-comments text-4xl mb-3 block"></i>
+                    <p>لا توجد رسائل سابقة</p>
+                </div>
+            </div>
 
-    // إغلاق modal عند النقر خارج المحتوى
-    if (loginModal) {
-        loginModal.addEventListener('click', function(e) {
-            if (e.target === loginModal) {
+            <!-- منطقة إدخال الرسالة -->
+            <div class="p-4 border-t border-gray-200">
+                <form id="messageForm" class="flex gap-2">
+                    <input type="text" id="messageInput" placeholder="اكتب رسالتك..."
+                        class="flex-1 py-2 px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        autocomplete="off">
+                    <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition duration-300">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر فتح الدردشة العائم -->
+    <div id="chatFloatingBtn" class="fixed bottom-6 left-6 bg-primary hover:bg-secondary text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center cursor-pointer transition duration-300 z-40 hidden">
+        <i class="fas fa-comments text-xl"></i>
+    </div>
+
+    <!-- overlay للخلفية -->
+    <div id="chatOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+    <style>
+        .chat-item {
+            transition: all 0.3s ease;
+        }
+
+        .chat-item:hover {
+            transform: translateX(-5px);
+        }
+
+        #chatSidebar {
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #chatFloatingBtn {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #chatFloatingBtn:hover {
+            transform: scale(1.1);
+        }
+
+        /* تنسيق الرسائل */
+        .message {
+            margin-bottom: 12px;
+        }
+
+        .message.sent {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .message.received {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            word-wrap: break-word;
+        }
+
+        .message.sent .message-content {
+            background-color: #3b82f6;
+            color: white;
+            border-bottom-right-radius: 0;
+        }
+
+        .message.received .message-content {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border-bottom-left-radius: 0;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== متغيرات عامة =====
+            const isAuthenticated = {{ auth()->check() ? 'true' : 'false' }};
+            const currentUserId = {{ auth()->check() ? auth()->user()->id : 'null' }};
+            let currentFreelancerId = null;
+
+            // ===== عناصر DOM =====
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const chatSidebar = document.getElementById('chatSidebar');
+            const closeChat = document.getElementById('closeChat');
+            const chatOverlay = document.getElementById('chatOverlay');
+            const chatFloatingBtn = document.getElementById('chatFloatingBtn');
+            const messageForm = document.getElementById('messageForm');
+            const messageInput = document.getElementById('messageInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatFreelancerName = document.getElementById('chatFreelancerName');
+
+            // ===== الدوال الأساسية =====
+
+            // فتح نموذج الدخول
+            function openLoginModal() {
+                loginModal.classList.remove('hidden');
+            }
+
+            // إغلاق نموذج الدخول
+            function closeLoginModalFunc() {
                 loginModal.classList.add('hidden');
             }
+
+            // فتح شريط الدردشة
+            function openChatSidebar(freelancerId, freelancerName) {
+                currentFreelancerId = freelancerId;
+                chatFreelancerName.textContent = freelancerName;
+                chatMessages.innerHTML = `
+                    <div class="text-center text-gray-500 py-10">
+                        <i class="fas fa-comments text-4xl mb-3 block"></i>
+                        <p>ابدأ المحادثة</p>
+                    </div>
+                `;
+                messageInput.value = '';
+                chatSidebar.classList.remove('translate-x-full');
+                chatOverlay.classList.remove('hidden');
+                chatFloatingBtn.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // إغلاق شريط الدردشة
+            function closeChatSidebar() {
+                chatSidebar.classList.add('translate-x-full');
+                chatOverlay.classList.add('hidden');
+                chatFloatingBtn.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                currentFreelancerId = null;
+            }
+
+            // إضافة رسالة إلى الدردشة
+            function addMessageToChat(message, isSent) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+                messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // ===== Event Listeners =====
+
+            // أزرار المراسلة في البطاقات
+            document.querySelectorAll('.msg-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    if (!isAuthenticated) {
+                        // إذا لم يكن مسجل دخول، فتح نموذج الدخول
+                        openLoginModal();
+                    } else {
+                        // إذا كان مسجل دخول، فتح الدردشة
+                        const freelancerId = this.getAttribute('data-freelancer-id');
+                        const freelancerName = this.getAttribute('data-freelancer-name');
+                        openChatSidebar(freelancerId, freelancerName);
+                    }
+                });
+            });
+
+            // إغلاق نموذج الدخول
+            if (closeLoginModal) {
+                closeLoginModal.addEventListener('click', closeLoginModalFunc);
+            }
+
+            // إغلاق نموذج الدخول عند النقر خارج المحتوى
+            if (loginModal) {
+                loginModal.addEventListener('click', function(e) {
+                    if (e.target === loginModal) {
+                        closeLoginModalFunc();
+                    }
+                });
+            }
+
+            // التحكم في شريط الدردشة
+            closeChat.addEventListener('click', closeChatSidebar);
+            chatOverlay.addEventListener('click', closeChatSidebar);
+            chatFloatingBtn.addEventListener('click', () => {
+                if (chatSidebar.classList.contains('translate-x-full')) {
+                    openChatSidebar(currentFreelancerId, chatFreelancerName.textContent);
+                } else {
+                    closeChatSidebar();
+                }
+            });
+
+            // منع إغلاق الشريط عند النقر داخله
+            chatSidebar.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // معالجة إرسال الرسالة
+            messageForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const message = messageInput.value.trim();
+                if (message && currentFreelancerId) {
+                    // إضافة الرسالة إلى الواجهة
+                    addMessageToChat(message, true);
+
+                    // هنا يمكن إضافة AJAX لإرسال الرسالة إلى الخادم
+                    // مثال:
+                    // fetch('/messages/send', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    //     },
+                    //     body: JSON.stringify({
+                    //         freelancer_id: currentFreelancerId,
+                    //         message: message
+                    //     })
+                    // }).then(response => response.json())
+                    //   .then(data => {
+                    //       console.log('تم إرسال الرسالة:', data);
+                    //   });
+
+                    messageInput.value = '';
+                    messageInput.focus();
+                }
+            });
+
+            // رابط نموذج الدخول في قسم البطل
+            const heroLoginModalLink = document.getElementById('heroLoginModalLink');
+            if (heroLoginModalLink) {
+                heroLoginModalLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openLoginModal();
+                });
+            }
         });
-    }
-});
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ===== متغيرات عامة =====
+        const isAuthenticated = {{ auth()->check() ? 'true' : 'false' }};
+        const currentUserId = {{ auth()->check() ? auth()->user()->id : 'null' }};
+        let currentConversationId = null;
+        let currentFreelancerId = null;
+
+        // ===== عناصر DOM =====
+        const loginModal = document.getElementById('loginModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const chatSidebar = document.getElementById('chatSidebar');
+        const closeChat = document.getElementById('closeChat');
+        const chatOverlay = document.getElementById('chatOverlay');
+        const chatFloatingBtn = document.getElementById('chatFloatingBtn');
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('messageInput');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatFreelancerName = document.getElementById('chatFreelancerName');
+
+        // ===== الدوال الأساسية =====
+
+        // فتح نموذج الدخول
+        function openLoginModal() {
+            loginModal.classList.remove('hidden');
+        }
+
+        // إغلاق نموذج الدخول
+        function closeLoginModalFunc() {
+            loginModal.classList.add('hidden');
+        }
+
+        // فتح شريط الدردشة
+        function openChatSidebar(conversationId, freelancerName) {
+            currentConversationId = conversationId;
+            chatFreelancerName.textContent = freelancerName;
+            loadMessages(conversationId);
+            chatSidebar.classList.remove('translate-x-full');
+            chatOverlay.classList.remove('hidden');
+            chatFloatingBtn.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق شريط الدردشة
+        function closeChatSidebar() {
+            chatSidebar.classList.add('translate-x-full');
+            chatOverlay.classList.add('hidden');
+            chatFloatingBtn.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            currentConversationId = null;
+            currentFreelancerId = null;
+        }
+
+        // تحميل الرسائل
+        function loadMessages(conversationId) {
+            fetch(`/get-messages/${conversationId}`)
+                .then(response => response.json())
+                .then(messages => {
+                    displayMessages(messages);
+                })
+                .catch(error => console.error('Error loading messages:', error));
+        }
+
+        // عرض الرسائل
+        function displayMessages(messages) {
+            chatMessages.innerHTML = '';
+            if (messages.length === 0) {
+                chatMessages.innerHTML = `
+                    <div class="text-center text-gray-500 py-10">
+                        <i class="fas fa-comments text-4xl mb-3 block"></i>
+                        <p>ابدأ المحادثة</p>
+                    </div>
+                `;
+                return;
+            }
+
+            messages.forEach(message => {
+                addMessageToChat(message.message, message.sender_id == currentUserId, false);
+            });
+        }
+
+        // إضافة رسالة إلى الدردشة
+        function addMessageToChat(message, isSent, saveToServer = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+            messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // إذا كانت رسالة جديدة من المستخدم، أرسلها إلى الخادم
+            if (saveToServer && currentConversationId) {
+                sendMessageToServer(message);
+            }
+        }
+
+        // إرسال الرسالة إلى الخادم
+        function sendMessageToServer(message) {
+            const formData = new FormData();
+            formData.append('conversation_id', currentConversationId);
+            formData.append('message', message);
+            formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+
+            fetch('/send-message', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status !== 'success') {
+                    console.error('Failed to send message');
+                }
+            })
+            .catch(error => console.error('Error sending message:', error));
+        }
+
+        // بدء محادثة جديدة
+        function startNewConversation(freelancerId, freelancerName) {
+            const formData = new FormData();
+            formData.append('freelancer_id', freelancerId);
+            formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+
+            fetch('/start-conversation', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                currentConversationId = data.conversation_id;
+                openChatSidebar(data.conversation_id, freelancerName);
+            })
+            .catch(error => console.error('Error starting conversation:', error));
+        }
+
+        // ===== Event Listeners =====
+
+        // أزرار المراسلة في البطاقات
+        document.querySelectorAll('.msg-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                if (!isAuthenticated) {
+                    openLoginModal();
+                } else {
+                    const freelancerId = this.getAttribute('data-freelancer-id');
+                    const freelancerName = this.getAttribute('data-freelancer-name');
+                    startNewConversation(freelancerId, freelancerName);
+                }
+            });
+        });
+
+        // إغلاق نموذج الدخول
+        if (closeLoginModal) {
+            closeLoginModal.addEventListener('click', closeLoginModalFunc);
+        }
+
+        if (loginModal) {
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === loginModal) {
+                    closeLoginModalFunc();
+                }
+            });
+        }
+
+        // التحكم في شريط الدردشة
+        closeChat.addEventListener('click', closeChatSidebar);
+        chatOverlay.addEventListener('click', closeChatSidebar);
+        chatFloatingBtn.addEventListener('click', () => {
+            if (chatSidebar.classList.contains('translate-x-full')) {
+                openChatSidebar(currentConversationId, chatFreelancerName.textContent);
+            } else {
+                closeChatSidebar();
+            }
+        });
+
+        chatSidebar.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // معالجة إرسال الرسالة
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const message = messageInput.value.trim();
+            if (message && currentConversationId) {
+                addMessageToChat(message, true, true);
+                messageInput.value = '';
+                messageInput.focus();
+            }
+        });
+
+        // رابط نموذج الدخول في قسم البطل
+        const heroLoginModalLink = document.getElementById('heroLoginModalLink');
+        if (heroLoginModalLink) {
+            heroLoginModalLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                openLoginModal();
+            });
+        }
+    });
 </script>
+
+
+
+@endsection

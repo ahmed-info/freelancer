@@ -29,6 +29,7 @@ class FrontController extends Controller
     public function freelance()
     {
         $freelancers = Freelancer::with('skills')->get();
+        //return auth()->user();
         return view('main.freelance.index', ['freelancers' => $freelancers]);
     }
 

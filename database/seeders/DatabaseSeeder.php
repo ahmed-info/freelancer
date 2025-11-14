@@ -10,6 +10,8 @@ use Database\Seeders\SpecializationSeeder;
 use Database\Seeders\MyJobSeeder;
 use Database\Seeders\SpecializationsAndMyjobsSeeder;
 use Database\Seeders\FreelancerSeeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -27,11 +29,39 @@ class DatabaseSeeder extends Seeder
         //     'password' => bcrypt('123456aa'),
         //     'role' => 'project',
         // ]);
-        $this->call(FreelancerSeeder::class);
-        $this->call(ProjectSeeder::class);
+        User::create([
+            'name' => 'المسؤول',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'admin'
+        ]);
+
+        User::create([
+            'name' => 'مستقل 1',
+            'email' => 'freelance1@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'freelance'
+        ]);
+
+        User::create([
+            'name' => 'مشروع 1',
+            'email' => 'project1@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'project'
+        ]);
+
+        User::create([
+            'name' => 'شركة 1',
+            'email' => 'company1@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'company'
+        ]);
+
+        //$this->call(FreelancerSeeder::class);
+        //$this->call(ProjectSeeder::class);
         // $this->call(SpecializationSeeder::class);
         // $this->call(MyJobSeeder::class);
-        $this->call(SpecializationsAndMyjobsSeeder::class);
+        //$this->call(SpecializationsAndMyjobsSeeder::class);
         //$this->call(FreelancerSeeder::class);
     }
 }

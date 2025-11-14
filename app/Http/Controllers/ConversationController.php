@@ -3,124 +3,68 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conversation;
-use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ConversationController extends Controller
 {
-    // عرض قائمة المحادثات
-    public function index()
-    {
-        $userId = Auth::id();
-
-        $conversations = Conversation::where('freelancer_id', $userId)
-            ->orWhere('project_id', $userId)
-            ->with(['freelancer', 'client', 'lastMessage'])
-            ->orderBy('last_message_at', 'desc')
-            ->get();
-
-        return view('messages.index', compact('conversations'));
-    }
-
-    // عرض محادثة محددة
-    public function show($id)
-    {
-        $userId = Auth::id();
-
-        $conversation = Conversation::with(['freelancer', 'client', 'messages.sender'])
-            ->findOrFail($id);
-
-        // التحقق من أن المستخدم طرف في المحادثة
-        if ($conversation->freelancer_id != $userId && $conversation->project_id != $userId) {
-            abort(403, 'غير مصرح لك بالوصول إلى هذه المحادثة');
-        }
-
-        // تحديد جميع الرسائل كمقروءة
-        $conversation->messages()
-            ->where('sender_id', '!=', $userId)
-            ->where('is_read', false)
-            ->update(['is_read' => true]);
-
-        return view('messages.show', compact('conversation'));
-    }
-
-    // بدء محادثة جديدة أو فتح محادثة موجودة
-    public function start($freelancerId)
-    {
-        $userId = Auth::id();
-
-        // البحث عن محادثة موجودة
-        $conversation = Conversation::where(function($query) use ($userId, $freelancerId) {
-            $query->where('freelancer_id', $freelancerId)
-                  ->where('project_id', $userId);
-        })->orWhere(function($query) use ($userId, $freelancerId) {
-            $query->where('freelancer_id', $userId)
-                  ->where('project_id', $freelancerId);
-        })->first();
-
-        // إذا لم توجد محادثة، قم بإنشاء واحدة جديدة
-        if (!$conversation) {
-            $conversation = Conversation::create([
-                'freelancer_id' => $freelancerId,
-                'project_id' => $userId,
-                'last_message_at' => now()
-            ]);
-        }
-
-        return redirect()->route('messages.show', $conversation->id);
-    }
-
-    // إرسال رسالة
-    public function sendMessage(Request $request, $id)
+    public function store(Request $request)
     {
         $request->validate([
-            'message' => 'required|string|max:5000'
+            'user_ids' => 'required|array',
+            'user_ids.*' => 'exists:users,id',
+            'title' => 'nullable|string|max:255',
         ]);
 
-        $userId = Auth::id();
+        $currentUser = Auth::user();
+        $userIds = array_merge([$currentUser->id], $request->user_ids);
 
-        $conversation = Conversation::findOrFail($id);
+        // البحث عن محادثة موجودة بين نفس المستخدمين
+        $existingConversation = $this->findExistingConversation($userIds);
 
-        // التحقق من أن المستخدم طرف في المحادثة
-        if ($conversation->freelancer_id != $userId && $conversation->project_id != $userId) {
-            abort(403, 'غير مصرح لك بإرسال رسالة في هذه المحادثة');
+        if ($existingConversation) {
+            return redirect()->route('chat.show', $existingConversation);
         }
 
-        // إنشاء الرسالة
-        $message = Message::create([
-            'conversation_id' => $conversation->id,
-            'sender_id' => $userId,
-            'message' => $request->message,
-            'is_read' => false
+        $conversation = Conversation::create([
+            'title' => $request->title,
+            'type' => count($userIds) > 2 ? 'group' : 'direct',
         ]);
 
-        // تحديث وقت آخر رسالة
-        $conversation->update([
-            'last_message_at' => now()
-        ]);
+        $conversation->participants()->attach($userIds);
 
-        return response()->json([
-            'success' => true,
-            'message' => $message->load('sender')
-        ]);
+        return redirect()->route('chat.show', $conversation)
+            ->with('success', 'تم إنشاء المحادثة بنجاح');
     }
 
-    // حذف محادثة
-    public function destroy($id)
+    private function findExistingConversation($userIds)
     {
-        $userId = Auth::id();
+        return Conversation::whereHas('participants', function ($query) use ($userIds) {
+            $query->whereIn('user_id', $userIds);
+        }, '=', count($userIds))
+        ->whereHas('participants', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
+        ->first();
+    }
 
-        $conversation = Conversation::findOrFail($id);
+    public function destroy(Conversation $conversation)
+    {
+        $user = Auth::user();
 
-        // التحقق من أن المستخدم طرف في المحادثة
-        if ($conversation->freelancer_id != $userId && $conversation->project_id != $userId) {
-            abort(403, 'غير مصرح لك بحذف هذه المحادثة');
+        if (!$conversation->participants->contains($user->id)) {
+            abort(403);
         }
 
-        $conversation->delete();
+        $conversation->participants()->detach($user->id);
 
-        return redirect()->route('messages.index')->with('success', 'تم حذف المحادثة بنجاح');
+        // إذا لم يتبقى أي مشاركين، احذف المحادثة
+        if ($conversation->participants()->count() === 0) {
+            $conversation->delete();
+        }
+
+        return redirect()->route('chat.index')
+            ->with('success', 'تم مغادرة المحادثة بنجاح');
     }
 }

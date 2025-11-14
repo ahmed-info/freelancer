@@ -9,8 +9,9 @@ use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MessageController;
 Route::get('/', [FrontController::class, 'home'])->name('home');
 Route::get('/projects/main', [FrontController::class, 'index'])->name('projects.main');
 Route::get('/freelance/main', [FrontController::class, 'freelance'])->name('freelance.main');
@@ -20,6 +21,25 @@ Route::get('/projects/show', [FrontController::class, 'projects'])->name('projec
 Route::post('/register-company', [CompanyController::class, 'store'])->name('company.register');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+
+    // عرض محادثة محددة
+    Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
+
+    // إنشاء محادثة جديدة
+    Route::post('/conversations', [ConversationController::class, 'store'])->name('conversations.store');
+
+    // مغادرة محادثة
+    Route::delete('/conversations/{conversation}', [ConversationController::class, 'destroy'])->name('conversations.destroy');
+
+    // إرسال رسالة
+    Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
+
+    // جلب الرسائل (للتحديث التلقائي)
+    Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages'])->name('messages.get');
+    // الرسائل
+    //Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'report'])->name('dashboard');
 

@@ -2,87 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-        // بدء محادثة جديدة أو إرجاع المحادثة الحالية
-    public function startConversation(Request $request)
+    public function index()
     {
-        $request->validate([
-            'freelancer_id' => 'required|exists:users,id'
-        ]);
+        $user = Auth::user();
+        $conversations = $user->conversations()
+            ->with(['latestMessage', 'participants'])
+            ->orderByDesc(
+                Conversation::select('created_at')
+                    ->whereColumn('conversation_id', 'conversations.id')
+                    ->orderByDesc('created_at')
+                    ->limit(1)
+            )
+            ->get();
 
-        $clientId = Auth::id();
-        $freelancerId = $request->freelancer_id;
+        $users = User::where('id', '!=', $user->id)->get();
 
-        // تحقق إذا كانت هناك محادثة موجودة بالفعل
-        $conversation = Conversation::where(function ($query) use ($clientId, $freelancerId) {
-            $query->where('user1_id', $clientId)
-                  ->where('user2_id', $freelancerId);
-        })->orWhere(function ($query) use ($clientId, $freelancerId) {
-            $query->where('user1_id', $freelancerId)
-                  ->where('user2_id', $clientId);
-        })->first();
+        return view('chat.index', compact('conversations', 'users'));
+    }
 
-        if (!$conversation) {
-            $conversation = Conversation::create([
-                'user1_id' => $clientId,
-                'user2_id' => $freelancerId
-            ]);
+    public function show(Conversation $conversation)
+    {
+        $user = Auth::user();
+
+        // التحقق من أن المستخدم مشارك في المحادثة
+        if (!$conversation->participants->contains($user->id)) {
+            abort(403);
         }
 
-        return response()->json([
-            'conversation_id' => $conversation->id,
-            'freelancer_name' => User::find($freelancerId)->name
-        ]);
-    }
-
-    // إرسال رسالة
-    public function sendMessage(Request $request)
-    {
-        $request->validate([
-            'conversation_id' => 'required|exists:conversations,id',
-            'message' => 'required|string'
-        ]);
-
-        $message = Message::create([
-            'conversation_id' => $request->conversation_id,
-            'sender_id' => Auth::id(),
-            'message' => $request->message
-        ]);
-
-        // يمكن إضافة event للبث هنا إذا أردت
-
-        return response()->json([
-            'status' => 'success',
-            'message' => $message
-        ]);
-    }
-
-    // جلب الرسائل في محادثة
-    public function getMessages($conversationId)
-    {
-        $messages = Message::where('conversation_id', $conversationId)
-            ->with('sender')
+        $messages = $conversation->messages()
+            ->with('user')
             ->orderBy('created_at', 'asc')
             ->get();
 
-        return response()->json($messages);
-    }
+        // تحديث وقت القراءة الأخير
+        $conversation->participants()
+            ->updateExistingPivot($user->id, ['last_read_at' => now()]);
 
-    // جلب المحادثات للمستخدم الحالي
-    public function getConversations()
-    {
-        $userId = Auth::id();
-
-        $conversations = Conversation::where('user1_id', $userId)
-            ->orWhere('user2_id', $userId)
-            ->with(['user1', 'user2', 'messages' => function ($query) {
-                $query->orderBy('created_at', 'desc')->limit(1);
-            }])
-            ->get();
-
-        return response()->json($conversations);
+        return view('chat.conversation', compact('conversation', 'messages'));
     }
 }

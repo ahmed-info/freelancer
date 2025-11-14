@@ -9,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\Project;
 use App\Models\Company;
 use App\Models\Proposal;
+use App\Models\Conversation;
+use App\Models\Message;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -30,6 +34,30 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class, 'conversation_participants')
+                    ->withTimestamps();
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+
+
+    public function isCompany()
+    {
+        return $this->role === 'company';
+    }
+
 
     public function projects()
     {
@@ -67,5 +95,11 @@ class User extends Authenticatable
     public function isProject(): bool
     {
         return $this->role === 'project';
+    }
+
+
+public function isEligibleForChat(): bool
+    {
+        return in_array($this->role, ['freelance', 'project', 'company']);
     }
 }

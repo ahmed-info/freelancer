@@ -95,7 +95,7 @@
                                     <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">MongoDB</span>
                                 </div>
                                 <div class="flex justify-between items-center text-sm text-gray-500">
-                                    <span>تم النشر: يناير 2024</span>
+                                    <span>{{$project->created_at->diffForHumans()}}</span>
                                     <div class="flex items-center">
                                         <i class="fas fa-eye ml-1"></i>
                                         <span>1.2K</span>

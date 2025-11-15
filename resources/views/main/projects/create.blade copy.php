@@ -188,7 +188,7 @@
 
                         <div class="border-t border-gray-200 pt-4">
                             <div class="text-lg font-bold text-gray-800 mb-3 text-center" id="preview-budget">
-                                25000 د.أ
+                                25000 د.ع
                             </div>
                             <button class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300 text-center">
                                 عرض مشروع مماثل
@@ -225,6 +225,6 @@
         </div>
     </div>
 
-    
+
 </body>
 </html>

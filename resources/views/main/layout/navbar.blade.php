@@ -1,4 +1,3 @@
-<!-- شريط التنقل -->
 <nav class="bg-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -10,33 +9,36 @@
                     <div class="mr-10 flex items-baseline space-x-4 space-x-reverse">
                         <a href="{{ route('home') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">الرئيسية</a>
                         <a href="{{ route('projects.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">المشاريع</a>
-                        <a href="{{ route('freelance.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">اصحاب العمل الحر</a>
-                        <a href="{{ route('company.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">الشركات</a>
+                        <a href="{{ route('freelance.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">فري لانسر</a>
+                        <a href="{{ route('company.main') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">الشركات والمكاتب واصحاب العمل</a>
                     </div>
                 </div>
             </div>
-            <div class="hidden md:flex items-center">
+            <div class="hidden md:flex items-center space-x-4 space-x-reverse">
                 @auth
                     <!-- إذا كان المستخدم مسجل دخول -->
                     @if(auth()->user()->role === 'freelance')
                         <!-- إذا كان مستقل -->
                         <a href="{{ route('freelancer.dashboard') }}" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">
-لوحة تحكم صاحب عمل حر                        </a>
+                            لوحة تحكم صاحب عمل حر
+                        </a>
                     @else
                         <!-- إذا كان عميل -->
-                        <a href="#" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                        <a href="{{ route('freelancer.dashboard') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">
                             لوحة التحكم
                         </a>
                     @endif
-                    <form method="POST" action="{{ route('logout') }}" class="mr-2">
+
+                    <!-- زر تسجيل الخروج بمحاذاة متساوية -->
+                    <form method="POST" action="{{ route('logout') }}" class="flex items-center justify-center text-center {{ Route::is('home') ? 'mt-4' : '' }}">
                         @csrf
-                        <button type="submit" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                        <button type="submit" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">
                             تسجيل الخروج
                         </button>
                     </form>
                 @else
                     <!-- إذا لم يكن مسجل دخول -->
-                    {{-- <a href="{{ route('login') }}" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">تسجيل الدخول</a>
+                    {{-- <a href="{{ route('login') }}" class="nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300">تسجيل الدخول</a>
                     <button id="#" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">
                         انضم إلينا
                     </button> --}}
@@ -67,9 +69,9 @@
                             لوحة التحكم
                         </a>
                     @endif
-                    <form method="POST" action="{{ route('logout') }}" class="mt-2">
+                    <form method="POST" action="{{ route('logout') }}" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition duration-300 w-full text-center">
                         @csrf
-                        <button type="submit" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition duration-300 w-full text-center">
+                        <button type="submit" class="">
                             تسجيل الخروج
                         </button>
                     </form>
@@ -166,7 +168,7 @@
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-bold text-gray-900">تسجيل الدخول</h3>
-            <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+            <button id="closeLoginModal" class="text-gray-400 hover:text-gray-500">
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>

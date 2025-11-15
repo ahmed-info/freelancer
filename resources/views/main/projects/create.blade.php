@@ -83,9 +83,9 @@
                                         type="number"
                                         id="budget-amount"
                                         name="budget"
-                                        value="{{ old('budget', '25000') }}"
+                                        value="{{ old('budget', '25,000') }}"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                                        placeholder="مثال: 25000"
+                                        placeholder="مثال: 25,000"
                                     />
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
 
                         <div class="border-t border-gray-200 pt-4">
                             <div class="text-lg font-bold text-gray-800 mb-3 text-center" id="preview-budget">
-                                25000 د.أ
+                                25,000 د.ع
                             </div>
                             <button class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300 text-center">
                                 عرض مشروع مماثل
@@ -233,7 +233,7 @@
 
             // تحديث الميزانية
             const budgetInput = document.getElementById('budget-amount');
-            previewBudget.textContent = (budgetInput.value || '25000') + ' د.أ';
+            previewBudget.textContent = (budgetInput.value || '25,000') + ' د.ع';
 
             // تحديث المهارات في المعاينة
             updatePreviewSkills();

@@ -1,118 +1,5 @@
 @extends('main.layout.layout')
 @section('main_content')
-    <style>
-        .company-slider {
-            position: relative;
-            overflow: hidden;
-            padding: 2rem 0;
-        }
-
-        .slider-container {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .slide {
-            min-width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            padding: 0 3rem;
-        }
-
-        .company-item {
-            flex: 0 0 auto;
-        }
-
-        .company-logo {
-            transition: all 0.3s ease;
-        }
-
-        .company-logo:hover {
-            transform: scale(1.1);
-        }
-
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            font-size: 18px;
-            color: #3b82f6;
-        }
-
-        .slider-btn:hover {
-            background: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .slider-btn:active {
-            transform: translateY(-50%) scale(0.95);
-        }
-
-        .prev-btn {
-            right: 10px;
-        }
-
-        .next-btn {
-            left: 10px;
-        }
-
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-            gap: 0.75rem;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #d1d5db;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .dot:hover {
-            background: #9ca3af;
-            transform: scale(1.2);
-        }
-
-        .dot.active {
-            background: #3b82f6;
-            border-color: #93c5fd;
-            transform: scale(1.3);
-        }
-
-        @media (max-width: 768px) {
-            .slide {
-                padding: 0 1rem;
-                gap: 1rem;
-            }
-
-            .slider-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 14px;
-            }
-        }
-    </style>
     <!-- قسم الهيرو -->
     <section class="gradient-bg text-white py-16 md:py-24 relative overflow-hidden">
         <div class="floating-shape"></div>
@@ -850,6 +737,14 @@
 
         // إغلاق modal تسجيل الدخول
         const closeLoginModal = loginModal?.querySelector('#closeModal');
+        if (closeLoginModal) {
+            closeLoginModal.addEventListener('click', function() {
+                loginModal.classList.add('hidden');
+            });
+        }
+
+        // إغلاق modal تسجيل الدخول
+        const closeLoginModal = loginModal?.querySelector('#closeLoginModal');
         if (closeLoginModal) {
             closeLoginModal.addEventListener('click', function() {
                 loginModal.classList.add('hidden');

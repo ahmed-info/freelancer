@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('budget_amount', 10, 2)->nullable();
             $table->decimal('hourly_rate', 10, 2)->nullable();
             $table->string('weekly_hours')->nullable();
+            $table->json('images')->nullable(); // الصور المرفقة
 
             // التفاصيل
             $table->string('duration'); // 1-5 حسب الخيارات
@@ -34,7 +35,7 @@ return new class extends Migration
                 ->default('draft');
 
             $table->decimal('rating', 3, 2)->nullable();
-            $table->text('review')->nullable();
+            $table->text('review')->nullable(); // مراجعة العميل
             $table->timestamp('completed_at')->nullable();
 
             // البيانات المخزنة كـ JSON

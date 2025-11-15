@@ -259,8 +259,8 @@
                             </div>
 
                             <div class="flex justify-between items-center gap-2">
-                                <a href="{{ route('profile.main', ['id' => $freelancer->id]) }}" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105 flex-1 text-center">
-                                    عرض الملف الشخصي
+                                <a href="{{ route('profile.portfolio', ['id' => $freelancer->id]) }}" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105 flex-1 text-center">
+                                    عرض مشاريع مماثلة
                                 </a>
                                 <!-- زر المراسلة مع تمرير معرف المستقل -->
                                 <button class="msg-btn bg-lime-500 hover:bg-lime-600 text-white py-2 px-4 rounded-lg text-sm transition duration-300 transform hover:scale-105 flex items-center flex-1 justify-center"

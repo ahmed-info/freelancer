@@ -1,29 +1,4 @@
 @extends('main.layout.layout')
-<style>
-    .animate-scale-in {
-        animation: scaleIn 0.3s ease-out;
-    }
-
-    @keyframes scaleIn {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    .hidden {
-        display: none !important;
-    }
-
-    .flex {
-        display: flex !important;
-    }
-</style>
 @section('main_content')
     <!-- قسم الهيرو للشركات -->
     <section class="gradient-bg text-white py-20 md:py-28 relative overflow-hidden">
@@ -143,7 +118,7 @@
                                     class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold ml-3 flex-shrink-0 animate-pulse">
                                     1</div>
                                 <div>
-                                    <h3 class="font-bold text-gray-800 text-lg">سجل شركتك</h3>
+                                    <h3 class="font-bold text-gray-800 text-lg">سجل شركتك اومكتبك</h3>
                                     <p class="text-gray-600 mt-1">أنشئ حساب شركة وأكمل معلوماتك خلال دقائق</p>
                                 </div>
                             </div>

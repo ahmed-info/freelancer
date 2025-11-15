@@ -73,8 +73,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/send', [ConversationController::class, 'sendMessage'])->name('messages.send');
         Route::delete('/{id}', [ConversationController::class, 'destroy'])->name('messages.destroy');
     });
-});Route::get('freelance/dashboard', [FreelancerController::class,'dashboardfreelance'])->name('freelancer.dashboard');
+});
 
+Route::get('freelance/dashboard', [FreelancerController::class,'dashboardfreelance'])->name('freelancer.dashboard');
 Route::prefix('profile')->group(function () {
     Route::get('/main/{id}', [ProfileController::class, 'profile'])->name('profile.main');
     Route::get('/{id}', [ProfileController::class, 'show'])->name('profile.show');

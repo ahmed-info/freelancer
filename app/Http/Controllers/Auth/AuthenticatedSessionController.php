@@ -31,23 +31,36 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
-    public function storeRole(LoginRequest $request): RedirectResponse
+    public function storeRole(Request $request): RedirectResponse
     {
-        $request->authenticate();
+        $validated = $request->validate([
+            'credential' => 'required|string',
+            'password' => 'required',
+            'role' => 'required|in:freelance,project,company', // أضفنا التحقق من role
+        ]);
 
-        $request->session()->regenerate();
+        $isEmail = filter_var($validated['credential'], FILTER_VALIDATE_EMAIL);
+        $field = $isEmail ? 'email' : 'phone';
 
-        if ($request->role === 'freelance') {
-            return redirect()->route('freelance.main')->with('status', 'مرحباً بك في لوحة تحكم فرصةين');
-        } elseif ($request->role === 'project') {
-            return redirect()->route('project.create')->with('status', 'مرحباً بك في لوحة تحكم المشاريع');
-        } elseif ($request->role === 'company') {
-            return redirect()->route('company.main')->with('status', 'مرحباً بك في لوحة تحكم الشركات');
-        }else {
-            return redirect('/')->with('error', 'نوع حساب غير معروف');
+        // محاولة تسجيل الدخول
+        if (Auth::attempt([$field => $validated['credential'], 'password' => $validated['password']])) {
+            $request->session()->regenerate();
+
+            // التوجيه بناءً على role بعد نجاح تسجيل الدخول
+            return match ($validated['role']) {
+                'freelance' => redirect()->route('freelance.main')
+                    ->with('status', 'مرحباً بك في لوحة تحكم فرصةين'),
+                'project' => redirect()->route('project.create')
+                    ->with('status', 'مرحباً بك في لوحة تحكم المشاريع'),
+                'company' => redirect()->route('company.main')
+                    ->with('status', 'مرحباً بك في لوحة تحكم الشركات'),
+            };
         }
 
-        //return redirect()->intended(route('dashboard', absolute: false));
+        // فشل تسجيل الدخول
+        return back()->withErrors([
+            'credential' => 'بيانات الدخول غير صحيحة',
+        ])->onlyInput('credential');
     }
 
     /**

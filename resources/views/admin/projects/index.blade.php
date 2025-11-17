@@ -50,7 +50,7 @@
                                     @foreach ($projects as $index => $project)
                                         <tr>
 
-                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $projects->firstItem() + $index }}</td>
                                             <td>
                                                 <div class="badge rounded-pill text-success bg-light-success p-2 px-3">
                                                     <i class='bx bxs-circle me-1'></i>{{ $project->title }}
@@ -114,9 +114,11 @@
                                             </td>
                                             <td>
                                                 <div class="text-black">
-                                                    @foreach ($project->skills as $skill)
+                                                    @if ($project->skills != null)
+                                                        @foreach ($project->skills as $skill)
                                                         <span class="badge bg-info text-dark">{{ $skill }}</span>
                                                     @endforeach
+                                                    @endif
                                                 </div>
                                             </td>
 
@@ -141,11 +143,12 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                @endif
+                            @endif
 
 
                             </tbody>
                         </table>
+                        {{ $projects->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>

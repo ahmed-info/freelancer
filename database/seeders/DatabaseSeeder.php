@@ -57,11 +57,8 @@ class DatabaseSeeder extends Seeder
             'role' => 'company'
         ]);
 
-        //$this->call(FreelancerSeeder::class);
-        //$this->call(ProjectSeeder::class);
-        // $this->call(SpecializationSeeder::class);
-        // $this->call(MyJobSeeder::class);
-        //$this->call(SpecializationsAndMyjobsSeeder::class);
-        //$this->call(FreelancerSeeder::class);
+        $this->call(FreelancerSeeder::class);
+        $this->call(ProjectSeeder::class);
+        $this->call(SpecializationsAndMyjobsSeeder::class);
     }
 }

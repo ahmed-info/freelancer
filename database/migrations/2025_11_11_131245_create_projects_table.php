@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('freelancer_id')->constrained()->cascadeOnDelete();
 
             // معلومات المشروع الأساسية
-            $table->string('title');
-            $table->text('description');
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
 
             // الميزانية
             //$table->enum('budget_type', ['fixed', 'hourly'])->default('fixed');
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->json('images')->nullable(); // الصور المرفقة
 
             // التفاصيل
-            $table->string('duration'); // 1-5 حسب الخيارات
+            $table->string('duration')->nullable(); // 1-5 حسب الخيارات
 
             // الحالة
             $table->enum('status', ['draft', 'published', 'in_progress', 'completed', 'cancelled'])

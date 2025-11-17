@@ -15,7 +15,7 @@ class ProjectController extends Controller
     //return view('admin.projects.index', compact('projects'));
     public function index()
     {
-        $projects = Project::withCount('proposals')->get();
+        $projects = Project::withCount('proposals')->paginate(15);
 
         // قم بتحويل كل project manually
         $projects->transform(function ($project) {
@@ -58,7 +58,7 @@ class ProjectController extends Controller
         'budget_amount' => 'required|numeric',
         'duration' => 'required|string',
         'attachments' => 'nullable|array',
-        'attachments.*' => 'file|max:10240', // 10MB
+        'attachments.*' => 'nullable|file|max:10240', // 10MB
         'skills' => 'nullable|array'
     ]);
 

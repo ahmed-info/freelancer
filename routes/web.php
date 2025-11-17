@@ -65,7 +65,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/myjobs', [SpecializationController::class, 'storeJobs'])->name('myjobs.store');
 
     Route::get('/profile/freelancer/create', [FreelancerController::class, 'create'])->name('profile.freelancer.create');
-    Route::post('freelancers/store', [FreelancerController::class, 'store'])->name('freelancers.store');
 
     Route::prefix('messages')->group(function () {
         Route::get('/start/{freelancerId}', [ConversationController::class, 'start'])->name('messages.start');
@@ -73,6 +72,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/send', [ConversationController::class, 'sendMessage'])->name('messages.send');
         Route::delete('/{id}', [ConversationController::class, 'destroy'])->name('messages.destroy');
     });
+
+    Route::get('/freelancers/create', [FreelancerController::class, 'create'])->name('freelancers.create');
+    Route::post('freelancers/store', [FreelancerController::class, 'store'])->name('freelancers.store');
 });
 
 Route::get('freelance/dashboard', [FreelancerController::class,'dashboardfreelance'])->name('freelancer.dashboard');

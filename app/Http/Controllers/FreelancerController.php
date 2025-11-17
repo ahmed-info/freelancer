@@ -6,6 +6,7 @@ use App\Models\Freelancer;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Skill;
+use App\Models\Project;
 
 class FreelancerController extends Controller
 {
@@ -51,22 +52,26 @@ class FreelancerController extends Controller
 
     public function store(Request $request)
     {
+        //return $request->all();
         // تحقق من صحة البيانات المدخلة
         $validatedData = $request->validate([
+            //'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'bio' => 'nullable|string',
             'country' => 'required|string|max:100',
             'profile_image' => 'nullable|image|max:2048',
-            'member_since' => 'nullable|date',
             'skills' => 'nullable|array',
-            'skills.*' => 'exists:skills,id',
+            //'skills.*' => 'exists:skills,id',
         ]);
 
         //return $request->all();
 
         // إنشاء ملف المستقل الجديد
-        $freelancer = new Freelancer($validatedData);
-        $freelancer->user_id = 1;
+        $freelancer = new Freelancer();
+        $freelancer->user_id = auth()->user()->id;
+        $freelancer->title = $request->title;
+        $freelancer->bio = $request->bio;
+        $freelancer->country = $request->country;
 
         // حفظ صورة الملف الشخصي إذا تم تحميلها
         if ($request->hasFile('profile_image')) {
@@ -78,6 +83,17 @@ class FreelancerController extends Controller
         }
 
         $freelancer->save();
+        //return "ok freelancer saved";
+        $project = new Project();
+        $project->title = $request->title_project;
+        $project->description = $request->description_project;
+        $project->skills = json_encode($request->skills ?? []);
+        $project->duration = $request->duration ?? '1-2';
+        $project->freelancer_id = $freelancer->id;
+        $project->user_id = auth()->id();
+        $project->save();
+
+        return "ok project saved 2";
 
         return redirect()->route('profile.main', $freelancer->id)->with('status', 'تم إنشاء ملفك الشخصي كمستقل بنجاح!');
     }

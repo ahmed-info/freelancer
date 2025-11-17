@@ -8,15 +8,17 @@ use App\Models\Skill;
 use App\Models\Freelancer;
 use Illuminate\Http\Request;
 use App\Models\company;
-
+use App\Models\Specialization;
 class FrontController extends Controller
 {
     public function home()
     {
-        // return auth()->user()->role;
+        //return auth()->user()->role;
         $fields = Field::latest()->get();
         $companies = Company::latest()->get();
-        return view('welcome', ['fields' => $fields, 'companies' => $companies]);
+        $specializations = Specialization::latest()->with('myjobs')->get();
+        //return $specializations;
+        return view('welcome', ['fields' => $fields, 'companies' => $companies, 'specializations' => $specializations]);
     }
 
     public function projects()

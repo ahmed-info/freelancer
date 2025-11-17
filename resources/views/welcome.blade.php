@@ -14,42 +14,34 @@
                     <p class="text-xl mb-8 text-blue-100 animate-fade-in-up" style="animation-delay: 0.2s">حوّل مهاراتك إلى
                         مشاريع حقيقية واربح من خلال العمل عبر الإنترنت مع آلاف العملاء العرب</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                        <a href="#" id="joinFreelancerBtn"
-                            class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">ابدأ
-                            كمقدم خدمة</a>
-                        @if (auth()->check() && auth()->user()->role == 'project')
+                        {{-- إذا كان مسجل دخول وصاحب مشروع --}}
+                        @if(auth()->check() && auth()->user()->role == 'project')
                             <a href="{{ route('project.create') }}"
-                                class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انشر
-                                مشروعك</a>
+                                class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                                انشر مشروعك
+                            </a>
                         @else
-                            <a href="#" id="loginModalLink"
-                                class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">انشر
-                                مشروعك</a>
+                            {{-- إذا لم يكن مسجل أو ليس صاحب مشروع --}}
+                            <button id="loginProjectBtn"
+                                class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                                انشر مشروعك
+                            </button>
+                        @endif
+                        @if (auth()->check() && auth()->user()->role == 'freelance')
+                            <a href="{{ route('freelancers.create') }}"
+                                class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">
+                                ابدأ كمقدم خدمة
+                            </a>
+                        @else
+                            <a href="#" id="loginBtn"
+                                class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-lg text-center transition duration-300 transform hover:scale-105">
+                                ابدأ كمقدم خدمة
+                            </a>
                         @endif
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center animate-slide-up">
-                    {{-- <div class="relative rotate-3">
-                        <div class="bg-white rounded-2xl shadow-2xl p-6 w-80 transform rotate-3 animate-float">
-                            <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-                                    <i class="fas fa-code text-white"></i>
-                                </div>
-                                <div class="mr-3">
-                                    <h3 class="font-bold text-gray-800">مشروع تطوير موقع إلكتروني</h3>
-                                    <p class="text-gray-600 text-sm">ميزانية: $500 - $1,500</p>
-                                </div>
-                            </div>
-                            <p class="text-gray-700 mb-4">أبحث عن مبرمج لتطوير موقع إلكتروني متكامل مع نظام إدارة محتوى وتصميم متجاوب.</p>
-                            <div class="flex justify-between text-sm text-gray-500">
-                                <span><i class="fas fa-tag ml-1"></i> برمجة وتطوير</span>
-                                <span><i class="far fa-clock ml-1"></i> 5 أيام متبقية</span>
-                            </div>
-                        </div>
-                        <div class="absolute -top-4 -right-4 bg-accent text-white py-1 px-3 rounded-full text-sm font-bold animate-bounce-slow">
-                            جاري التوظيف
-                        </div>
-                    </div> --}}
+                    {{-- محتوى اختياري --}}
                 </div>
             </div>
         </div>
@@ -169,7 +161,7 @@
                                 <div>
                                     <h4 class="text-xl font-semibold text-gray-800 mb-2">أضف مشروع</h4>
                                     <p class="text-gray-600 leading-relaxed">أضف تفاصيل المشروع الذي تحتاج إنجازه والمهارات
-                                        المطلوبة واحصل على عروض فرصةين المتخصصين في دقائق.</p>
+                                        المطلوبة واحصل على عروض المتخصصين في دقائق.</p>
                                 </div>
                             </div>
 
@@ -186,9 +178,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 class="text-xl font-semibold text-gray-800 mb-2">اختر فرصة المناسب</h4>
-                                    <p class="text-gray-600 leading-relaxed">قارن عروض فرصةين وتصفح ملفاتهم وتقيماتهم
-                                        وأعمالهم، تفاوض معهم عبر الرسائل واختر الأفضل لتنفيذ مشروعك.</p>
+                                    <h4 class="text-xl font-semibold text-gray-800 mb-2">اختر المناسب</h4>
+                                    <p class="text-gray-600 leading-relaxed">قارن العروض وتصفح الملفات والتقييمات، تفاوض عبر الرسائل
+                                        واختر الأفضل لتنفيذ مشروعك.</p>
                                 </div>
                             </div>
 
@@ -206,7 +198,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-xl font-semibold text-gray-800 mb-2">استلم المشروع</h4>
-                                    <p class="text-gray-600 leading-relaxed">سيعمل فرصة الذي اخترته على مشروعك ويتابع معك
+                                    <p class="text-gray-600 leading-relaxed">سيعمل المستقل على مشروعك ويتابع معك
                                         حتى حصولك على نتائج العمل المتفق عليه وتسليم المشروع.</p>
                                 </div>
                             </div>
@@ -267,7 +259,7 @@
                         <i class="fas fa-dollar-sign text-purple-600 text-2xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-2">+$200 مليون</h3>
-                    <p class="text-gray-600">أرباح فرصةين</p>
+                    <p class="text-gray-600">أرباح المستقلين</p>
                 </div>
             </div>
         </div>
@@ -316,12 +308,21 @@
                 <div class="md:w-1/2 text-center md:text-right animate-slide-in-right">
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">انضم إلى مجتمع العمل الحر الأكبر عربياً</h3>
                     <p class="text-gray-600 mb-6 max-w-md mx-auto md:mr-0">سجّل الآن وابدأ رحلتك في عالم العمل الحر مع آلاف
-                        فرصةين العرب الناجحين</p>
-                    <a href="#"
-                        class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
-                        سجل حسابك الآن
-                        <i class="fas fa-arrow-left mr-2"></i>
-                    </a>
+                        المستقلين العرب الناجحين</p>
+                    {{-- إذا كان مسجل دخول ومستقل --}}
+                    @if(auth()->check() && auth()->user()->role == 'freelancer')
+                        <a href="{{ route('freelancer.dashboard') }}"
+                            class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                            اذهب إلى لوحتك
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    @else
+                        <a href="#" id="registerNowBtn"
+                            class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg inline-flex items-center transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                            سجل حسابك الآن
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -336,20 +337,19 @@
                     واسعة من المجالات التي يمكنك العمل فيها كمستقل</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach ($fields as $field)
+                @forelse ($fields ?? [] as $field)
                     <div class="service-card bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
                         style="animation-delay: 0.1s">
                         <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 service-icon">
-                            <ion-icon name="{{ $field->icon }}"
-                                style="font-size: 1.75rem; color: {{ $field->color }}"></ion-icon>
+                            <ion-icon name="{{ $field->icon ?? 'briefcase' }}"
+                                style="font-size: 1.75rem; color: {{ $field->color ?? '#3b82f6' }}"></ion-icon>
                         </div>
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $field->name }}</h3>
-                        <p class="text-gray-600">{{ $field->description }}</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $field->name ?? 'مجال' }}</h3>
+                        <p class="text-gray-600">{{ $field->description ?? 'وصف المجال' }}</p>
                     </div>
-                @endforeach
-
-
+                @empty
+                    <p class="col-span-full text-center text-gray-600">لا توجد مجالات متاحة حالياً</p>
+                @endforelse
             </div>
             <div class="text-center mt-10">
                 <a href="#"
@@ -361,19 +361,13 @@
         </div>
     </section>
 
-
-
-
-
-
-
     <!-- قسم آراء العملاء -->
     <section class="py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4 animate-fade-in-up">آراء عملائنا</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">ما يقوله
-                    فرصةون والعملاء عن تجربتهم مع منصة مستقل</p>
+                    المستقلون والعملاء عن تجربتهم مع منصة مستقل</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white rounded-xl shadow-md p-6 card-hover animate-fade-in-up"
@@ -451,17 +445,265 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-up">جاهز لبدء رحلتك في العمل الحر؟</h2>
             <p class="text-xl mb-8 text-blue-100 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s">انضم
-                إلى ملايين فرصةين العرب وابدأ في كسب المال من مهاراتك اليوم</p>
+                إلى ملايين المستقلين العرب وابدأ في كسب المال من مهاراتك اليوم</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                <a href="#" id="joinFreelancerBtn"
-                    class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">سجل
-                    كصاحب عمل حر</a>
-                <a href="{{ route('project.create') }}"
-                    class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">انشر
-                    مشروعك</a>
+                {{-- زر التسجيل كصاحب عمل حر --}}
+                @if(auth()->check() && auth()->user()->role == 'freelancer')
+                    <a href="{{ route('freelancer.dashboard') }}"
+                        class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                        لوحتك الشخصية
+                    </a>
+                @else
+                    <a href="#" id="ctaRegisterBtn"
+                        class="bg-white text-primary hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 animate-pulse-glow">
+                        سجل كصاحب عمل حر
+                    </a>
+                @endif
+
+                {{-- زر انشر المشروع --}}
+                @if(auth()->check() && auth()->user()->role == 'project')
+                    <a href="{{ route('project.create') }}"
+                        class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+                        انشر مشروعك الآن
+                    </a>
+                @else
+                    <button id="ctaPublishBtn"
+                        class="bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+                        انشر مشروعك
+                    </button>
+                @endif
             </div>
         </div>
     </section>
+
+    <!-- Modal تسجيل الدخول/التسجيل -->
+    <div id="authModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h2 class="text-2xl font-bold" id="modalTitle">تسجيل دخول</h2>
+                <button id="closeAuthModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+
+            <form id="authForm" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2">الاسم</label>
+                    <input type="text" id="authName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary"
+                        placeholder="أدخل اسمك">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2">البريد الإلكتروني أو رقم الهاتف</label>
+                    <input type="text" name="credential" id="authEmail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary"
+                        placeholder="أدخل بريدك الإلكتروني أو رقم هاتفك">
+                        @error('credential')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                </div>
+
+                <div id="passwordField" class="hidden">
+                    <label class="block text-gray-700 font-bold mb-2">كلمة المرور</label>
+                    <input type="password" id="authPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary"
+                        placeholder="أدخل كلمة المرور">
+                </div>
+
+                <button type="submit" class="w-full bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-secondary transition">
+                    متابعة
+                </button>
+
+                <!-- رسالة ليس لديك حساب - تظهر فقط عند نشر المشروع -->
+                <div id="noAccountMessage" class="hidden border-t pt-4 mt-4">
+                    <p class="text-gray-600 text-center text-sm mb-3">
+                        ليس لديك حساب؟
+                    </p>
+                    <a href="{{ route('register', ['role' => 'project']) }}"
+                        class="block w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white font-bold py-2 px-4 rounded-lg text-center transition duration-300">
+                        أنشئ حساب الآن
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerProjectModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white animate-fade-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-900">ابدأ كصاحب مشروع</h3>
+                <button id="closeRegisterModal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+                <p class="text-sm text-blue-800 text-right">
+                    <i class="fas fa-info-circle ml-2"></i>
+                    انضم كصاحب مشروع
+                </p>
+            </div>
+
+            <form action="{{ route('register') }}" method="POST" class="mt-4">
+                @csrf
+
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2 text-right">الاسم الكامل</label>
+                    <input type="text" id="name" name="name" required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        placeholder="أدخل اسمك">
+                </div>
+
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الالكتروني او رقم الهاتف</label>
+                    <input type="text" id="email" name="credential" required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        placeholder="أدخل بريدك الإلكتروني أو رقم هاتفك">
+                        @error('credential')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                </div>
+
+                <div class="relative mb-2">
+                    <input type="hidden" name="role" id="role" value="project">
+                </div>
+
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2 text-right">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
+                        placeholder="أدخل كلمة المرور">
+                </div>
+
+                <div class="flex items-center justify-between mb-4">
+                    <a href="{{ route('password.request') }}"
+                        class="inline-block align-baseline font-bold text-sm text-primary hover:text-secondary">
+                        نسيت كلمة المرور؟
+                    </a>
+                    <div class="flex items-center">
+                        <label class="flex items-center">
+                            <span class="ml-2 text-sm text-gray-700">تذكرني</span>
+                            <input type="checkbox" name="remember" class="form-checkbox h-4 w-4 text-primary rounded">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-3">
+                    <button type="submit"
+                        class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full transition duration-300">
+                        إنشاء حساب
+                    </button>
+
+                    <div class="text-center text-gray-600 text-sm">
+                        هل لديك حساب؟
+                        <a href="#" id="switchToLoginProject" class="text-primary hover:text-secondary font-bold">
+                            سجل الدخول كصاحب مشروع
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- ====================================== Scripts ============================== --}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/7.1.0/ionicons.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر الـ Modal
+            const authModal = document.getElementById('authModal');
+            const closeAuthModal = document.getElementById('closeAuthModal');
+            const authForm = document.getElementById('authForm');
+
+            // أزرار الفتح
+            const publishProjectBtn = document.getElementById('publishProjectBtn');
+            const startAsFreelancerBtn = document.getElementById('startAsFreelancerBtn');
+            const registerNowBtn = document.getElementById('registerNowBtn');
+            const ctaRegisterBtn = document.getElementById('ctaRegisterBtn');
+            const ctaPublishBtn = document.getElementById('ctaPublishBtn');
+
+            // دالة لفتح الـ Modal
+            function openAuthModal(type) {
+                const modalTitle = document.getElementById('modalTitle');
+                const passwordField = document.getElementById('passwordField');
+                const noAccountMessage = document.getElementById('noAccountMessage');
+
+                if (type === 'freelancer') {
+                    modalTitle.textContent = 'تسجيل كمستقل';
+                    passwordField.classList.remove('hidden');
+                    noAccountMessage.classList.add('hidden'); // إخفاء الرسالة
+                } else if (type === 'project') {
+                    modalTitle.textContent = 'انشر مشروعك';
+                    passwordField.classList.add('hidden');
+                    noAccountMessage.classList.remove('hidden'); // إظهار الرسالة
+                }
+
+                authModal.classList.remove('hidden');
+            }
+
+            // دالة لإغلاق الـ Modal
+            function closeModalFunc() {
+                authModal.classList.add('hidden');
+                authForm.reset();
+            }
+
+            // أحداث الفتح
+            if (publishProjectBtn) {
+                publishProjectBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openAuthModal('project');
+                });
+            }
+
+            if (startAsFreelancerBtn) {
+                startAsFreelancerBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openAuthModal('freelancer');
+                });
+            }
+
+            if (registerNowBtn) {
+                registerNowBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openAuthModal('freelancer');
+                });
+            }
+
+            if (ctaRegisterBtn) {
+                ctaRegisterBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openAuthModal('freelancer');
+                });
+            }
+
+            if (ctaPublishBtn) {
+                ctaPublishBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openAuthModal('project');
+                });
+            }
+
+            // أحداث الإغلاق
+            closeAuthModal.addEventListener('click', closeModalFunc);
+
+            authModal.addEventListener('click', (e) => {
+                if (e.target === authModal) {
+                    closeModalFunc();
+                }
+            });
+
+            // إغلاق عند الضغط على ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !authModal.classList.contains('hidden')) {
+                    closeModalFunc();
+                }
+            });
+
+            // معالجة النموذج
+            authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                console.log('تم إرسال النموذج');
+                closeModalFunc();
+            });
+        });
+    </script>
 
     <script>
         (function() {
@@ -470,7 +712,10 @@
 
             // إذا لم توجد شركات، لا نقوم بتنفيذ أي شيء
             if (!companies || companies.length === 0) {
-                document.querySelector('.company-slider').style.display = 'none';
+                const companySlider = document.querySelector('.company-slider');
+                if (companySlider) {
+                    companySlider.style.display = 'none';
+                }
                 return;
             }
 
@@ -479,6 +724,8 @@
             const sliderDots = document.getElementById('sliderDots');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
+
+            if (!sliderContainer || !sliderDots || !prevBtn || !nextBtn) return;
 
             // المتغيرات
             let currentSlide = 0;
@@ -489,29 +736,29 @@
             // حساب عدد العناصر لكل شريحة
             function getItemsPerSlide() {
                 const width = window.innerWidth;
-                if (width >= 1024) return 6; // شاشات كبيرة
-                if (width >= 768) return 4; // شاشات متوسطة
-                if (width >= 480) return 2; // شاشات صغيرة
-                return 1; // شاشات صغيرة جداً
+                if (width >= 1024) return 6;
+                if (width >= 768) return 4;
+                if (width >= 480) return 2;
+                return 1;
             }
 
             // إنشاء HTML لشركة واحدة
             function createCompanyHTML(company, index) {
                 return `
-            <div class="company-item" style="animation: fadeInUp 0.5s ease forwards ${(index % itemsPerSlide) * 0.1}s; opacity: 0;">
-                <div class="text-center">
-                    <div class="company-logo">
-                        <div class="w-28 h-20 md:w-32 md:h-24 bg-white rounded-xl flex items-center justify-center p-4 shadow-md hover:shadow-xl transition-all duration-300">
-                            ${company.logo ?
-                                `<img src="${company.logo}" alt="${company.company_name}" class="max-w-full max-h-full object-contain">` :
-                                `<span class="text-gray-400 font-bold text-sm">${company.company_name}</span>`
-                            }
+                    <div class="company-item" style="animation: fadeInUp 0.5s ease forwards ${(index % itemsPerSlide) * 0.1}s; opacity: 0;">
+                        <div class="text-center">
+                            <div class="company-logo">
+                                <div class="w-28 h-20 md:w-32 md:h-24 bg-white rounded-xl flex items-center justify-center p-4 shadow-md hover:shadow-xl transition-all duration-300">
+                                    ${company.logo ?
+                                        `<img src="${company.logo}" alt="${company.company_name}" class="max-w-full max-h-full object-contain">` :
+                                        `<span class="text-gray-400 font-bold text-sm">${company.company_name}</span>`
+                                    }
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-2 font-medium">${company.company_name}</p>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 mt-2 font-medium">${company.company_name}</p>
-                </div>
-            </div>
-        `;
+                `;
             }
 
             // إنشاء جميع الشرائح
@@ -519,26 +766,18 @@
                 sliderContainer.innerHTML = '';
                 sliderDots.innerHTML = '';
 
-                // إعادة حساب المتغيرات
                 itemsPerSlide = getItemsPerSlide();
                 totalSlides = Math.ceil(companies.length / itemsPerSlide);
 
-                // إذا كان عدد الشركات أقل من itemsPerSlide، ضبط itemsPerSlide
                 if (companies.length < itemsPerSlide) {
                     itemsPerSlide = companies.length;
                     totalSlides = 1;
                 }
 
-                console.log(
-                    `عدد الشركات: ${companies.length}, عناصر لكل شريحة: ${itemsPerSlide}, عدد الشرائح: ${totalSlides}`
-                    );
-
-                // إنشاء كل شريحة
                 for (let i = 0; i < totalSlides; i++) {
                     const slide = document.createElement('div');
                     slide.className = 'slide';
 
-                    // إضافة الشركات للشريحة
                     const startIdx = i * itemsPerSlide;
                     const endIdx = Math.min(startIdx + itemsPerSlide, companies.length);
 
@@ -550,7 +789,6 @@
                     sliderContainer.appendChild(slide);
                 }
 
-                // إنشاء نقاط التنقل فقط إذا كان هناك أكثر من شريحة
                 if (totalSlides > 1) {
                     for (let i = 0; i < totalSlides; i++) {
                         const dot = document.createElement('button');
@@ -560,7 +798,6 @@
                         sliderDots.appendChild(dot);
                     }
                 } else {
-                    // إخفاء الأزرار والنقاط إذا كان هناك شريحة واحدة فقط
                     prevBtn.style.display = 'none';
                     nextBtn.style.display = 'none';
                     sliderDots.style.display = 'none';
@@ -572,13 +809,11 @@
                 const offset = -currentSlide * 100;
                 sliderContainer.style.transform = `translateX(${offset}%)`;
 
-                // تحديث النقاط
                 const dots = sliderDots.querySelectorAll('.dot');
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentSlide);
                 });
 
-                // تحديث حالة الأزرار
                 updateButtonStates();
             }
 
@@ -604,7 +839,6 @@
             // الشريحة التالية
             function nextSlide() {
                 if (totalSlides <= 1) return;
-
                 currentSlide = (currentSlide + 1) % totalSlides;
                 updateSlider();
                 resetAutoSlide();
@@ -613,7 +847,6 @@
             // الشريحة السابقة
             function prevSlide() {
                 if (totalSlides <= 1) return;
-
                 currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
                 updateSlider();
                 resetAutoSlide();
@@ -622,14 +855,12 @@
             // بدء التشغيل التلقائي
             function startAutoSlide() {
                 if (totalSlides <= 1) return;
-
                 autoSlideInterval = setInterval(nextSlide, 4000);
             }
 
             // إيقاف وإعادة بدء التشغيل التلقائي
             function resetAutoSlide() {
                 if (totalSlides <= 1) return;
-
                 clearInterval(autoSlideInterval);
                 startAutoSlide();
             }
@@ -643,7 +874,6 @@
                     const oldItemsPerSlide = itemsPerSlide;
                     itemsPerSlide = getItemsPerSlide();
 
-                    // إعادة البناء فقط إذا تغير عدد العناصر في الشريحة
                     if (oldItemsPerSlide !== itemsPerSlide) {
                         currentSlide = 0;
                         createSlides();
@@ -659,34 +889,35 @@
 
             // إيقاف التشغيل التلقائي عند التمرير
             const slider = document.querySelector('.company-slider');
-            slider.addEventListener('mouseenter', () => {
-                if (autoSlideInterval) clearInterval(autoSlideInterval);
-            });
-            slider.addEventListener('mouseleave', startAutoSlide);
+            if (slider) {
+                slider.addEventListener('mouseenter', () => {
+                    if (autoSlideInterval) clearInterval(autoSlideInterval);
+                });
+                slider.addEventListener('mouseleave', startAutoSlide);
 
-            // دعم اللمس للأجهزة المحمولة
-            let touchStartX = 0;
-            let touchEndX = 0;
+                // دعم اللمس للأجهزة المحمولة
+                let touchStartX = 0;
+                let touchEndX = 0;
 
-            slider.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-                if (autoSlideInterval) clearInterval(autoSlideInterval);
-            });
+                slider.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    if (autoSlideInterval) clearInterval(autoSlideInterval);
+                });
 
-            slider.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-                startAutoSlide();
-            });
+                slider.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                    startAutoSlide();
+                });
+            }
 
             function handleSwipe() {
                 if (totalSlides <= 1) return;
-
                 const swipeThreshold = 50;
                 if (touchStartX - touchEndX > swipeThreshold) {
-                    nextSlide(); // سحب لليسار
+                    nextSlide();
                 } else if (touchEndX - touchStartX > swipeThreshold) {
-                    prevSlide(); // سحب لليمين
+                    prevSlide();
                 }
             }
 
@@ -697,7 +928,6 @@
                 startAutoSlide();
             }
 
-            // الانتظار حتى تحميل الصفحة
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
             } else {
@@ -707,57 +937,310 @@
             // إضافة CSS للأنيميشن
             const style = document.createElement('style');
             style.textContent = `
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    `;
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
             document.head.appendChild(style);
         })();
     </script>
-@endsection
+
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // فتح modal تسجيل الدخول
-        const loginLink = document.getElementById('loginModalLink');
+        // التحكم في القائمة المتنقلة
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // التحكم بالـ Modals
+        const registerModal = document.getElementById('registerModal');
         const loginModal = document.getElementById('loginModal');
 
-        if (loginLink && loginModal) {
-            loginLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                loginModal.classList.remove('hidden');
+        // دوال لـ registerModal
+        if (registerModal) {
+            const joinFreelancerBtn = document.getElementById('joinFreelancerBtn');
+            const joinFreelancerBtnMobile = document.getElementById('joinFreelancerBtnMobile');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+
+            function openRegisterModal() {
+                registerModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeRegisterModalFunc() {
+                registerModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // فتح Modal عند الضغط على "انضم إلينا"
+            if (joinFreelancerBtn) {
+                joinFreelancerBtn.addEventListener('click', openRegisterModal);
+            }
+
+            if (joinFreelancerBtnMobile) {
+                joinFreelancerBtnMobile.addEventListener('click', openRegisterModal);
+            }
+
+            // إغلاق Modal
+            if (closeRegisterModal) {
+                closeRegisterModal.addEventListener('click', closeRegisterModalFunc);
+            }
+
+            // إغلاق عند الضغط خارج المحتوى
+            registerModal.addEventListener('click', (e) => {
+                if (e.target === registerModal) {
+                    closeRegisterModalFunc();
+                }
+            });
+
+            // إغلاق عند الضغط على ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !registerModal.classList.contains('hidden')) {
+                    closeRegisterModalFunc();
+                }
             });
         }
 
-        // إغلاق modal تسجيل الدخول
-        const closeLoginModal = loginModal?.querySelector('#closeModal');
-        if (closeLoginModal) {
-            closeLoginModal.addEventListener('click', function() {
-                loginModal.classList.add('hidden');
-            });
-        }
-
-        // إغلاق modal تسجيل الدخول
-        const closeLoginModal = loginModal?.querySelector('#closeLoginModal');
-        if (closeLoginModal) {
-            closeLoginModal.addEventListener('click', function() {
-                loginModal.classList.add('hidden');
-            });
-        }
-
-        // إغلاق modal عند النقر خارج المحتوى
+        // دوال لـ loginModal
         if (loginModal) {
-            loginModal.addEventListener('click', function(e) {
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnMobile = document.getElementById('loginBtnMobile');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+
+            function openLoginModal() {
+                loginModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLoginModalFunc() {
+                loginModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // فتح Modal عند الضغط على "تسجيل الدخول"
+            if (loginBtn) {
+                loginBtn.addEventListener('click', openLoginModal);
+            }
+
+            if (loginBtnMobile) {
+                loginBtnMobile.addEventListener('click', openLoginModal);
+            }
+
+            // إغلاق Modal
+            if (closeLoginModal) {
+                closeLoginModal.addEventListener('click', closeLoginModalFunc);
+            }
+
+            // إغلاق عند الضغط خارج المحتوى
+            loginModal.addEventListener('click', (e) => {
                 if (e.target === loginModal) {
+                    closeLoginModalFunc();
+                }
+            });
+
+            // إغلاق عند الضغط على ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !loginModal.classList.contains('hidden')) {
+                    closeLoginModalFunc();
+                }
+            });
+        }
+
+        // التبديل بين الـ Modals
+        const switchToLogin = document.getElementById('switchToLogin');
+        const switchToRegister = document.getElementById('switchToRegister');
+
+        if (switchToLogin) {
+            switchToLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (registerModal) {
+                    registerModal.classList.add('hidden');
+                }
+                if (loginModal) {
+                    loginModal.classList.remove('hidden');
+                }
+            });
+        }
+
+        if (switchToRegister) {
+            switchToRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (loginModal) {
                     loginModal.classList.add('hidden');
+                }
+                if (registerModal) {
+                    registerModal.classList.remove('hidden');
                 }
             });
         }
     });
 </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // التحكم في القائمة المتنقلة
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // التحكم بالـ Modals
+        const registerProjectModal = document.getElementById('registerProjectModal');
+        const loginProjectModal = document.getElementById('loginProjectModal');
+
+        // دوال لـ registerModal
+        if (registerProjectModal) {
+            const joinFreelancerBtn = document.getElementById('joinFreelancerBtn');
+            const joinFreelancerBtnMobile = document.getElementById('joinFreelancerBtnMobile');
+            console.log('registerProjectModal found');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+
+            function openRegisterProjectModal() {
+                registerProjectModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeRegisterProjectModalFunc() {
+                registerProjectModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // فتح Modal عند الضغط على "انضم إلينا"
+            if (joinFreelancerBtn) {
+                console.log("fffffffffffffff")
+                joinFreelancerBtn.addEventListener('click', openRegisterProjectModal);
+            }
+
+            if (joinFreelancerBtnMobile) {
+                joinFreelancerBtnMobile.addEventListener('click', openRegisterProjectModal);
+            }
+
+            // إغلاق Modal
+            if (closeRegisterModal) {
+                console.log('closeRegisterModal found');
+                closeRegisterModal.addEventListener('click', closeRegisterProjectModalFunc);
+            }else {
+                console.log('closeRegisterModal NOT found');
+            }
+
+            // إغلاق عند الضغط خارج المحتوى
+            registerProjectModal.addEventListener('click', (e) => {
+                if (registerProjectModal) {
+                    closeRegisterProjectModalFunc();
+                }
+            });
+
+            // إغلاق عند الضغط على ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !registerProjectModal.classList.contains('hidden')) {
+                    closeRegisterProjectModalFunc();
+                }
+            });
+        }else {
+            console.log('registerProjectModal NOT found');
+        }
+
+        // دوال لـ loginModal
+        if (loginProjectModal) {
+            const loginProjectBtn = document.getElementById('loginProjectBtn');
+            const loginProjectBtnMobile = document.getElementById('loginProjectBtnMobile');
+            const closeLoginProjectModal = document.getElementById('closeLoginProjectModal');
+
+            function openLoginModal() {
+                console.log("open login moadl")
+                loginProjectModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLoginProjectModalFunc() {
+                                console.log("close login modal")
+
+                loginProjectModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // فتح Modal عند الضغط على "تسجيل الدخول"
+            if (loginProjectBtn) {
+                loginProjectBtn.addEventListener('click', openLoginModal);
+            }
+
+            if (loginProjectBtnMobile) {
+                loginProjectBtnMobile.addEventListener('click', openLoginModal);
+            }
+
+            // إغلاق Modal
+            if (closeLoginProjectModal) {
+                closeLoginProjectModal.addEventListener('click', closeLoginProjectModalFunc);
+            }
+
+            // إغلاق عند الضغط خارج المحتوى
+            loginProjectModal.addEventListener('click', (e) => {
+                if (e.target === loginProjectModal) {
+                    closeLoginProjectModalFunc();
+                }
+            });
+
+            // إغلاق عند الضغط على ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !loginProjectModal.classList.contains('hidden')) {
+                    closeLoginProjectModalFunc();
+                }
+            });
+        }
+
+        // التبديل بين الـ Modals
+        const switchToLoginProject = document.getElementById('switchToLoginProject');
+        const switchToRegisterProject = document.getElementById('switchToRegisterProject');
+
+        if (switchToLoginProject) {
+            switchToLoginProject.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (registerProjectModal) {
+                    registerProjectModal.classList.add('hidden');
+                }
+                if (loginProjectModal) {
+                    loginProjectModal.classList.remove('hidden');
+                }
+            });
+        }
+
+        if (switchToRegisterProject) {
+
+            switchToRegisterProject.addEventListener('click', function(e) {
+
+                e.preventDefault();
+
+                if (loginProjectModal) {
+
+                    loginProjectModal.classList.add('hidden');
+
+                }
+                if (registerProjectModal) {
+                    registerProjectModal.classList.remove('hidden');
+                }
+            });
+        }
+    });
+</script>
+
+
+@endsection

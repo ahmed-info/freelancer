@@ -30,10 +30,13 @@
             </div>
 
             <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الإلكتروني</label>
-                <input type="email" id="email" name="email" required
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الإلكتروني أو رقم الهاتف</label>
+                <input type="text" id="email" name="credential" required
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
-                    placeholder="أدخل بريدك الإلكتروني">
+                    placeholder="أدخل بريدك الإلكتروني أو رقم هاتفك">
+                    @error('credential')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
             </div>
 
             <div class="relative mb-2">
@@ -85,14 +88,17 @@
             </button>
         </div>
 
-        <form action="{{ route('storeRole') }}" method="POST" class="mt-4">
+    <form id="loginForm" action="{{ route('storeRole') }}" method="POST" class="mt-4">
             @csrf
 
             <div class="mb-4">
                 <label for="email2" class="block text-gray-700 text-sm font-bold mb-2 text-right">البريد الإلكتروني</label>
-                <input type="email" id="email2" name="email" required
+                <input type="text" id="email2" name="credential" required
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
                     placeholder="أدخل بريدك الإلكتروني">
+                    @error('credential')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
             </div>
 
             <div class="mb-6">
@@ -101,6 +107,7 @@
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-right"
                     placeholder="أدخل كلمة المرور">
             </div>
+<p id="loginError" class="text-red-600 text-center text-sm mt-2 hidden"></p>
 
             <div class="flex items-center justify-between mb-4">
                 <a href="{{ route('password.request') }}" class="inline-block align-baseline font-bold text-sm text-primary hover:text-secondary">

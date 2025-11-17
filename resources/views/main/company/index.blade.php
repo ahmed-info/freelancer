@@ -446,10 +446,13 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-gray-700 mb-2">البريد الإلكتروني</label>
-                            <input type="email" name="email"
+                            <label class="block text-gray-700 mb-2">البريد الإلكتروني أو رقم الهاتف</label>
+                            <input type="text" name="credential"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="ادخل البريد الإلكتروني">
+                                placeholder="ادخل البريد الإلكتروني أو رقم الهاتف">
+                                @error('credential')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-2">رقم الهاتف</label>

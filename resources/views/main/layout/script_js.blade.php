@@ -1,3 +1,18 @@
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+
+@if (Session::has('status'))
+        <script>
+            toastr.success("{{ Session::get('status') }}");
+        </script>
+    @endif
+
+    @if (Session::has('error'))
+        <script>
+            toastr.error("{{ Session::get('error') }}");
+        </script>
+    @endif
+
+
 <script>
     // تفعيل القائمة المتنقلة
     document.getElementById('mobile-menu-button').addEventListener('click', function() {

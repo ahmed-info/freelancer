@@ -446,11 +446,11 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-gray-700 mb-2">البريد الإلكتروني أو رقم الهاتف</label>
-                            <input type="text" name="credential"
+                            <label class="block text-gray-700 mb-2">البريد الإلكتروني</label>
+                            <input type="text" name="email"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="ادخل البريد الإلكتروني أو رقم الهاتف">
-                                @error('credential')
+                                placeholder="ادخل البريد الإلكتروني">
+                                @error('email')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                         </div>
@@ -458,7 +458,10 @@
                             <label class="block text-gray-700 mb-2">رقم الهاتف</label>
                             <input type="tel" name="phone"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="ادخل رقم الهاتف">
+                                placeholder="مثال: 07123456789">
+                                @error('phone')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                         </div>
                     </div>
 
@@ -468,6 +471,9 @@
                             <input type="password" name="password"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="ادخل كلمة المرور">
+                                @error('password')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
                         </div>
 
                     </div>
@@ -477,6 +483,9 @@
                         <textarea name="description"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             rows="3" placeholder="صف نشاط شركتك باختصار"></textarea>
+                            @error('description')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                     </div>
 
                     <div class="flex items-center">
@@ -485,6 +494,9 @@
                         <label for="terms" class="text-gray-700">أوافق على <a href="#"
                                 class="text-blue-600 hover:underline">الشروط والأحكام</a> و <a href="#"
                                 class="text-blue-600 hover:underline">سياسة الخصوصية</a></label>
+                        @error('terms_accepted')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
 

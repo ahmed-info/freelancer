@@ -128,9 +128,9 @@
 
                                             <td>
                                                 <div class="d-flex order-actions">
-                                                    <a href="{{ route('freelancers.edit', $freelancer) }}" class=""><i
+                                                    <a href="#" class=""><i
                                                             class='bx bxs-edit'></i></a>
-                                                    <form action="{{ route('freelancers.destroy', $freelancer) }}" method="POST"
+                                                    <form action="{{ route('freelancers.destroy', $freelancer->id) }}" method="POST"
                                                         class="mr-2" id="delete_form_{{ $freelancer->id }}">
                                                         @csrf
                                                         @method('DELETE')

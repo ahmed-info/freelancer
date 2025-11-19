@@ -260,9 +260,9 @@
                             <p class="text-gray-700 mb-4">{{ $freelancer->bio }}</p>
 
                             <div class="flex flex-wrap mb-4">
-                                @foreach ($freelancer->skills as $skill)
+                                {{-- @foreach ($freelancer->skills as $skill)
                                     <span class="skill-tag">{{ $skill->name }}</span>
-                                @endforeach
+                                @endforeach --}}
                             </div>
 
                             <div class="flex justify-between items-center gap-2">

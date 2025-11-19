@@ -29,35 +29,35 @@ class DatabaseSeeder extends Seeder
         //     'password' => bcrypt('123456aa'),
         //     'role' => 'project',
         // ]);
-        User::create([
-            'name' => 'المسؤول',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin'
-        ]);
+        // User::create([
+        //     'name' => 'المسؤول',
+        //     'email' => 'admin@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'admin'
+        // ]);
 
-        User::create([
-            'name' => 'مستقل 1',
-            'email' => 'freelance1@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'freelance'
-        ]);
+        // User::create([
+        //     'name' => 'مستقل 1',
+        //     'email' => 'freelance1@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'freelance'
+        // ]);
 
-        User::create([
-            'name' => 'مشروع 1',
-            'email' => 'project1@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'project'
-        ]);
+        // User::create([
+        //     'name' => 'مشروع 1',
+        //     'email' => 'project1@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'project'
+        // ]);
 
-        User::create([
-            'name' => 'شركة 1',
-            'email' => 'company1@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'company'
-        ]);
+        // User::create([
+        //     'name' => 'شركة 1',
+        //     'email' => 'company1@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'company'
+        // ]);
 
-        $this->call(FreelancerSeeder::class);
+        //$this->call(FreelancerSeeder::class);
         $this->call(ProjectSeeder::class);
         $this->call(SpecializationsAndMyjobsSeeder::class);
     }

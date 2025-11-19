@@ -32,6 +32,7 @@ return new class extends Migration
             $table->decimal('rating', 3, 2)->default(0); // التقييم من 5
             $table->integer('reviews_count')->default(0); // عدد التقييمات
             $table->integer('projects_count')->default(0); // عدد المشاريع
+            $table->json('skills')->nullable(); // المهارات كمصفوفة JSON
 
             $table->timestamps();
 

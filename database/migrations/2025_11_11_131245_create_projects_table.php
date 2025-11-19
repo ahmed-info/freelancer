@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('freelancer_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('freelancer_id')->nullable()->constrained()->cascadeOnDelete();
 
             // معلومات المشروع الأساسية
             $table->string('title')->nullable();

@@ -122,7 +122,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-600 text-sm mb-1">إجمالي المشاريع</p>
-                        <h3 class="text-3xl font-bold text-gray-800">{{ $freelancer->projects->count() ?? 24 }}</h3>
+                        <h3 class="text-3xl font-bold text-gray-800">24</h3>
                         <p class="text-green-600 text-sm mt-2 flex items-center gap-1">
                             <i class="fas fa-arrow-up"></i>
                             <span>+12% من الشهر الماضي</span>
@@ -293,7 +293,8 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @if ($freelancer->projects && $freelancer->projects->count() > 0)
+                        @if ($freelancer)
+                            @if($freelancer->projects && $freelancer->projects->count() > 0)
                             @foreach ($freelancer->projects as $project)
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -342,6 +343,7 @@
                                     </td>
                                 </tr>
                             @endforeach
+                        @endif
                         @endif
 
 
@@ -518,8 +520,8 @@
             </div>
         </div>
 
-        <!-- إحصائيات الأداء -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        <!-- احصائيات الأداء -->
+        {{-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-md p-6 text-white animate-fade-in-up"
                 style="animation-delay: 0.1s">
                 <div class="flex items-center justify-between mb-4">
@@ -549,7 +551,7 @@
                 <p class="text-3xl font-bold mb-2">98%</p>
                 <p class="text-purple-100 text-sm">التسليم في الوقت المحدد</p>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <!-- مكتبة Chart.js -->

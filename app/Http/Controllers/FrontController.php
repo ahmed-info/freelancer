@@ -16,6 +16,7 @@ class FrontController extends Controller
         //return auth()->user()->role;
         $fields = Field::latest()->get();
         $companies = Company::latest()->get();
+        //return $companies;
         $specializations = Specialization::latest()->with('myjobs')->get();
         //return $specializations;
         return view('welcome', ['fields' => $fields, 'companies' => $companies, 'specializations' => $specializations]);
@@ -30,7 +31,7 @@ class FrontController extends Controller
 
     public function freelance()
     {
-        $freelancers = Freelancer::with('skills')->get();
+        $freelancers = Freelancer::with('user')->get();
         //return auth()->user();
         return view('main.freelance.index', ['freelancers' => $freelancers]);
     }

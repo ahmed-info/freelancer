@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
 
 class MessageSent implements ShouldBroadcast
 {
@@ -21,22 +22,22 @@ class MessageSent implements ShouldBroadcast
         $this->message = $message;
     }
 
-    public function broadcastOn(): Channel
+    public function broadcastOn(): array
     {
-        return new PresenceChannel('chat.' . $this->message->conversation_id);
+        return [new PrivateChannel('chat.' . $this->message->receiver_id)];
     }
 
     public function broadcastWith(): array
     {
         return [
             'id' => $this->message->id,
-            'conversation_id' => $this->message->conversation_id,
-            'user_id' => $this->message->user_id,
-            'user_name' => $this->message->user->name,
-            'user_role' => $this->message->user->role,
-            'body' => $this->message->body,
+            'sender_id' => $this->message->sender_id,
+            'receiver_id' => $this->message->receiver_id,
+            'text' => $this->message->text,
             'type' => $this->message->type,
-            'created_at' => $this->message->created_at->toDateTimeString(),
+            'read_at' => $this->message->read_at,
+            'created_at' => $this->message->created_at,
+            'updated_at' => $this->message->updated_at,
         ];
     }
 }

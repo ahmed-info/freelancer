@@ -34,11 +34,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'credential' => 'required|string|unique:users,email|unique:users,phone',
             'password' => ['required'],
-           // 'role' => ['required', 'in:freelance,project,company'],
+           'role' => ['required', 'in:freelance,project,company'],
         ]);
 
 

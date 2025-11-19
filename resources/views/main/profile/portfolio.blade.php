@@ -98,7 +98,7 @@
                                     <span>{{$project->created_at->diffForHumans()}}</span>
                                     <div class="flex items-center">
                                         <i class="fas fa-eye ml-1"></i>
-                                        <span>1.2K</span>
+                                        <span>{{ $project->views }}</span>
                                     </div>
                                 </div>
                             </div>

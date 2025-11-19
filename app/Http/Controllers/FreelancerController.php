@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Freelancer;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Models\Skill;
-use App\Models\Project;
 
 class FreelancerController extends Controller
 {
@@ -27,7 +26,7 @@ class FreelancerController extends Controller
             },
             'reviews' => function ($query) {
                 $query->with('client')->latest()->limit(3);
-            }
+            },
         ]);
 
         return view('main.profile.show', compact('freelancer'));
@@ -35,65 +34,110 @@ class FreelancerController extends Controller
 
     public function dashboardfreelance()
     {
-       $userId =  auth()->user()->id;
-       $freelancer = Freelancer::where('user_id', $userId)->with('projects')->first();
-       //return ['userId' => $userId, 'freelancer' => $freelancer];
+        $userId = auth()->user()->id;
+        $freelancer = Freelancer::where('user_id', $userId)->with('projects')->first();
+
+        // return "abcd";
+        // return ['userId' => $userId, 'freelancer' => $freelancer];
         return view('dashboardfreelance', compact('freelancer'));
     }
 
-    public function create(): View
+    public function create()
     {
-        $skills = Skill::all();
-        $countries = $this->getCountries();
-        $freelancer = Freelancer::first();
+        $freelancer = Freelancer::where('user_id', auth()->id())->first();
+        $project = Project::latest()->first();
 
+        // return [$freelancer, $project];
+        $skills = [];
+        $countries = $this->getCountries();
+
+        if ($freelancer && $freelancer->skills) {
+            $skills = json_decode($freelancer->skills, true);
+        }
+
+        // return $freelancer;
         return view('main.freelance.create', compact('skills', 'countries', 'freelancer'));
     }
 
     public function store(Request $request)
     {
-        //return $request->all();
         // تحقق من صحة البيانات المدخلة
         $validatedData = $request->validate([
-            //'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'bio' => 'nullable|string',
             'country' => 'required|string|max:100',
             'profile_image' => 'nullable|image|max:2048',
             'skills' => 'nullable|array',
-            //'skills.*' => 'exists:skills,id',
         ]);
 
-        //return $request->all();
+       // return $request->all();
 
-        // إنشاء ملف المستقل الجديد
-        $freelancer = new Freelancer();
-        $freelancer->user_id = auth()->user()->id;
-        $freelancer->title = $request->title;
-        $freelancer->bio = $request->bio;
-        $freelancer->country = $request->country;
+        // البحث عن ملف المستقل الحالي أو إنشاء جديد
+        $freelancer = Freelancer::firstOrNew(['user_id' => auth()->id()]);
+        $message = $freelancer->exists
+        ? 'تم تحديث ملفك الشخصي بنجاح!'
+        : 'تم إنشاء ملفك الشخصي كصاحب عمل حر بنجاح!';
 
-        // حفظ صورة الملف الشخصي إذا تم تحميلها
+        // تحديث البيانات
+        $freelancer->fill([
+            'title' => $request->title,
+            'bio' => $request->bio,
+            'country' => $request->country,
+            'skills' => json_encode($request->skills ?? []),
+        ]);
+
+        // معالجة صورة الملف الشخصي
         if ($request->hasFile('profile_image')) {
-            $file = $request->file('profile_image');
-            $filename = time() .'.'. $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/freelancers'), $filename);
-            $freelancer->profile_image = 'uploads/freelancers/' . $filename;
+            // حذف الصورة القديمة إذا كانت موجودة
+            if ($freelancer->profile_image) {
+                $oldImagePath = public_path($freelancer->profile_image);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
 
+            $filename = time().'.'.$request->profile_image->getClientOriginalExtension();
+            $request->profile_image->move(public_path('uploads/freelancers'), $filename);
+            $freelancer->profile_image = 'uploads/freelancers/'.$filename;
         }
 
         $freelancer->save();
-        //return "ok freelancer saved";
-        $project = new Project();
+
+        // return redirect()->route('profile.main', $freelancer->id)->with('status', $message);
+
+        $project = new Project;
         $project->title = $request->title_project;
         $project->description = $request->description_project;
         $project->skills = json_encode($request->skills ?? []);
         $project->duration = $request->duration ?? '1-2';
         $project->freelancer_id = $freelancer->id;
         $project->user_id = auth()->id();
+        $project->attachments = null; // Initialize
+
+
+        if ($request->hasFile('attachments')) {
+            $attachmentsPaths = [];
+            $uploadPath = public_path('uploads/projects');
+            // Ensure the directory exists
+            if (! file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            foreach ($request->file('attachments') as $file) {
+                $fileName = time().'_'.uniqid().'_'.$file->getClientOriginalName();
+                // Move the file to the public directory
+                $file->move($uploadPath, $fileName);
+                // Save the path relative to public, so we can use it in the frontend
+                $attachmentsPaths[] = 'uploads/projects/'.$fileName;
+            }
+
+            $project->attachments = json_encode($attachmentsPaths);
+
+            //return $project->attachments;
+        }
         $project->save();
 
-        return "ok project saved 2";
+            //return "ok attachments uploaded";
 
         return redirect()->route('profile.main', $freelancer->id)->with('status', 'تم إنشاء ملفك الشخصي كمستقل بنجاح!');
     }
@@ -244,11 +288,11 @@ class FreelancerController extends Controller
                 break;
         }
 
-        $freelancers = $query->paginate(12);
+        $freelancers = $query->paginate(8);
+        // return $freelancers;
 
         return view('admin.freelance.index', compact('freelancers'));
     }
-
 
     private function getCountries(): array
     {

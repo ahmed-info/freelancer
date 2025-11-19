@@ -44,7 +44,7 @@
                     </p>
                 </div>
 
-                <!-- الخدمات -->
+                {{-- <!-- الخدمات -->
                 <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="font-bold text-gray-800">الخدمات</h3>
@@ -62,7 +62,7 @@
                         </div>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- المشاريع السابقة -->
                 <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
@@ -72,19 +72,44 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        @foreach([
-                            ['title' => 'موقع تجارة إلكترونية', 'client' => 'شركة التقنية', 'price' => '1500', 'rating' => '5.0'],
-                            ['title' => 'تطبيق إدارة المهام', 'client' => 'مؤسسة النجاح', 'price' => '1200', 'rating' => '4.8'],
-                            ['title' => 'منصة تعليمية', 'client' => 'أكاديمية البرمجة', 'price' => '2000', 'rating' => '5.0'],
-                            ['title' => 'موقع شركة سياحية', 'client' => 'شركة السياحة', 'price' => '800', 'rating' => '4.7']
-                        ] as $project)
+                        @foreach($freelancer->projects as $project)
                         <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition duration-300">
-                            <h4 class="font-bold text-gray-800 mb-2">{{ $project['title'] }}</h4>
-                            <p class="text-gray-600 text-sm mb-3">لـ {{ $project['client'] }}</p>
+                            <h4 class="font-bold text-gray-800 mb-2">{{ $project->title }}</h4>
+                            <p class="text-gray-600 text-sm mb-3">{{ $project->description }}</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-primary font-bold">${{ $project['price'] }}</span>
+                                @if ($project->attachments)
+                                                        @foreach (json_decode($project->attachments) as $attachmentPath)
+                                                            @php
+                                                                $fileExtension = strtolower(
+                                                                    pathinfo($attachmentPath, PATHINFO_EXTENSION),
+                                                                );
+                                                                $imageExtensions = [
+                                                                    'jpg',
+                                                                    'jpeg',
+                                                                    'png',
+                                                                    'gif',
+                                                                    'bmp',
+                                                                    'svg',
+                                                                    'webp',
+                                                                ];
+                                                                $fileExists = file_exists(public_path($attachmentPath));
+                                                            @endphp
+
+                                                            @if (in_array($fileExtension, $imageExtensions) && $fileExists)
+                                                                <img src="{{ asset($attachmentPath) }}" alt="Attachment"
+                                                                    style="width: 80px; height: 80px; object-fit: cover; margin-right: 5px;">
+                                                            @elseif($fileExists)
+                                                                <a href="{{ asset($attachmentPath) }}" target="_blank"
+                                                                    class="btn bg-primary hover:bg-secondary hover:text-white px-2 py-1 rounded btn-sm btn-primary mb-1">عرض الملف</a>
+                                                            @else
+                                                                <span class="text-danger">الملف غير موجود</span>
+                                                            @endif
+                                                        @endforeach
+                                                        @else
+                                                        <span class="text-muted">لا توجد ملفات مرفقة</span>
+                                                    @endif
                                 <div class="flex items-center">
-                                    <span class="text-yellow-400 ml-1">{{ $project['rating'] }}</span>
+                                    <span class="text-yellow-400 ml-1">{{ $freelancer->rating }}</span>
                                     <i class="fas fa-star text-yellow-400"></i>
                                 </div>
                             </div>

@@ -40,7 +40,8 @@ class ProfileController extends Controller
 
     public function profile(string $id)
     {
-        $freelancer = Freelancer::find($id);
+        $freelancer = Freelancer::with('projects')->find($id);
+        //return $freelancer;
         return view('main.profile.profile', compact('freelancer'));
     }
 

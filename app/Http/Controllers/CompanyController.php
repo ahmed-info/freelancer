@@ -7,7 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 class CompanyController extends Controller
 {
     /**
@@ -15,7 +16,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::latest()->paginate(8);
+        //return $companies;
+        return view('admin.companies.index', compact('companies'));
     }
 
     /**
@@ -30,12 +33,13 @@ class CompanyController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
+    {
+       // return $request->all();
     $validator = Validator::make($request->all(), [
         'company_name' => 'required|string|max:255',
         'business_field' => 'required|string|max:255',
         'email' => 'required|email|unique:companies,email',
-        'phone' => 'required|string|max:20',
+        'phone' => 'required|string|digits_between:11,11|starts_with:07',
         'description' => 'nullable|string',
         'terms_accepted' => 'required|accepted',
     ], [
@@ -45,6 +49,8 @@ class CompanyController extends Controller
         'email.email' => 'يرجى إدخال بريد إلكتروني صالح.',
         'email.unique' => 'هذا البريد الإلكتروني مستخدم بالفعل.',
         'phone.required' => 'حقل رقم الهاتف مطلوب.',
+        'phone.digits_between' => 'يجب أن يكون رقم الهاتف مكونًا من 11 رقمًا.',
+        'phone.starts_with' => 'يجب أن يبدأ رقم الهاتف بـ 07',
         'terms_accepted.required' => 'يجب قبول الشروط والأحكام.',
         'terms_accepted.accepted' => 'يجب قبول الشروط والأحكام.',
     ]);
@@ -60,6 +66,7 @@ class CompanyController extends Controller
         'name' => $request->company_name,
         'email' => $request->email,
         'password' => Hash::make($request->password), // تأكد من وجود password في ال request
+        'phone' => $request->phone,
         'role' => 'company',
     ]);
     $userId = $user->id;
@@ -94,7 +101,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        return view('admin.companies.edit', compact('company'));
     }
 
     /**
@@ -102,7 +109,26 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+        $request->validate([
+            'company_name' => 'required|string|max:255',
+            'business_field' => 'required|string|max:255',
+            'email' => 'required|email|unique:companies,email,' . $company->id,
+            'phone' => 'required|string|digits_between:11,11|starts_with:07',
+            'description' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $company->update([
+            'company_name' => $request->company_name,
+            'business_field' => $request->business_field,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'description' => $request->description,
+            'logo' => $request->hasFile('logo') ? $request->file('logo')->store('company_logos', 'public') : $company->logo,
+        ]);
+
+        return redirect()->route('companies.index')
+            ->with('status', 'تم تحديث بيانات الشركة بنجاح.');
     }
 
     /**
@@ -110,6 +136,13 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $destination = public_path($company->logo);
+        if(File::exists($destination)){
+            File::delete($destination);
+        }
+        $company->delete();
+
+        return redirect()->route('companies.index')
+            ->with('status', 'تم حذف الشركة بنجاح.');
     }
 }

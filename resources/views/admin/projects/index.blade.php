@@ -11,7 +11,7 @@
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">اسم المشروع</li>
+                            <li class="breadcrumb-item active" aria-current="page">المشاريع</li>
                         </ol>
                     </nav>
                 </div>
@@ -36,12 +36,12 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>المشاريع</th>
+                                    <th>اسم المشروع</th>
                                     <th>وصف المشروع</th>
+                                    <th>صاحب المشروع</th>
                                     <th>مبلغ المشروع</th>
                                     <th>ملفات</th>
                                     <th>حالة المشروع</th>
-                                    <th>المهارات</th>
                                     <th>الحدث</th>
                                 </tr>
                             </thead>
@@ -60,6 +60,12 @@
                                             <td>
                                                 <div class="text-black p-2 px-3">
                                                     {{ $project->description }}
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="text-black">
+                                                    {{ $project->user->name }}
                                                 </div>
                                             </td>
 
@@ -112,15 +118,7 @@
                                                     {{ $project->status }}
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="text-black">
-                                                    @if ($project->skills != null)
-                                                        @foreach ($project->skills as $skill)
-                                                        <span class="badge bg-info text-dark">{{ $skill }}</span>
-                                                    @endforeach
-                                                    @endif
-                                                </div>
-                                            </td>
+                                            
 
                                             {{-- <td>
                                                 <div class="text-black">

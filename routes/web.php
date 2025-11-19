@@ -12,6 +12,8 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
+use App\Livewire\Chat;
+use Livewire\Volt\Volt;
 Route::get('/', [FrontController::class, 'home'])->name('home');
 Route::get('/projects/main', [FrontController::class, 'index'])->name('projects.main');
 Route::get('/freelance/main', [FrontController::class, 'freelance'])->name('freelance.main');
@@ -20,29 +22,32 @@ Route::get('/projects/show', [FrontController::class, 'projects'])->name('projec
 
 Route::post('/register-company', [CompanyController::class, 'store'])->name('company.register');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
 
-    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    // Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
 
-    // عرض محادثة محددة
-    Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
+    // // عرض محادثة محددة
+    // Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
 
-    // إنشاء محادثة جديدة
-    Route::post('/conversations', [ConversationController::class, 'store'])->name('conversations.store');
+    // // إنشاء محادثة جديدة
+    // Route::post('/conversations', [ConversationController::class, 'store'])->name('conversations.store');
 
-    // مغادرة محادثة
-    Route::delete('/conversations/{conversation}', [ConversationController::class, 'destroy'])->name('conversations.destroy');
+    // // مغادرة محادثة
+    // Route::delete('/conversations/{conversation}', [ConversationController::class, 'destroy'])->name('conversations.destroy');
 
-    // إرسال رسالة
-    Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
+    // // إرسال رسالة
+    // Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
 
-    // جلب الرسائل (للتحديث التلقائي)
-    Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages'])->name('messages.get');
-    // الرسائل
-    //Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
-    // Dashboard
+    // // جلب الرسائل (للتحديث التلقائي)
+     Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages'])->name('messages.get');
+    // // الرسائل
+    // //Route::post('/conversations/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
+    // // Dashboard
+    Route::get('/dashboard2', [DashboardController::class, 'index'])->name('dashboard2');
     Route::get('/dashboard', [DashboardController::class, 'report'])->name('dashboard');
-
+    Route::get('/chat', Chat::class)->name('chat');
+    Route::get('/messages/{user}', [ChatController::class, 'getMessages'])->name('messages.get');
+    Route::post('/messages/{user}', [ChatController::class, 'sendMessage'])->name('messages.send');
     Route::resource('fields', FieldController::class);
     Route::resource('projects', ProjectController::class)->except(['show', 'create']);
     Route::resource('specializations', SpecializationController::class);
@@ -73,8 +78,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [ConversationController::class, 'destroy'])->name('messages.destroy');
     });
 
-    Route::get('/freelancers/create', [FreelancerController::class, 'create'])->name('freelancers.create');
-    Route::post('freelancers/store', [FreelancerController::class, 'store'])->name('freelancers.store');
+    Route::resource('/freelancers', FreelancerController::class);
+    Route::resource('/companies', CompanyController::class);
 });
 
 Route::get('freelance/dashboard', [FreelancerController::class,'dashboardfreelance'])->name('freelancer.dashboard');

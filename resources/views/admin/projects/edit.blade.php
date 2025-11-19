@@ -10,7 +10,7 @@
                         <ol class="breadcrumb mb-0 p-0">
                             <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">تعديل المجال</li>
+                            <li class="breadcrumb-item active" aria-current="page">تعديل المشروع</li>
                         </ol>
                     </nav>
                 </div>
@@ -18,7 +18,7 @@
             </div>
             <!--end breadcrumb-->
 
-            <h2 class="mb-3 text-uppercase" dir="rtl">تعديل المجال</h2>
+            <h2 class="mb-3 text-uppercase" dir="rtl">تعديل المشروع</h2>
 
             <div class="card" dir="rtl">
                 <div class="card-body">
@@ -27,7 +27,7 @@
                             @csrf
                             @method('PUT')
                             <div class="col-md-3">
-                                <label for="title" class="form-label">عنوان المجال المتاح</label>
+                                <label for="title" class="form-label">عنوان المشروع</label>
                                 <input type="text" class="form-control" id="title" name="title"
                                     value="{{ old('title', $project->title) }}">
                                 @error('title')
@@ -48,8 +48,19 @@
                                 @enderror
                             </div>
 
+                            <div class="col-md-3">
+                                <label for="duration" class="form-label">مدة المشروع</label>
+                                <input type="text" class="form-control" id="duration" name="duration"
+                                    value="{{ old('duration', $project->duration) }}">
+                                @error('duration')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             <div class="col-md-4">
-                                <label for="description" class="form-label">وصف المجال</label>
+                                <label for="description" class="form-label">وصف المشروع</label>
                                 <textarea class="form-control" id="description" name="description" rows="2">{{ old('description', $project->description) }}</textarea>
                                 @error('description')
                                     <div class="text-danger">

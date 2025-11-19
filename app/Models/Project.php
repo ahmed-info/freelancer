@@ -15,18 +15,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'user_id',
-        'title',
-        'description',
-        'budget_type',      // fixed أو hourly
-        'budget_amount',    // للمشاريع ذات الميزانية المحددة
-        'hourly_rate',      // السعر بالساعة
-        'duration',         // مدة المشروع
-        'status',           // draft, published, in_progress, completed, cancelled
-        'skills',           // JSON array للمهارات المطلوبة
-        'attachments',      // JSON array للملفات المرفقة
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be cast.
@@ -173,5 +162,10 @@ class Project extends Model
     protected function getBudgetTypeDisplayAttribute()
     {
         return $this->budget_type === 'fixed' ? 'ميزانية ثابتة' : 'ميزانية بالساعة';
+    }
+
+    public function freelancer()
+    {
+        return $this->belongsTo(Freelancer::class, 'freelancer_id');
     }
 }

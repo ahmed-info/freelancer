@@ -2,49 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Conversation;
 use App\Models\User;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Events\MessageSent;
 class ChatController extends Controller
 {
-    public function index()
+    public function show(User $user)
     {
-        $user = Auth::user();
-        $conversations = $user->conversations()
-            ->with(['latestMessage', 'participants'])
-            ->orderByDesc(
-                Conversation::select('created_at')
-                    ->whereColumn('conversation_id', 'conversations.id')
-                    ->orderByDesc('created_at')
-                    ->limit(1)
-            )
-            ->get();
-
-        $users = User::where('id', '!=', $user->id)->get();
-
-        return view('chat.index', compact('conversations', 'users'));
+        return view('chat', compact('user'));
     }
 
-    public function show(Conversation $conversation)
+    public function getMessages(User $user)
     {
-        $user = Auth::user();
+        return Message::where(function ($query) use ($user) {
+            $query->where('sender_id', Auth::id())
+                  ->where('receiver_id', $user->id);
+        })->orWhere(function ($query) use ($user) {
+            $query->where('sender_id', $user->id)
+                  ->where('receiver_id', Auth::id());
+        })->with(['sender', 'receiver'])->
+        orderBy('created_at', 'asc')->get();
+    }
 
-        // التحقق من أن المستخدم مشارك في المحادثة
-        if (!$conversation->participants->contains($user->id)) {
-            abort(403);
-        }
+    public function sendMessage(Request $request, User $user)
+    {
+        $message = Message::create([
+            'sender_id' => Auth::id(),
+            'receiver_id' => $user->id,
+            'text' => $request->input('message'),
+            'type' => $request->input('type', 'text'),
+        ]);
 
-        $messages = $conversation->messages()
-            ->with('user')
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        // تحديث وقت القراءة الأخير
-        $conversation->participants()
-            ->updateExistingPivot($user->id, ['last_read_at' => now()]);
-
-        return view('chat.conversation', compact('conversation', 'messages'));
+        broadcast(new MessageSent($message));
+        return response()->json($message);
     }
 }

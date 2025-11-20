@@ -1094,14 +1094,14 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // التحكم في القائمة المتنقلة
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // const mobileMenuButton = document.getElementById('mobile-menu-button');
+        // const mobileMenu = document.getElementById('mobile-menu');
 
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
+        // if (mobileMenuButton && mobileMenu) {
+        //     mobileMenuButton.addEventListener('click', function() {
+        //         mobileMenu.classList.toggle('hidden');
+        //     });
+        // }
 
         // التحكم بالـ Modals
         const registerProjectModal = document.getElementById('registerProjectModal');

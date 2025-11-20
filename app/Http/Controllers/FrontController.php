@@ -31,8 +31,8 @@ class FrontController extends Controller
 
     public function freelance()
     {
-        $freelancers = Freelancer::with('user')->get();
-        //return auth()->user();
+        $freelancers = Freelancer::with('ratings.user')->get();
+        //return $freelancers;
         return view('main.freelance.index', ['freelancers' => $freelancers]);
     }
 

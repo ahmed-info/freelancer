@@ -187,11 +187,12 @@ class Freelancer extends Model
     public function getFormattedResponseTimeAttribute(): string
     {
         if ($this->response_time < 60) {
-            return $this->response_time . ' دقيقة';
+            return $this->response_time.' دقيقة';
         }
 
         $hours = floor($this->response_time / 60);
-        return $hours . ' ساعة' . ($hours > 1 ? '' : '');
+
+        return $hours.' ساعة'.($hours > 1 ? '' : '');
     }
 
     /**
@@ -200,7 +201,7 @@ class Freelancer extends Model
     public function getProfileImageUrlAttribute(): string
     {
         return $this->profile_image
-            ? asset('storage/' . $this->profile_image)
+            ? asset('storage/'.$this->profile_image)
             : asset('images/default-avatar.png');
     }
 
@@ -226,5 +227,70 @@ class Freelancer extends Model
     public function scopeTopRated($query, $minRating = 4.0)
     {
         return $query->where('rating', '>=', $minRating);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    /**
+     * حساب توزيع التقييمات
+     */
+    public function getRatingDistribution()
+    {
+        $totalRatings = $this->ratings->count();
+
+        if ($totalRatings === 0) {
+            return collect();
+        }
+
+        $distribution = [];
+
+        for ($stars = 5; $stars >= 1; $stars--) {
+            $count = $this->ratings->where('rating', $stars)->count();
+            $percent = $totalRatings > 0 ? round(($count / $totalRatings) * 100) : 0;
+
+            $distribution[] = [
+                'stars' => $stars,
+                'count' => $count,
+                'percent' => $percent
+            ];
+        }
+
+        return collect($distribution);
+    }
+
+    /**
+     * الحصول على متوسط التقييم
+     */
+    public function getAverageRating()
+    {
+        return $this->ratings->avg('rating') ?? 0;
+    }
+
+    /**
+     * الحصول على عدد التقييمات
+     */
+    public function getRatingsCount()
+    {
+        return $this->ratings->count();
+    }
+
+    // إذا أردنا حساب متوسط التقييمات
+    public function averageRating()
+    {
+        return $this->ratings()->avg('rating') ?? 0;
+    }
+
+    public function totalRatings()
+    {
+        return $this->ratings()->count();
+    }
+
+    // وإذا أردنا عدد التقييمات
+    public function ratingsCount()
+    {
+        return $this->ratings()->count();
     }
 }

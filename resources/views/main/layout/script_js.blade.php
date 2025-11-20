@@ -1,5 +1,5 @@
 <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 @if (Session::has('status'))
         <script>
             toastr.success("{{ Session::get('status') }}");

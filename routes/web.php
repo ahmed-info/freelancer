@@ -10,6 +10,7 @@ use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 use App\Livewire\Chat;
@@ -80,6 +81,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/freelancers', FreelancerController::class);
     Route::resource('/companies', CompanyController::class);
+
+    Route::post('/freelancers/{freelancer}/ratings', [RatingController::class, 'store'])->name('ratings.store');
+    Route::put('/ratings/{rating}', [RatingController::class, 'update'])->name('ratings.update');
+    Route::delete('/ratings/{rating}', [RatingController::class, 'destroy'])->name('ratings.destroy');
 });
 
 Route::get('freelance/dashboard', [FreelancerController::class,'dashboardfreelance'])->name('freelancer.dashboard');

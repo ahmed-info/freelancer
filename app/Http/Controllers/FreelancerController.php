@@ -17,7 +17,6 @@ class FreelancerController extends Controller
         // تحميل العلاقات المطلوبة مع eager loading لتحسين الأداء
         $freelancer->load([
             'user',
-            'skills',
             'activeServices' => function ($query) {
                 $query->latest()->limit(4);
             },
@@ -27,7 +26,11 @@ class FreelancerController extends Controller
             'reviews' => function ($query) {
                 $query->with('client')->latest()->limit(3);
             },
+            'ratings.user',
         ]);
+
+        return view('main.freelance.show', compact('freelancer'));
+
 
         return view('main.profile.show', compact('freelancer'));
     }

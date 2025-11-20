@@ -46,6 +46,16 @@ class User extends Authenticatable
         return $this->hasMany(Message::class);
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function hasRated(Freelancer $freelancer)
+    {
+        return $this->ratings()->where('freelancer_id', $freelancer->id)->exists();
+    }
+
     public function isAdmin()
     {
         return $this->role === 'admin';

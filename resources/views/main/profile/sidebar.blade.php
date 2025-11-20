@@ -10,7 +10,7 @@
         <p class="text-gray-600 mb-4">{{ $freelancer->title }}</p>
 
         <!-- التقييم -->
-        <div class="flex items-center justify-center mb-4">
+        {{-- <div class="flex items-center justify-center mb-4">
             <div class="flex text-yellow-400 ml-2">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -18,10 +18,10 @@
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star-half-alt"></i>
             </div>
-            <span class="text-gray-700 font-bold">4.7</span>
+            <span class="text-gray-700 font-bold">{{ number_format($averageRating, 1) }}</span>
             <span class="text-gray-500 mx-2">|</span>
-            <span class="text-gray-600">({{ $freelancer->reviews_count }} تقييم)</span>
-        </div>
+            <span class="text-gray-600">({{ $ratingsCount }} تقييم)</span>
+        </div> --}}
 
         <!-- معلومات الاتصال -->
         <div class="space-y-3 mb-6">
@@ -33,10 +33,12 @@
                 <i class="fas fa-clock ml-2"></i>
                 <span> تم انشاء الحساب منذ {{ $freelancer->created_at->year }}</span>
             </div>
+            @if ($freelancer->is_verified)
             <div class="flex items-center justify-center text-gray-600">
                 <i class="fas fa-check-circle text-green-500 ml-2"></i>
-                <span>الهوية موثقة</span>
+                <span>الحساب موثق</span>
             </div>
+            @endif
         </div>
 
         <!-- الأزرار -->

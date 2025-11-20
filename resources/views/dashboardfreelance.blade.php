@@ -99,12 +99,13 @@
                     <p class="text-blue-100 animate-fade-in-up" style="animation-delay: 0.1s">لوحة التحكم الخاصة بك</p>
                 </div>
                 <div class="flex gap-3">
-                    <a href="#"
+                    <a href="#recent_projects"
                         class="quick-action-btn bg-white text-primary hover:bg-gray-100 font-bold py-2 px-4 rounded-lg inline-flex items-center gap-2 transition duration-300">
                         <i class="fas fa-search"></i>
                         تصفح المشاريع
                     </a>
-                    <a href="#"
+
+                    <a href="{{ route('profile.freelancer.create') }}"
                         class="quick-action-btn bg-transparent border-2 border-white hover:bg-white hover:text-primary font-bold py-2 px-4 rounded-lg inline-flex items-center gap-2 transition duration-300">
                         <i class="fas fa-user-edit"></i>
                         تعديل الملف الشخصي
@@ -269,10 +270,10 @@
         </div>
 
         <!-- المشاريع الأخيرة -->
-        <div class="bg-white rounded-xl shadow-md p-6 mb-8 animate-fade-in-up" style="animation-delay: 0.2s">
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 animate-fade-in-up" style="animation-delay: 0.2s" id="recent_projects">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-bold text-gray-800">المشاريع الأخيرة</h3>
-                <a href="#" class="text-primary hover:text-secondary font-semibold text-sm">عرض الكل</a>
+                <h3 class="text-xl font-bold text-gray-800" >المشاريع الأخيرة</h3>
+                <a href="#"  class="text-primary hover:text-secondary font-semibold text-sm">عرض الكل</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full">
@@ -281,13 +282,9 @@
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 المشروع</th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                العميل</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                القيمة</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                الحالة</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                التقدم</th>
+                                مدة المشروع</th>
+
+
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 الإجراءات</th>
                         </tr>
@@ -310,35 +307,20 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $freelancer->user->name ?? 'عميل غير معروف' }}</div>
+                                        <div class="text-sm text-gray-900">{{ $project->duration_display ?? 'عميل غير معروف' }}</div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-semibold text-gray-900">{{ number_format($project->budget_amount,0) }} دينار</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="status-badge status-active">
-                                            <span class="w-2 h-2 bg-green-600 rounded-full"></span>
-                                            جاري التنفيذ
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center gap-2">
-                                            <div class="flex-1 bg-gray-200 rounded-full h-2">
-                                                <div class="progress-bar bg-blue-600 h-2 rounded-full" style="width: 75%">
-                                                </div>
-                                            </div>
-                                            <span class="text-xs text-gray-600">75%</span>
-                                        </div>
-                                    </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <button class="text-blue-600 hover:text-blue-800 ml-3">
-                                            <i class="fas fa-eye"></i>
+                                            <i class="fas fa-eye fa-xl"></i>
                                         </button>
                                         <button class="text-green-600 hover:text-green-800 ml-3">
-                                            <i class="fas fa-comment"></i>
+                                            تعديل
+                                            <i class="fas fa-xl fa-edit"></i>
                                         </button>
-                                        <button class="text-purple-600 hover:text-purple-800">
-                                            <i class="fas fa-upload"></i>
+                                        <button class="text-red-600 hover:text-red-800">
+                                            حذف
+                                            <i class="fas fa-xl fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
